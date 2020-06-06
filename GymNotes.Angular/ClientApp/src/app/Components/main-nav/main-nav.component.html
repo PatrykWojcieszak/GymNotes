@@ -1,0 +1,76 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <mat-toolbar><span>GymNotes</span></mat-toolbar>
+    <mat-nav-list>
+      <div class="main-container">
+        <div class="drawer-wrapper">
+          <div class="user-container">
+            <div class="avatar-container"><img src="/images/russ.jpg" (click)="toggle('userProfile')" class="avatar"
+                [routerLink]="['userprofile']">
+            </div>
+            <div class="name-wrapper" [routerLink]="['userprofile']" (click)="toggle('userProfile')">
+              <span class="first">Russel</span>
+              <span class="alias">Russwole</span>
+              <span class="last">Orhii</span>
+            </div>
+          </div>
+          <div class="menu-container">
+            <div class="menu-element" [routerLink]="['userList']"
+              [ngClass]="{'settings-element-active': showComponent === 'userList'}" (click)="toggle('userList')">
+              <a class="fas fa-search"></a> <span class="menu-name">Search user</span>
+            </div>
+            <div class="menu-element" [routerLink]="['training-list']"
+              [ngClass]="{'settings-element-active': showComponent === 'trainingPlan'}"
+              (click)="toggle('trainingPlan')">
+              <a class="fas fa-th-list"></a> <span class="menu-name">Training plan</span>
+            </div>
+            <div class="menu-element" [routerLink]="['calendar']"
+              [ngClass]="{'settings-element-active': showComponent === 'calendar'}" (click)="toggle('trainingHistory')">
+              <a class="fas fa-calendar-alt"></a> <span class="menu-name">Training history</span>
+            </div>
+            <div class="menu-element" [routerLink]="['tools/bmi']"
+              [ngClass]="{'settings-element-active': showComponent === 'tools'}" (click)="toggle('tools')">
+              <a class="fas fa-tools"></a> <span class="menu-name">Tools</span>
+            </div>
+            <div class="menu-element" [routerLink]="['statistics']"
+              [ngClass]="{'settings-element-active': showComponent === 'statistics'}" (click)="toggle('statistics')">
+              <a class="fas fa-chart-area"></a> <span class="menu-name">Statistics</span>
+            </div>
+            <div class="menu-element" [ngClass]="{'settings-element-active': showComponent === 'pupil'}"
+              (click)="toggle('pupil')">
+              <a class="fas fa-users"></a> <span class="menu-name">Pupil</span>
+            </div>
+            <div class="menu-element" [ngClass]="{'settings-element-active': showComponent === 'coach'}"
+              (click)="toggle('coach')">
+              <a class="fas fa-user-friends"></a> <span class="menu-name">Coach</span>
+            </div>
+          </div>
+        </div>
+        <div class="footer-container">
+          <i class="fas fa-bell" [routerLink]="['notifications']"
+            [ngClass]="{'fa-bell-selected': showComponent === 'notification'}" (click)="toggle('notification')">
+            <div class="icon-notification">2</div>
+          </i>
+          <i class="far fa-envelope" [routerLink]="['chat']" [ngClass]=" {'fa-envelope-selected':
+            showComponent==='messages' }" (click)="toggle('messages')"></i>
+          <i class="fas fa-user-cog" [ngClass]="{'fa-user-cog-selected': showComponent === 'settings'}"
+            (click)="toggle('settings')" [routerLink]="['settings/general']"></i>
+          <i class=" fas fa-power-off" [ngClass]="{'fa-power-off-selected': showComponent === 'logout'}"
+            (click)="toggle('logout')" (click)="logout()"></i>
+        </div>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+    </mat-toolbar>
+    <!-- <ng-content></ng-content> -->
+    <router-outlet></router-outlet>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

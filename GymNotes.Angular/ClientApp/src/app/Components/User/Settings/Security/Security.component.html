@@ -1,0 +1,75 @@
+<div class="main-container">
+  <div class="title">
+    Security account settings
+  </div>
+  <form [formGroup]="passwordForm" (submit)="onSubmit()">
+    <div class="settings-container" [ngClass]="{'settings-container-editing': showElement === 'password'}"
+      (click)="elementToggle('password')">
+      <div class="settings-wrapper">
+        <div class="setting-name">Change password
+          <span class="setting-subname">It's a good idea to use a strong password that you're not using elsewhere</span>
+        </div>
+        <button class="edit-btn" *ngIf="showElement != 'password'">Edit</button>
+      </div>
+      <div *ngIf="showElement === 'password'">
+        <div class="settings-input">
+          <div class="setting-input-name">
+            Old password
+          </div>
+          <div class="input-field">
+            <input class="input-text effect-2" type="password" placeholder="Old password" formControlName="oldPassword">
+            <span class="focus-border"></span>
+          </div>
+        </div>
+        <div class="errorContainer" *ngIf="passwordSubmitted || getPasswordForm.oldPassword.touched">
+          <span class="errorInfo" *ngIf="getPasswordForm.oldPassword.errors?.required">Old password is required</span>
+          <span class="errorInfo" *ngIf="getPasswordForm.oldPassword.errors?.minlength">Minimum
+            6 characters required.</span>
+        </div>
+        <div class="settings-input">
+          <div class="setting-input-name">
+            New password
+          </div>
+          <div class="input-field">
+            <input class="input-text effect-2" type="password" placeholder="New password" formControlName="newPassword">
+            <span class="focus-border"></span>
+          </div>
+        </div>
+        <div class="errorContainer" *ngIf="passwordSubmitted || getPasswordForm.newPassword.touched">
+          <span class="errorInfo" *ngIf="getPasswordForm.newPassword.errors?.required">New password
+            is required</span>
+          <span class="errorInfo" *ngIf="getPasswordForm.newPassword.errors?.minlength">Minimum
+            6 characters required.</span>
+        </div>
+        <div class="settings-input">
+          <div class="setting-input-name">
+            Confirm password
+          </div>
+          <div class="input-field">
+            <input class="input-text effect-2" type="password" placeholder="Confirm password"
+              formControlName="confirmPassword">
+            <span class="focus-border"></span>
+          </div>
+        </div>
+        <div class="errorContainer" *ngIf="passwordSubmitted || getPasswordForm.confirmPassword.touched">
+          <span class="errorInfo" *ngIf="getPasswordForm.confirmPassword.errors?.required">Confirm
+            password is required</span>
+          <span class="errorInfo" *ngIf="getPasswordForm.confirmPassword.errors?.mustMatch">Confirm
+            Password does not match</span>
+        </div>
+        <div class="errorContainer" *ngIf="changePasswordError">
+          <span class="errorInfo" *ngIf="changePasswordError">{{changePasswordErrorMessage}}</span>
+        </div>
+        <div class="btn-wrapper">
+          <div class="btn-container">
+            <div class="sim-button button13 cancel-btn" (click)="elementToggle('');$event.stopPropagation()">Cancel
+            </div>
+          </div>
+          <div class="btn-container">
+            <div class="sim-button-green button13-green" (click)="onSubmit()">Save</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

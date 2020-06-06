@@ -1,0 +1,4 @@
+Application pages
+Navigation
+User interface
+Templates

@@ -1,0 +1,30 @@
+.span {
+	color: #a09faf;
+}
+
+.title {
+	color: #a09faf;
+	font-size: 32px;
+	margin-top: 20px;
+	margin-bottom: 40px;
+	display: block;
+}
+
+.subTitle {
+	color: #a09faf;
+	font-size: 20px;
+	margin-bottom: 20px;
+	display: block;
+}
+
+.message {
+	color: #a09faf;
+	font-size: 20px;
+	margin-bottom: 20px;
+	display: block;
+}
+
+.container {
+	background: #1b1a1f;
+	text-align: center;
+}

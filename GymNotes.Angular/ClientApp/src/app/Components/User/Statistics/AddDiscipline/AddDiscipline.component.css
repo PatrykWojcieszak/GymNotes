@@ -1,0 +1,41 @@
+.input-text--transparent {
+  border: none;
+  background-color: transparent;
+  color: #a09faf;
+}
+
+.table,
+.table .fas {
+  color: #a09faf;
+}
+
+.table .fas:hover {
+  color: #ed2a54;
+}
+
+.discipline-title {
+  color: #ed2a54;
+  width: 100%;
+  font-weight: 500;
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.exercise-title {
+  width: 100%;
+  font-weight: 500;
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.sim-button--small {
+  width: 50%;
+}
+
+tr > .input-field {
+  border-bottom: unset;
+  border-left: unset;
+  border-right: unset;
+}

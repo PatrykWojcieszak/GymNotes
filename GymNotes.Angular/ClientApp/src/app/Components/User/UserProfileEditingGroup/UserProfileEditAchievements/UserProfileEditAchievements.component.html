@@ -1,0 +1,68 @@
+<mat-dialog-content>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="main-container">
+      <div class="top">
+        <div class="center">
+          Achievements
+        </div>
+        <div class="right">
+          <i class="far fa-times-circle" (click)="close()"></i>
+        </div>
+      </div>
+      <div class="content-container">
+        <div class="input-field">
+          <input class="input-text effect-2" type="text" placeholder="Dyscypline" formControlName="name">
+          <span class="focus-border"></span>
+        </div>
+        <div class="errorContainer">
+          <span class="errorInfo" *ngIf="myForm.get('name').touched && myForm.get('name').errors?.required">Dyscypline
+            name is required</span>
+        </div>
+        <div class="achievement-container">
+          <div formArrayName="achievements">
+            <div *ngFor="let section of getAchievement(myForm); let i = index">
+              <div class="achievement-wrapper" [formGroupName]="i">
+                <div class="select-container">
+                  <select id="filter-option" class="form-control input-select" [ngClass]="{'form-control-gold': WhatPlaceSelected(i) === 'first',
+                    'form-control-silver': WhatPlaceSelected(i) === 'second',
+                    'form-control-bronze': WhatPlaceSelected(i) === 'third'
+                    }" name="filter-option" formControlName="place" (focusout)="AchievementChanged($event)">
+                    <option class="gold" value='first'>&#xf091; -first</option>
+                    <option class="silver" value='second'>&#xf091; -second</option>
+                    <option class="bronze" value='third'>&#xf091; -third</option>
+                  </select>
+                </div>
+                <input type="date" class="form-control-date input-date" placeholder="Date" formControlName="date"
+                  (focusout)="AchievementChanged($event)">
+                <div class="input-field">
+                  <input class="input-text effect-2" type="text" placeholder="Achievement name" formControlName="name"
+                    (focusout)="AchievementChanged($event)">
+                  <span class="focus-border"></span>
+                </div>
+                <div class="icons-container">
+                  <div class="icon">
+                    <i class="fas fa-trash" (click)="removeAchievement(i)"></i>
+                    <div class="icon-tooltip">
+                      <p>Delete</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="errorContainer" *ngIf="FieldRequired">
+              <span class="errorInfo">All fields are requried</span>
+            </div>
+          </div>
+          <div class="btn-add-wrapper">
+            <button class="edit-btn" (click)="addAchievement()">Add</button>
+          </div>
+        </div>
+        <div class="btn-wrapper">
+          <div class="btn-container">
+            <div class="sim-button button13" (click)="onSubmit()">Save</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>

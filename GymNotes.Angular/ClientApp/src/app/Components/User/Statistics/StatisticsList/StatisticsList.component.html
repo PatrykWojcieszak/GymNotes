@@ -1,0 +1,48 @@
+<div class="main-container">
+  <div class="top">System of measurement</div>
+  <div class="switch-container">
+    <label class="switch">
+      <input class="switch-input" type="checkbox" />
+      <span class="switch-label" data-on="Metric" data-off="Imperial"></span>
+      <span class="switch-handle"></span>
+    </label>
+  </div>
+  <p class="statistics-weight">
+    Weight:
+    <span class="weight-value">100</span>
+    <span class="unit">kg</span>
+  </p>
+
+  <div class="content-container">
+    <div
+      *ngFor="let disicipline of disiciplineArray"
+      class="exercise-container"
+    >
+      <h6 class="exercise-title">{{ disicipline.name }}</h6>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Exercise name</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let exercise of disicipline.exerciseArray; let i = index">
+            <td>
+              <p> {{ exercise.name }} </p>
+            </td>
+            <td>
+              <p> {{ exercise.value }} </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sim-button button13" (click)="popupDialog()">
+      Add Disicipline
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+.title {
+  color: white;
+  text-align: center;
+  opacity: 0.7;
+  font-size: 1.3em;
+}
+
+.sim-button--small {
+  margin-top: 1.5rem;
+  width: 50%;
+}
+
+.fa-times-circle {
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  font-size: 1.5rem;
+  position: absolute;
+  z-index: 999;
+  color: #a09faf;
+}
+
+.fa-times-circle:hover {
+  color: #ed2a54;
+}
+

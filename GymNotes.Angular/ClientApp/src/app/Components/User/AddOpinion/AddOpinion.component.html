@@ -1,0 +1,27 @@
+<div class="main-container">
+  <div class="navbar">
+    <div>
+      Author name: {{CommentorName}}
+    </div>
+    <div>
+      <i class="far fa-times-circle" (click)="close()"></i>
+    </div>
+  </div>
+  <div class="content-container">
+    <div class="input-field">
+      <textarea class="input-text-without-icon effect-2" type="text"
+        placeholder="Tell others what you think about the trainer. Do you recommend it and why?" maxlength="1000"
+        name="opinionMessage" [(ngModel)]="UserOpinion.opinionMessage"></textarea>
+      <span class="focus-border"></span>
+    </div>
+    <div class="start-container">
+      <ngb-rating [max]='5' [(rate)]="currentRate" (hover)="ratingChanged($event)" (leave)="ratingSelected()">
+      </ngb-rating>
+      <span class="rating-message">{{ratingMessage}}</span>
+    </div>
+    <div class="btn-container">
+      <div class="sim-button-green button13-green" (click)="onSubmit()">Add opinion
+      </div>
+    </div>
+  </div>
+</div>

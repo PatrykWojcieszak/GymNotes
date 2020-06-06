@@ -1,0 +1,54 @@
+<div class="main-container">
+  <div class="wrapped-div">
+    <div class="side-menu">
+      <div class="input-field">
+        <input class="input-text effect-2" type="text" placeholder="Search">
+        <span class="fas fa-search fa-search-input fa-lg"></span>
+        <span class="focus-border"></span>
+      </div>
+      <div class="user-list-wrap">
+        <div class="user-list-container overflow-auto" *ngFor="let receipent of receipentList"
+          (click)="selectRecipent(receipent)">
+          <div class=" avatar-container">
+            <img class="img-responsive avatar" src="/images/bryce.jpg" alt="User picture">
+          </div>
+          <div class="user-details-container">
+            <span class="username">{{receipent.fullName}}</span>
+            <span class="user-details">{{receipent.email}}</span>
+          </div>
+          <div class="user-details-date">
+            <span class="dateTime">12:43</span>
+            <span class="date">2020.02.02</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="user-settings-container">
+
+      <div class="chat-header" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        <span>{{receipent.fullName}}</span>
+      </div>
+      <div class="chat">
+        <div [ngClass]="{'receiver': !message.isSender, 'sender': message.isSender}" *ngFor="let message of _messages">
+          <span *ngIf="!message.isSender" class="receiverUser">{{receipent.fullName}}</span>
+          <span *ngIf="message.isSender" class="senderUser">{{userFullName}}</span>
+          <div class="message">
+            <span>{{message.content}}</span>
+            <span class="date">{{message.sendDate | date:'medium'}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="input-field">
+        <input class="input-text effect-2" type="text" placeholder="Type a message" [(ngModel)]="msg.text"
+          (keydown)="sendMessage($event)">
+        <span class="fas fa-paper-plane fa-lg"></span>
+        <span class="focus-border"></span>
+      </div>
+      <!-- <div class="text-input">
+        <span class="fas fa-paper-plane form-control-feedback"></span>
+        <input type="text" class="form-control" placeholder="Enter message">
+      </div> -->
+    </div>
+  </div>
+</div>

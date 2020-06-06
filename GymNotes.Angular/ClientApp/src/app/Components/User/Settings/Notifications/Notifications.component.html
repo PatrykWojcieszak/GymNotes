@@ -1,0 +1,128 @@
+<div class="main-container">
+  <div class="title">
+    Notifications settings
+  </div>
+  <div class="content-container">
+    <div class="settings-container" [ngClass]="{'settings-container-active': showElement === 'comments'}">
+      <div class="settings-wrapper" (click)="showElement != 'comments' ? toggle('comments') : toggle('')">
+        <div class="left">
+          <div class="icon-wrapper">
+            <i class="far fa-comment"></i>
+          </div>
+          <div class="setting-title-wrapper">
+            <span class="setting-title">Comments</span>
+            <span class="setting-type">Email</span>
+          </div>
+        </div>
+        <div class="icon-right">
+          <i *ngIf="showElement != 'comments'" class="fas fa-sort-down"></i>
+          <i *ngIf="showElement === 'comments'" class="fas fa-sort-up"></i>
+        </div>
+      </div>
+      <div class="swtich-container" *ngIf="showElement === 'comments'">
+        <span class="switch-title">These are notifications for comments on your profile page.</span>
+        <span class="switch-description">Where you receive these notifications</span>
+        <div class="switch-content-container">
+          <div class="left">
+            <div class="switch-icon-wrapper">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="switch-title-wrapper">
+              <span class="switch-setting-title">Email</span>
+            </div>
+          </div>
+          <div class="toggle-container">
+            <span>ON</span>
+            <div class="toggle">
+              <label class="switch">
+                <input class="switch-input" type="checkbox" />
+                <span class="switch-label"></span> <span class="on-off-handle"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="switch-content-container">
+          <div class="left">
+            <div class="switch-icon-wrapper">
+              <i class="fas fa-tv"></i>
+            </div>
+            <div class="switch-title-wrapper">
+              <span class="switch-setting-title">On the website</span>
+            </div>
+          </div>
+          <div class="toggle-container">
+            <span>OFF</span>
+            <div class="toggle">
+              <label class="switch">
+                <input class="switch-input" type="checkbox" />
+                <span class="switch-label"></span> <span class="on-off-handle"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-container" [ngClass]="{'settings-container-active': showElement === 'coaching-request'}">
+      <div class="settings-wrapper"
+        (click)="showElement != 'coaching-request' ? toggle('coaching-request') : toggle('')">
+        <div class="left">
+          <div class="icon-wrapper">
+            <i class="fas fa-user-friends"></i>
+          </div>
+          <div class="setting-title-wrapper">
+            <span class="setting-title">Coaching request</span>
+            <span class="setting-type">Email, Website</span>
+          </div>
+        </div>
+        <div class="icon-right">
+          <i *ngIf="showElement != 'coaching-request'" class="fas fa-sort-down"></i>
+          <i *ngIf="showElement === 'coaching-request'" class="fas fa-sort-up"></i>
+        </div>
+      </div>
+      <div class="swtich-container" *ngIf="showElement === 'coaching-request'">
+        <span class="switch-title">These are notifications for coaching request.</span>
+        <span class="switch-description">Where you receive these notifications</span>
+        <div class="switch-content-container">
+          <div class="left">
+            <div class="switch-icon-wrapper">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="switch-title-wrapper">
+              <span class="switch-setting-title">Email</span>
+            </div>
+          </div>
+          <div class="toggle-container">
+            <span>ON</span>
+            <div class="toggle">
+              <label class="switch">
+                <input class="switch-input" type="checkbox" />
+                <span class="switch-label"></span> <span class="on-off-handle"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="switch-content-container">
+          <div class="left">
+            <div class="switch-icon-wrapper">
+              <i class="fas fa-tv"></i>
+            </div>
+            <div class="switch-title-wrapper">
+              <span class="switch-setting-title">On the website</span>
+            </div>
+          </div>
+          <div class="toggle-container">
+            <span>OFF</span>
+            <div class="toggle">
+              <label class="switch">
+                <input class="switch-input" type="checkbox" />
+                <span class="switch-label"></span> <span class="on-off-handle"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

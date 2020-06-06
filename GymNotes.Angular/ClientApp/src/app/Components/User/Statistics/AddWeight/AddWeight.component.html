@@ -1,0 +1,14 @@
+<form (submit)="onSubmit()">
+  <div class="right">
+    <i class="far fa-times-circle" (click)="close()"></i>
+  </div>
+  <h2 class="title">Add new weight</h2>
+  <input
+    class="input-text effect-2"
+    type="text"
+    placeholder="Your weight"
+    [(ngModel)]="yourWeight"
+    name="weight"
+  />
+  <div class="sim-button sim-button--small button13" (click)="onSubmit()"> Save </div>
+</form>

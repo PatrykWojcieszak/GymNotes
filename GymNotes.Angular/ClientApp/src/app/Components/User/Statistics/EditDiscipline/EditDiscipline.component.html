@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="right">
+    <i class="far fa-times-circle" (click)="close()"></i>
+  </div>
+
+  <h2 class="discipline-title">Edit Discipline</h2>
+
+  <div class="icon icon-delete" (click)="deleteDiscipline()">
+    <i class="fas fa-trash"></i>
+    <div class="icon-tooltip">
+      <p>Delete Discipline</p>
+    </div>
+  </div>
+  
+</div>
+  <div class="exercise-container">
+    <input class="exercise-title input-text effect-2" [(ngModel)]="discipline.name" />
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Value</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let exercise of discipline.exerciseArray; let i = index">
+          <td>
+            <input
+              [(ngModel)]="exercise.name"
+              class="input-text effect-2"
+              type="text"
+              name="{{ exercise.name }}"
+            />
+          </td>
+          <td clsas="input-field">
+            <input
+              [(ngModel)]="exercise.value"
+              class="input-text effect-2"
+              type="text"
+              name="{{ exercise.value }}"
+            />
+          </td>
+          <td>
+            <button
+              class="btn btn-default"
+              type="button"
+              (click)="deleteFieldValue(i)"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="input-field">
+            <input
+              [(ngModel)]="newAttribute.name"
+              class="input-text effect-2"
+              type="text"
+              name="newAttributeName"
+            />
+          </td>
+          <td class="input-field">
+            <input
+              [(ngModel)]="newAttribute.value"
+              class="input-text effect-2"
+              type="text"
+              name="newAttributeValue"
+              (keyup.enter)="addFieldValue()"
+            />
+          </td>
+          <td>
+            <button
+              class="btn btn-default"
+              type="button"
+              (click)="addFieldValue()"
+            >
+              <i class="fas fa-plus"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sim-button sim-button--small button13" (click)="saveData()">
+      Save
+    </div>
+  </div>
+

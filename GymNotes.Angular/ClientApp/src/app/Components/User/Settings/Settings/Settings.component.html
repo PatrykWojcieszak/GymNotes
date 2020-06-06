@@ -1,0 +1,30 @@
+<div class="main-container">
+  <div class="menu-left">
+    <div class="title">Settings</div>
+    <div class="mobile">
+      <div class="settings-panel">
+        <div class="settings-element" (click)="toogle('general')"
+          [ngClass]="{'settings-element-active': showComponent === 'general'}" [routerLink]="['general']">
+          <a class="fas fa-cog"></a> <span class="settings-name">General</span>
+        </div>
+        <div class="settings-element" (click)="toogle('security')"
+          [ngClass]="{'settings-element-active': showComponent === 'security'}" [routerLink]="['security']">
+          <a class="fas fa-user-shield"></a> <span class="settings-name">Security</span>
+        </div>
+      </div>
+      <div class="settings-panel">
+        <div class="settings-element" (click)="toogle('privacy')"
+          [ngClass]="{'settings-element-active': showComponent === 'privacy'}" [routerLink]="['privacy']">
+          <a class="fas fa-user-lock"></a> <span class="settings-name">Privacy</span>
+        </div>
+        <div class="settings-element" (click)="toogle('notifications')"
+          [ngClass]="{'settings-element-active': showComponent === 'notifications'}" [routerLink]="['notifications']">
+          <a class="fas fa-bell"></a> <span class="settings-name">Notifications</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-panel">
+    <router-outlet></router-outlet>
+  </div>
+</div>

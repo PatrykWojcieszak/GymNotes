@@ -1,0 +1,63 @@
+<form [formGroup]="registerForm" (submit)="onSubmit()">
+  <div class="input-field">
+    <input class="input-text effect-2" type="email" placeholder="E-mail" formControlName="email">
+    <span class="fas fa-envelope fa-lg fa-envelope-input"></span>
+    <span class="focus-border"></span>
+  </div>
+  <div class="errorContainer" *ngIf="submitted || form.email.touched">
+    <span class="errorInfo" *ngIf="form.email.errors?.required">Email is required</span>
+    <span class="errorInfo" *ngIf="form.email.errors?.email">Email is not valid</span>
+  </div>
+  <div class="input-field">
+    <input class="input-text input-text-password effect-2" type="password" placeholder="Password"
+      formControlName="password">
+    <span class="fas fa-lock fa-lg"></span>
+    <span class="focus-border"></span>
+  </div>
+  <div class="errorContainer" *ngIf="submitted || form.password.touched">
+    <span class="errorInfo" *ngIf="form.password.errors?.required">Password is required</span>
+    <span class="errorInfo" *ngIf="form.password.errors?.minlength">Minimum
+      6 characters required.</span>
+  </div>
+  <div class=" input-field">
+    <input class="input-text input-text-password effect-2" type="password" placeholder="Confirm password"
+      formControlName="confirmPassword">
+    <span class="fas fa-lock fa-lg"></span>
+    <span class="focus-border"></span>
+  </div>
+  <div class="errorContainer" *ngIf="submitted || form.confirmPassword.touched">
+    <span class="errorInfo" *ngIf="form.confirmPassword.errors?.required">Confirm
+      password is required</span>
+    <span class="errorInfo" *ngIf="form.confirmPassword.errors?.mustMatch">Confirm
+      Password does not match</span>
+  </div>
+  <div class=" input-field">
+    <input class="input-text effect-2" type="text" placeholder="Firstname" formControlName="firstName">
+    <span class="fas fa-user fa-lg"></span>
+    <span class="focus-border"></span>
+  </div>
+  <div class="errorContainer" *ngIf="submitted || form.firstName.touched">
+    <span class="errorInfo" *ngIf="form.firstName.errors">Firstname is required</span>
+  </div>
+  <div class="input-field">
+    <input class="input-text effect-2" type="text" placeholder="Lastname" formControlName="lastName">
+    <span class="fas fa-user fa-lg"></span>
+    <span class="focus-border"></span>
+  </div>
+  <div class="errorContainer" *ngIf="submitted || form.lastName.touched ">
+    <span class="errorInfo" *ngIf="form.lastName.errors">Lastname is required</span>
+    <!-- <span class="errorInfo" *ngIf="registrationError">{{registrationErrorMessage}}</span> -->
+  </div>
+  <div class="terms-container">
+    <input type="checkbox" name="cb" id="cb1" formControlName="termsChk" />
+    <label for="cb1">By clicking Sign up, you agree to our </label>
+    <span class="termsLabel" [routerLink]="['/terms']">Terms.</span>
+  </div>
+  <div class="errorContainer" *ngIf="submitted">
+    <span class="errorInfo" *ngIf="registerForm.value.termsChk == false">You must agree with our terms!</span>
+    <span class="errorInfo" *ngIf="registrationError">{{registrationErrorMessage}}</span>
+  </div>
+  <div class="btn-container">
+    <div class="sim-button button13" (click)="onSubmit()">Sign Up</div>
+  </div>
+</form>

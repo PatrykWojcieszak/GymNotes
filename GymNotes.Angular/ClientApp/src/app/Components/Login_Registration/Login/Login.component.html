@@ -1,0 +1,41 @@
+<form [formGroup]="loginForm" (submit)="onSubmit()">
+  <div class="input-field" [ngClass]="{inputError: submitted && form.email.errors}">
+    <input class="input-text effect-2" type="email" placeholder="Email" formControlName="email">
+    <span class="fas fa-envelope fa-lg fa-envelope-input"></span>
+    <span class="focus-border"></span>
+  </div>
+  <div class="errorContainer" *ngIf="submitted">
+    <span class="errorInfo" *ngIf="form.email.errors?.required">Email is required</span>
+    <span class="errorInfo" *ngIf="form.email.errors?.email">Email is not valid</span>
+  </div>
+  <div class="input-field" [ngClass]="{inputError: submitted && form.password.errors}">
+    <input class="input-text input-text-password effect-2" [type]="showPass ? 'text' : 'password'"
+      placeholder="Password" formControlName="password">
+    <span class="fas fa-lock fa-lg"></span>
+    <span class="focus-border"></span>
+    <i class="fas fa-eye-slash fa-lg" (click)="showPassword()" *ngIf="!showPass"></i>
+    <i class="fas fa-eye fa-lg" (click)="showPassword()" *ngIf="showPass"></i>
+  </div>
+  <div class="errorContainer" *ngIf="submitted">
+    <span class="errorInfo" *ngIf="form.password.errors">Password is required</span>
+    <span class="errorInfo" *ngIf="loginError">{{loginErrorMessage}}</span>
+  </div>
+  <div class="rememberMe-container">
+    <input type="checkbox" name="cb" id="cb1" formControlName="rememberme" />
+    <label for="cb1">Remember me</label>*
+  </div>
+  <div class="form-forgotPassword">
+    <a [routerLink]="['/forgotPasswordEmail']">Forgot password?</a>
+  </div>
+  <div class="btn-container">
+    <div class="sim-button button13" (click)="onSubmit()">Sign In</div>
+  </div>
+  <div class="social-container">
+    <span>Or login with:</span>
+    <div class="icon-button">
+      <a href="" class="btn-icon facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="" class="btn-icon instagram"><i class="fab fa-google"></i></a>
+      <a href="" class="btn-icon twitter"><i class="fab fa-twitter"></i></a>
+    </div>
+  </div>
+</form>

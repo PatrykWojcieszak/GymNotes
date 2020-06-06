@@ -1,0 +1,95 @@
+.main-container{
+  width: 800px;
+  height: 70%;
+  margin-bottom: 50px;
+  margin-right: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+}
+
+.user-settings-container {
+  height: 92%;
+  width: 100%;
+}
+
+.chat {
+	width: 100%;
+	height: 94%;
+	padding: 15px 0 0 0;
+	background: rgba(14, 22, 33, 0.6);
+	overflow-y: auto;
+}
+
+.chat-header {
+  background: #009bf9;
+	width: 100%;
+	color: #f4f9ff;
+	font-size: 22px;
+	height: 55px;
+	line-height: 55px;
+	padding-left: 15px;
+	text-align: center;
+}
+
+.chat-header > span {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;
+}
+
+.receiver {
+	margin: 10px 0;
+}
+
+.sender {
+	margin: 10px 0;
+	padding-right: 10px;
+	text-align: right;
+}
+
+
+.receiverUser {
+	font-size: 12px;
+	display: block;
+	color: white;
+	padding-left: 10px;
+}
+
+.senderUser {
+	font-size: 12px;
+	display: block;
+	color: white;
+}
+
+.message {
+	display: inline-block;
+	border-radius: 10px;
+	margin-left: 10px;
+	padding: 10px;
+	width: 80%;
+}
+
+.receiver > .message {
+	color: white;
+	background: rgba(24, 37, 51, 1);
+}
+
+.sender > .message {
+	color: white;
+	background: rgba(43, 82, 120, 1);
+	text-align: left;
+}
+
+.date {
+	padding-top: 8px;
+	display: block;
+	font-size: 10px;
+}
+
+.sender > .message > .date {
+	text-align: right;
+}

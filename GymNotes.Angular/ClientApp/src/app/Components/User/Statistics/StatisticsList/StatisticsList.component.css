@@ -1,0 +1,59 @@
+.main-container {
+  margin: 2rem 4rem;
+  color: #a09faf;
+}
+
+.statistics-weight {
+  margin-top: 2rem;
+}
+
+.content-container {
+  display: block;
+  margin: 20px auto;
+  display: block;
+  color: #a09faf;
+  width: 600px;
+}
+
+.exercise-container {
+  position: relative;
+  border-bottom: 1px solid #2f2e36;
+  border-radius: 20px;
+  padding-top: 1rem;
+  margin-bottom: 2rem;
+
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+.exercise-title {
+  width: 100%;
+  font-weight: 500;
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.exercise-container input[type="text"] {
+  border: none;
+  background-color: transparent;
+}
+
+.table input[type="text"] {
+  color: #9fa2af;
+}
+
+.table,
+.table .fas {
+  color: #a09faf;
+}
+
+.table .fas:hover {
+  color: #ed2a54;
+}
+
+.form-control {
+  padding: 0;
+}

@@ -1,0 +1,57 @@
+@import '_main';
+
+.main-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 750px;
+}
+
+.navbar{
+  font-size: 24px;
+  padding-bottom: 20px;
+  display: flex;
+  color: #a09faf;
+  border-bottom: 1px solid #2f2e36;
+  justify-content: space-between;
+}
+
+.fa-times-circle{
+  font-size: 28px;
+  cursor: pointer;
+
+  -webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+}
+
+.fa-times-circle:hover{
+  color: #ed2a54;
+}
+
+textarea{
+  max-height: 200px;
+  height: 200px;
+}
+
+.start-container{
+  color: #a09faf;
+  font-size: 32px;
+  margin-left: 20px;
+}
+
+.rating-message{
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.btn-container{
+  max-width: 200px;
+  width: 100%;
+  float: right;
+}
+
+:focus {
+  outline: none
+}

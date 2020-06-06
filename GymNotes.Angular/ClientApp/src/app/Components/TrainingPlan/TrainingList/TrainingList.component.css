@@ -1,0 +1,144 @@
+.content-container{
+  margin: 20px auto;
+  text-align: center;
+  display: block;
+  color: #a09faf;
+  width: 600px;
+}
+
+.navbar{
+  border-bottom: 1px solid #ed2a54;
+}
+
+.input-field {
+  margin: 0 20px;
+  float: right;
+}
+
+input.form-control,
+input.form-control:focus {
+  color: #a09faf;
+	border: 1px solid #232228;
+}
+
+input.form-control:focus {
+	box-shadow: none;
+}
+
+.input {
+	outline: none;
+  background-color: #232228;
+  border-radius: 8px;
+	border: solid 1px #232228;
+	resize: none;
+	color: #a09faf;
+
+	-webkit-transition: border 300ms ease-out;
+	-moz-transition: border 300ms ease-out;
+	-o-transition: border 300ms ease-out;
+}
+
+.input:focus {
+	border: solid 1px #232228;
+	background: rgba(33, 43, 70, 0.7);
+	outline: none;
+}
+
+.select-list-container
+{
+  float: left;
+}
+
+.data-container {
+  margin: 20px;
+  display: inline-block;
+}
+
+.training-container, .training-container-favorite{
+  display: flex;
+  flex-direction: row;
+  padding: 20px 20px 10px 20px;
+  border-bottom: 1px solid #2f2e36;
+  border-radius: 20px;
+  cursor: pointer;
+
+  -webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+}
+
+.favorite{
+  border-bottom: 1px solid #FFD700;
+}
+
+.selected{
+  border-bottom: 1px solid #00C895;
+}
+
+.training-container:hover{
+  background: #2f2e36;
+}
+
+.left-side{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+
+.right-side{
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 20px;
+}
+
+.title{
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.fa-trash-alt{
+  color: #ed2a54;
+}
+
+.fa-heart{
+  color: #00C895;
+}
+
+.fa-heart,
+.fa-check,
+.fa-pencil-alt,
+.fa-trash-alt{
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  -webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+}
+
+.fa-heart:hover,
+.fa-check:hover,
+.fa-pencil-alt:hover,
+.fa-trash-alt:hover{
+  background: #060d19;
+}
+
+.date{
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.sim-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+}

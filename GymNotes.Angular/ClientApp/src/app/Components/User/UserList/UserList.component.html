@@ -1,0 +1,136 @@
+<div class="navbar">
+  <div class="select-list-container">
+    <div class="data-container">
+      <select id="filter-option" class="form-control input" name="filter-option">
+        <option value="Male">Coaches</option>
+        <option value="Female">Everyone</option>
+      </select>
+    </div>
+    <div class="data-container">
+      <select id="filter-option" class="form-control input" name="filter-option">
+        <option value="Male">Featured</option>
+        <option value="Female">Newest</option>
+        <option value="Female">Highest rating</option>
+      </select>
+    </div>
+  </div>
+  <div class="input-field">
+    <form (ngSubmit)="search()">
+      <input [(ngModel)]="searchText" (input)="updateSearch()" class="input-text effect-2" type="text"
+        placeholder="Search" name="searchBar">
+      <span class="fas fa-search fa-search-input fa-lg"></span>
+      <span class="focus-border"></span>
+    </form>
+  </div>
+</div>
+
+<div class="pagination-wrapper">
+  <nav class="pagination-container">
+    <div class="pagination">
+      <a [routerLink]="" [attr.disabled]="!userList.hasPreviousPage" (click)="prevPage()"
+        class="pagination-newer">PREV</a>
+      <span class="pagination-inner">
+        <a [routerLink]="" *ngIf="userList.hasPreviousPage">{{userList.pageIndex-1}}</a>
+        <a [routerLink]="" class="pagination-active">{{userList.pageIndex}}</a>
+        <a [routerLink]="" *ngIf="userList.hasNextPage">{{userList.pageIndex+1}}</a>
+      </span>
+      <a [routerLink]="" [attr.disabled]="!userList.hasNextPage" (click)="nextPage()" class="pagination-older">NEXT</a>
+    </div>
+  </nav>
+</div>
+<main class="main-container container d-flex flex-column">
+
+  <div *ngIf="isLoading" class="row">
+    <div class="spinner">
+      <div class=" text-center">
+        <div class="spinner-grow spinner-grow-lg" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showNoResults" class="row no-results">
+    <div *ngIf="true">
+      <span class="secondaryText">
+        No results.
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="row no-results">
+    <div *ngIf="true">
+      <span class="secondaryText">
+        Something went wrog!
+      </span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div *ngIf="showList" class="user-list-container">
+
+      <div *ngFor="let user of userList.items" class="card">
+        <div class="front">
+          <div class="content">
+            <span class="mainText">{{user.fullName}}</span>
+            <span class="secondaryText">Age: {{printProp(getAge(user.birthday))}} | Gender: {{printProp(user.gender)}} |
+              Height: {{printProp((0+user.height).toFixed(1))+'cm'}} | Weight: {{printProp(null)}}</span>
+            <span *ngIf="user.isCoach" class="secondaryText">Coach: <i class="fas fa-star"></i> <i
+                class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                class="fas fa-star-half-alt"></i></span>
+            <div class="image">
+              <img class="img" src="/images/russ.jpg">
+            </div>
+          </div>
+        </div>
+        <div class="back">
+          <div class="content">
+            <div class="top-icons">
+              <span class="fas fa-envelope fa-lg" (click)="sendMessage(user.id)"></span>
+            </div>
+            <div class="avatar-container">
+              <img src="/images/russ.jpg" class="avatar">
+              <img src="/images/russ.jpg" class="avatar-background">
+            </div>
+            <div class="icon-button">
+              <a target="_blank" [href]="printProp(user.facebook)" class="btn-icon facebook"><i
+                  class="fab fa-facebook-f"></i></a>
+              <a target="_blank" [href]="printProp(user.instagram)" class="btn-icon instagram"><i
+                  class="fab fa-instagram"></i></a>
+              <a target="_blank" [href]="printProp(user.twitter)" class="btn-icon twitter"><i
+                  class="fab fa-twitter"></i></a>
+              <a target="_blank" [href]="printProp(user.youTube)" class="btn-icon youtube"><i
+                  class="fab fa-youtube"></i></a>
+            </div>
+            <div class="content-container">
+              <span class="mainText">{{printProp(user.fullName)}}</span>
+              <span class="secondaryText">Age: {{printProp(getAge(user.birthday))}} | Gender: {{printProp(user.gender)}}
+                | Height: {{printProp((0+user.height).toFixed(1))+'cm'}} | Weight: {{printProp(null)}}</span>
+              <span class="secondaryTextBack">{{printProp(user.description)}}</span>
+              <span *ngIf="user.isCoach" class="secondaryTextBack">Coach: <i class="fas fa-star"></i> <i
+                  class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                  class="fas fa-star-half-alt"></i></span>
+              <span class="secondaryTextBack">Discipline: {{printProp(user.discipline)}}</span>
+              <span class="secondaryTextBack">Years of experience: {{printProp(user.yearsOfExperience)}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<div class="pagination-wrapper">
+  <nav class="pagination-container">
+    <div class="pagination">
+      <a class="pagination-newer">PREV</a>
+      <span class="pagination-inner">
+        <a>1</a>
+        <a class="pagination-active">2</a>
+        <a>3</a>
+      </span>
+      <a class="pagination-older">NEXT</a>
+    </div>
+  </nav>
+</div>

@@ -1,0 +1,350 @@
+<mat-dialog-content>
+  <div class="main-container overflow-auto">
+    <div class="navbar">
+      <div class="center">
+        Edit Profile
+      </div>
+      <div class="right">
+        <i class="far fa-times-circle" (click)="close()"></i>
+      </div>
+    </div>
+    <div class="section-container">
+      <div class="section-navbar">
+        <span>Profile picture</span>
+        <button class="edit-btn">Add</button>
+      </div>
+      <div class="section-content">
+        <img src="/images/bryce.jpg" class="avatar">
+      </div>
+    </div>
+    <div class="section-container">
+      <div class="section-navbar">
+        <span>Background picture</span>
+        <button class="edit-btn">Add</button>
+      </div>
+      <div class="section-content">
+        <div class="background-picture-container">
+          <img class="img" src="/images/bryce.jpg">
+        </div>
+      </div>
+    </div>
+    <div class="section-container">
+      <div class="section-navbar">
+        <span>Achievements</span>
+        <button class="edit-btn" (click)="OpenAcievementsEditor(null)">Add</button>
+      </div>
+      <div class="section-content" *ngFor="let item of AchievementsList">
+        <div class="achievement-wrapper">
+          <div class="navbar">
+            <div class="center">
+              {{item.name}}
+            </div>
+            <div class="right">
+              <i class="fas fa-pen" (click)="OpenAcievementsEditor(item.id)"></i>
+              <i class="fas fa-trash" (click)="DeleteAchievement(item.id)"></i>
+            </div>
+          </div>
+          <div class="achievement" *ngFor="let achievement of item.achievements">
+            <i class="fas fa-trophy gold" *ngIf="achievement.place == 'first'"></i>
+            <i class="fas fa-trophy silver" *ngIf="achievement.place == 'second'"></i>
+            <i class="fas fa-trophy bronze" *ngIf="achievement.place == 'third'"></i>
+            {{achievement.date | date:'longDate'}} - {{achievement.name}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-container">
+      <div class="section-navbar">
+        <span>Socials</span>
+      </div>
+      <div class="section-content">
+        <div class="social-wrapper">
+          <div class="input-field">
+            <input class="input-text effect-2" type="text" placeholder="Provide Instagram profile url" name="instagram"
+              [(ngModel)]="UserInfo.instagram" #instagram="ngModel" (focusout)="updateInstagramURL($event)">
+            <span class="fab fa-instagram instagram-icon"></span>
+          </div>
+          <div class="input-field">
+            <input class="input-text effect-2" type="text" placeholder="Provide Facebook profile url" name="facebook"
+              [(ngModel)]="UserInfo.facebook" #facebook="ngModel" (focusout)="updateFacebookURL($event)">
+            <span class="fab fa-facebook-f instagram-icon"></span>
+          </div>
+          <div class="input-field">
+            <input class="input-text effect-2" type="text" placeholder="Provide Twitter profile url" name="twitter"
+              [(ngModel)]="UserInfo.twitter" #twitter="ngModel" (focusout)="updateTwitterURL($event)">
+            <span class="fab fa-twitter instagram-icon"></span>
+          </div>
+          <div class="input-field">
+            <input class="input-text effect-2" type="text" placeholder="Provide Youtube profile url" name="youTube"
+              [(ngModel)]="UserInfo.youTube" #youTube="ngModel" (focusout)="updateYoutubeURL($event)">
+            <span class="fab fa-youtube instagram-icon"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!basicInfo" class="basicInfo-btn-wrapper">
+      <button class="edit-btn" (click)="showBasicInfo()">Edit your basic info</button>
+    </div>
+    <div *ngIf="basicInfo" class="section-container">
+      <div class="section-navbar">
+        <span>Basic info</span>
+      </div>
+      <div class="section-content">
+        <div class="basic-info-section">
+          <div class="basic-info-container" [ngClass]="{'basic-info-container-editing': showElement === 'description'}">
+            <div class="basic-info-wrapper" (click)="toggle('description')">
+              <div class="setting-name">Description</div>
+              <button class="basic-info-edit-btn" *ngIf="showElement != 'description'">Edit</button>
+            </div>
+            <div class="basic-info-content" *ngIf="showElement != 'description'">
+              <span>{{UserInfo.description != null ? UserInfo.description : 'Empty'}}</span>
+            </div>
+            <div *ngIf="showElement === 'description'">
+              <div class="basic-info-input">
+                <div class="textarea-field">
+                  <textarea class="input-text-without-icon effect-2" maxlength="500" type="text"
+                    placeholder="Description" name="description" [(ngModel)]="UserInfo.description"
+                    #description="ngModel"></textarea>
+                  <span class="focus-border"></span>
+                </div>
+              </div>
+              <div class="btn-wrapper">
+                <div class="btn-container">
+                  <div class="sim-button button13 cancel-btn" (click)="toggle('');$event.stopPropagation()">
+                    Cancel</div>
+                </div>
+                <div class="btn-container">
+                  <div class="sim-button-green button13-green" (click)="updateDescription()">Save</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class=" basic-info-container" [ngClass]="{'basic-info-container-editing': showElement === 'discipline'}">
+            <div class="basic-info-wrapper" (click)="toggle('discipline')">
+              <div class="setting-name">Discipline</div>
+              <button class="basic-info-edit-btn" *ngIf="showElement != 'discipline'">Edit</button>
+            </div>
+            <div class="basic-info-content" *ngIf="showElement != 'discipline'">
+              <span>{{UserInfo.discipline != null ? UserInfo.discipline : 'Empty'}}</span>
+            </div>
+            <div *ngIf="showElement === 'discipline'">
+              <div class="basic-info-input">
+                <div class="textarea-field">
+                  <input class="input-text-without-icon effect-2" maxlength="50" type="text" placeholder="Discipline"
+                    name="discipline" [(ngModel)]="UserInfo.discipline" #discipline="ngModel">
+                  <span class="focus-border"></span>
+                </div>
+              </div>
+              <div class="btn-wrapper">
+                <div class="btn-container">
+                  <div class="sim-button button13 cancel-btn" (click)="toggle('');$event.stopPropagation()">
+                    Cancel</div>
+                </div>
+                <div class="btn-container">
+                  <div class="sim-button-green button13-green" (click)="updateDiscipline()">Save</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="basic-info-container"
+            [ngClass]="{'basic-info-container-editing': showElement === 'yearsOfExperience'}">
+            <div class="basic-info-wrapper" (click)="toggle('yearsOfExperience')">
+              <div class="setting-name">Years of experience</div>
+              <button class="basic-info-edit-btn" *ngIf="showElement != 'yearsOfExperience'">Edit</button>
+            </div>
+            <div class="basic-info-content" *ngIf="showElement != 'yearsOfExperience'">
+              <span>{{UserInfo.yearsOfExperience != null ? UserInfo.yearsOfExperience : 'Empty'}}</span>
+            </div>
+            <div *ngIf="showElement === 'yearsOfExperience'">
+              <div class="basic-info-input">
+                <div class="years-if-expierience-select-box">
+                  <div class="dropdown">
+                    <div class="select">
+                      <span>{{UserInfo.yearsOfExperience != null ? UserInfo.yearsOfExperience : 'I train from'}}</span>
+                      <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <input type="hidden" name="yearsOfExperience">
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let item of years" (click)="yearsOfExperienceChanged(item)" id="{{item}}">
+                        {{item}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-wrapper">
+                <div class="btn-container">
+                  <div class="sim-button button13 cancel-btn" (click)="toggle('');$event.stopPropagation()">
+                    Cancel</div>
+                </div>
+                <div class="btn-container">
+                  <div class="sim-button-green button13-green" (click)="updateYearsOfExperience()">Save</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="basic-info-container" [ngClass]="{'basic-info-container-editing': showElement === 'birthday'}">
+            <div class="basic-info-wrapper" (click)="toggle('birthday')">
+              <div class="setting-name">Birthday</div>
+              <button class="basic-info-edit-btn" *ngIf="showElement != 'birthday'">Edit</button>
+            </div>
+            <div class="basic-info-content" *ngIf="showElement != 'birthday'">
+              <span>{{birthdayMonth}} {{birthdayDay}}, {{birthdayYear}}</span>
+            </div>
+            <div *ngIf="showElement === 'birthday'">
+              <div class="basic-info-input">
+                <div class="years-if-expierience-select-box">
+
+                  <div class="dropdown margin-side-5">
+                    <div class="select">
+                      <span>{{birthdayDay}}</span>
+                      <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <input type="hidden" name="dayOfBirth">
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let item of days" (click)="dayChanged(item)" id="{{item}}">{{item}}</li>
+                    </ul>
+                  </div>
+
+                  <div class="dropdown margin-side-5">
+                    <div class="select">
+                      <span>{{birthdayMonth}}</span>
+                      <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <input type="hidden" name="monthOfBirth">
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let item of months" (click)="monthChanged(item)" id="{{item}}">{{item}}</li>
+                    </ul>
+                  </div>
+
+                  <div class="dropdown margin-side-5">
+                    <div class="select">
+                      <span id="year">{{birthdayYear}}</span>
+                      <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <input type="hidden" name="yearOfBirth">
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let item of years" (click)="yearChanged(item)" id="{{item}}">{{item}}</li>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+              <div class="btn-wrapper">
+                <div class="btn-container">
+                  <div class="sim-button button13 cancel-btn" (click)="toggle('');$event.stopPropagation()">
+                    Cancel</div>
+                </div>
+                <div class="btn-container">
+                  <div class="sim-button-green button13-green" (click)="updateBirthday()">Save</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="basic-info-container" [ngClass]="{'basic-info-container-editing': showElement === 'gender'}">
+            <div class="basic-info-wrapper" (click)="toggle('gender')">
+              <div class="setting-name">Gender</div>
+              <button class="basic-info-edit-btn" *ngIf="showElement != 'gender'">Edit</button>
+            </div>
+            <div class="basic-info-content" *ngIf="showElement != 'gender'">
+              <span>{{UserInfo.gender != null ? UserInfo.gender : 'Empty'}}</span>
+            </div>
+            <div *ngIf="showElement === 'gender'">
+              <div class="basic-info-input">
+                <div class="years-if-expierience-select-box">
+                  <div class="dropdown">
+                    <div class="select">
+                      <span>{{UserInfo.gender != null ? UserInfo.gender : 'Gender'}}</span>
+                      <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <input type="hidden" name="yearsOfExperience">
+                    <ul class="dropdown-menu">
+                      <li id="male" (click)="genderChanged('Male')">Male</li>
+                      <li id="female" (click)="genderChanged('Female')">Female</li>
+                      <li id="other" (click)="genderChanged('Other')">Other</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-wrapper">
+                <div class="btn-container">
+                  <div class="sim-button button13 cancel-btn" (click)="toggle('');$event.stopPropagation()">
+                    Cancel</div>
+                </div>
+                <div class="btn-container">
+                  <div class="sim-button-green button13-green" (click)="updateGender()">Save</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="basic-info-container" [ngClass]="{'basic-info-container-editing': showElement === 'isCoach'}">
+            <div class="basic-info-wrapper" (click)="toggle('isCoach')">
+              <div class="setting-name">Are you a coach?</div>
+              <button class="basic-info-edit-btn" *ngIf="showElement != 'isCoach'">Edit</button>
+            </div>
+            <div class="basic-info-content" *ngIf="showElement != 'isCoach'">
+              <span>{{UserInfo.isCoach == true ? 'Yes' : 'No'}}</span>
+            </div>
+            <div *ngIf="showElement === 'isCoach'">
+              <div class="basic-info-input">
+                <div class="years-if-expierience-select-box">
+                  <div class="dropdown">
+                    <div class="select">
+                      <span>{{UserInfo.isCoach == true ? 'Yes' : 'No'}}</span>
+                      <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <input type="hidden" name="yearsOfExperience">
+                    <ul class="dropdown-menu">
+                      <li id="male" (click)="isCoachChanged(true)">Yes</li>
+                      <li id="female" (click)="isCoachChanged(false)">No</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-wrapper">
+                <div class="btn-container">
+                  <div class="sim-button button13 cancel-btn" (click)="toggle('');$event.stopPropagation()">
+                    Cancel</div>
+                </div>
+                <div class="btn-container">
+                  <div class="sim-button-green button13-green" (click)="updateIsCoach()">Save</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="basic-info-container" [ngClass]="{'basic-info-container-editing': showElement === 'weight'}">
+            <div class="basic-info-wrapper" (click)="toggle('weight')">
+              <div class="setting-name">Height</div>
+              <button class="basic-info-edit-btn" *ngIf="showElement != 'weight'">Edit</button>
+            </div>
+            <div class="basic-info-content" *ngIf="showElement != 'weight'">
+              <span>{{UserInfo.height != null ? UserInfo.height : 'Empty'}}</span>
+            </div>
+            <div *ngIf="showElement === 'weight'">
+              <div class="basic-info-input">
+                <div class="textarea-field">
+                  <input class="input-text-without-icon effect-2" type="number" min="0" step="0.1" placeholder="Height"
+                    name="height" [(ngModel)]="UserInfo.height" #height="ngModel">
+                  <span class="focus-border"></span>
+                </div>
+              </div>
+              <div class="btn-wrapper">
+                <div class="btn-container">
+                  <div class="sim-button button13 cancel-btn" (click)="toggle('');$event.stopPropagation()">
+                    Cancel</div>
+                </div>
+                <div class="btn-container">
+                  <div class="sim-button-green button13-green" (click)="updateheight()">Save</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

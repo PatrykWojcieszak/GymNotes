@@ -1,0 +1,55 @@
+@import '_main';
+
+.terms-container {
+	display: inline-block;
+	margin-left: 20px;
+	font-size: 14px;
+}
+
+input[type=checkbox] + label {
+	color: #a1a4b6;
+	cursor: pointer;
+}
+
+input[type=checkbox] {
+	display: none;
+}
+
+label::before {
+	content: "\2713";
+	border: 0.1em solid #a1a4b6;
+	border-radius: 0.2em;
+	padding: 0 0.3em 0 0.3em;
+	margin-right: 0.6em;
+	vertical-align: bottom;
+	color: transparent;
+	transition: 0.2s;
+}
+
+input[type=checkbox] + label:active::before {
+	transform: scale(0);
+}
+
+input[type=checkbox]:checked + label::before {
+	background-color: $red;
+	border-color: $red;
+	color: #fff;
+}
+
+input[type=checkbox]:disabled + label::before {
+	transform: scale(1);
+	border-color: #aaa;
+}
+
+input[type=checkbox]:checked:disabled + label::before {
+	transform: scale(1);
+	background-color: $green;
+	border-color: $green;
+}
+
+.termsLabel {
+	margin-left: 5px;
+	color: $red;
+	cursor: pointer;
+	display: inline-block;
+}

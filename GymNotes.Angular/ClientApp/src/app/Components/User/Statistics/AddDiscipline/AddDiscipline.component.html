@@ -1,0 +1,87 @@
+<h2 class="discipline-title">Add Discipline</h2>
+<div class="exercise-container">
+  <div class="input-field">
+    <input
+      class="input-text effect-2"
+      type="text"
+      placeholder="discipline name"
+      maxlength="30"
+    />
+    <span class="focus-border"></span>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let exercise of exerciseArray; let i = index">
+        <td >
+          <input
+            [(ngModel)]="exercise.name"
+            class="input-text effect-2 input-text--transparent"
+            type="text"
+            name="{{ exercise.name }}"
+            disabled
+          />
+        </td>
+        <td clsas="input-field">
+          <input
+            [(ngModel)]="exercise.value"
+            class="input-text effect-2 input-text--transparent"
+            type="text"
+            name="{{ exercise.value }}"
+            disabled
+          />
+        </td>
+        <td>
+          <button
+            class="btn btn-default"
+            type="button"
+            (click)="deleteFieldValue(i)"
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="input-field">
+          <input
+            class="input-text effect-2"
+            type="text"
+            [(ngModel)]="newAttribute.name"
+            name="newAttributeName"
+          />
+        </td>
+        <td class="input-field">
+          <input
+            class="input-text effect-2"
+            type="text"
+            [(ngModel)]="newAttribute.value"
+            name="newAttributeValue"
+            (keyup.enter)="addFieldValue()"
+          />
+        </td>
+        <td>
+          <button
+            class="btn btn-default"
+            type="button"
+            (click)="addFieldValue()"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sim-button sim-button--small button13" (click)="saveData()">
+    Save
+  </div>
+</div>

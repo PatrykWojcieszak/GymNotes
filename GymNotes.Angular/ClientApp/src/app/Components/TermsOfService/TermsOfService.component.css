@@ -1,0 +1,73 @@
+.terms-of-service-container{
+  color: #a09faf;
+  margin: 20px;
+}
+
+.terms-of-service-container-title{
+  font-size: 42px;
+  color: #fff;
+}
+
+.terms-of-service-category{
+  margin-top: 20px;
+}
+
+.terms-of-service-category-title{
+  font-size: 28px;
+}
+
+.terms-of-service-category-wrapper{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.terms-of-service-category-wrapper-title{
+  font-weight: bold;
+  margin-bottom: 9px;
+}
+
+.icon-container{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+  align-items: center;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.icon-container > span{
+  margin-left: 10px;
+}
+
+.fa-arrow-circle-up{
+  color: #ed2a54;
+}
+
+.nav{
+  position: sticky;
+  top: 0px;
+  z-index:999;
+  background: #1b1a1f;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.4);
+  display: flex;
+  height: 70px;
+  flex-direction: row;
+  justify-content: right;
+}
+
+.btn-container{
+  width: 100px;
+  margin-top: 10px;
+}
+
+.wrapped-div{
+  max-width: 700px;
+}
+
+@media screen and (max-width: 850px) {
+  .navbar{
+    justify-content: center;
+  }
+}

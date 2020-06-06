@@ -1,0 +1,103 @@
+<div class="main-container">
+  <div class="main-wrapper">
+    <div class="photo-background">
+      <img class="img" src="/images/bryce.jpg">
+      <div class="navbar">
+        <div class="icon">
+          <i class="fas fa-envelope fa-lg"></i>
+          <div class="icon-tooltip">
+            <p>Send Message</p>
+          </div>
+        </div>
+        <div class="icon" (click)="profileEditing()">
+          <i class="fas fa-user-edit"></i>
+          <div class="icon-tooltip">
+            <p>Profile editing</p>
+          </div>
+        </div>
+      </div>
+      <img src="/images/bryce.jpg" class="avatar">
+    </div>
+    <div class="main-content">
+      <div class="social-icon-wrapper">
+        <div class="social-icon-left">
+          <a href="" class="btn-icon facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="" class="btn-icon instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+        <div class="social-icon-right">
+          <a href="" class="btn-icon twitter"><i class="fab fa-twitter"></i></a>
+          <a href="" class="btn-icon youtube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="name-wrapper">
+        <span class="first">Russel</span>
+        <span class="alias">Russwole</span>
+        <span class="last">Orhii</span>
+      </div>
+      <div class="info">
+        <span class="secondary-text">Age: 24 | Gender: Male | Height: 185cm | Weight: 85kg</span>
+        <span class="secondary-text">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
+          lorem lorem lorem lorem lorem</span>
+        <span class="secondary-text">Coach: <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+            class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i></span>
+        <span class="secondary-text">Discipline: Powerlifting</span>
+        <span class="secondary-text">Years of experience: 6</span>
+      </div>
+      <div class="achievements">
+        <span class="section-title">Achievements</span>
+        <div class="achievement-wrapper">
+          <div class="achievement-wrapper-title">Discipline: Powerlifting</div>
+          <div class="achievement"><i class="fas fa-trophy gold"></i>2020-02-01 - IPF Championship</div>
+          <div class="achievement"><i class="fas fa-trophy bronze"></i>2020-02-01 - IPF Championship</div>
+        </div>
+      </div>
+
+      <div class="comment-section" *ngIf="CommentsList != null">
+        <span class="section-title">Comments</span>
+        <button class="edit-btn" (click)="AddOpinion()">Add opinion</button>
+        <div class="comment-container">
+          <div class="comment-wrapper" *ngFor="let item of CommentsList">
+            <div>
+              <img src="/images/bryce.jpg" class="avatar-small">
+            </div>
+            <div class="comment-info">
+              <div class="comment-upper">
+                <div class="comment-person-info-container">
+                  <span class="person">{{item.profileUser.firstName}} {{item.profileUser.lastName}}</span>
+                  <span class="date-rating">
+                    <ngb-rating [max]='5' [(rate)]="item.rating" [readonly]="true"></ngb-rating>
+                    {{item.dateAdded  | date:'longDate'}}
+                  </span>
+                </div>
+                <div class="likes-section">
+                  <div class="icon" (click)="LikeClick()">
+                    <i class="far fa-thumbs-up"></i>
+                    <div class="icon-tooltip">
+                      <p>Helpful</p>
+                    </div>
+                  </div>
+                  <span>16</span>
+                </div>
+              </div>
+              <div class="message-wrapper">
+                <span class="comment">{{item.opinionMessage}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="pagination-wrapper">
+            <nav class="pagination-container">
+              <div class="pagination">
+                <a class="pagination-newer">PREV</a>
+                <span class="pagination-inner">
+                  <a>1</a>
+                  <a class="pagination-active">2</a>
+                  <a>3</a>
+                </span>
+                <a class="pagination-older">NEXT</a>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

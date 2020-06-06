@@ -1,0 +1,86 @@
+<div class="main-container">
+  <div class="title">
+    General account settings
+  </div>
+
+  <form [formGroup]="nameForm" (submit)="updateName()">
+    <div class="settings-container" [ngClass]="{'settings-container-editing': showElement === 'name'}"
+      (click)="elementToggle('name')">
+      <div class="settings-wrapper">
+        <div class="setting-name">Name</div>
+        <span *ngIf="showElement != 'name'">{{userFullName.firstName}} <span class="alias">{{userFullName.alias}}</span>
+          {{userFullName.lastName}}</span>
+        <button class="edit-btn" *ngIf="showElement != 'name'">Edit</button>
+      </div>
+      <div *ngIf="showElement === 'name'">
+        <div class="settings-input">
+          <span>First</span>
+          <div class="input-field">
+            <input class="input-text effect-2" type="text" placeholder="First" formControlName="firstname">
+            <span class="focus-border"></span>
+          </div>
+        </div>
+        <div class="errorContainer" *ngIf="nameSubmitted">
+          <span class="errorInfo" *ngIf="getNameForm.firstname.errors?.required">First name is required</span>
+        </div>
+        <div class="settings-input">
+          <span>Alias</span>
+          <div class="input-field">
+            <input class="input-text effect-2" type="text" placeholder="Alias - Optional" formControlName="alias">
+            <span class="focus-border"></span>
+          </div>
+        </div>
+        <div class="settings-input">
+          <span>Last</span>
+          <div class="input-field">
+            <input class="input-text effect-2" type="text" placeholder="Last" formControlName="lastname">
+            <span class="focus-border"></span>
+          </div>
+        </div>
+        <div class="errorContainer" *ngIf="nameSubmitted">
+          <span class="errorInfo" *ngIf="getNameForm.lastname.errors?.required">Last name is required</span>
+        </div>
+        <div class="btn-wrapper">
+          <div class="btn-container">
+            <div class="sim-button button13 cancel-btn" (click)="elementToggle('');$event.stopPropagation()">Cancel
+            </div>
+          </div>
+          <div class="btn-container">
+            <div class="sim-button-green button13-green" (click)="updateName()">Save</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form [formGroup]="emailForm" (submit)="updateEmail()">
+    <div class="settings-container" [ngClass]="{'settings-container-editing': showElement === 'email'}"
+      (click)="elementToggle('email')">
+      <div class="settings-wrapper">
+        <span class="setting-name">Email </span>
+        <span *ngIf="showElement != 'email'">{{userEmail}}</span>
+        <button class="edit-btn" *ngIf="showElement != 'email'">Edit</button>
+      </div>
+      <div *ngIf="showElement === 'email'">
+        <div class="settings-input">
+          <span>Email</span>
+          <div class="input-field">
+            <input class="input-text effect-2" type="text" placeholder="Email" formControlName="email">
+            <span class="focus-border"></span>
+          </div>
+        </div>
+        <div class="errorContainer" *ngIf="emailSubmitted">
+          <span class="errorInfo" *ngIf="getEmailForm.email.errors?.required">Email is required</span>
+          <span class="errorInfo" *ngIf="getEmailForm.email.errors?.email">Email is not valid</span>
+        </div>
+        <div class="btn-wrapper">
+          <div class="btn-container">
+            <div class="sim-button button13" (click)="elementToggle('');$event.stopPropagation()">Cancel</div>
+          </div>
+          <div class="btn-container">
+            <div class="sim-button-green button13-green" (click)="updateEmail()">Save</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

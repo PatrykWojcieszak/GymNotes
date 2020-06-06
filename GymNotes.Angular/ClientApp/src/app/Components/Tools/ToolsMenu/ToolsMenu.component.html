@@ -1,0 +1,37 @@
+<div class="main-container">
+  <div class="menu-left">
+    <div class="title">Tools</div>
+    <div class="mobile">
+      <div class="settings-panel">
+        <div class="settings-element" (click)="toogle('BMI')"
+          [ngClass]="{'settings-element-active': showComponent === 'BMI'}" [routerLink]="['bmi']">
+          <a class="fas fa-weight"></a> <span class="settings-name">BMI</span>
+        </div>
+        <div class="settings-element" (click)="toogle('Calorie-calculator')" [routerLink]="['calorie']"
+          routerLinkActive="router-link-active"
+          [ngClass]="{'settings-element-active': showComponent === 'Calorie-calculator'}">
+          <a class="fas fa-calculator"></a> <span class="settings-name">Calorie calculator</span>
+        </div>
+        <div class="settings-element" (click)="toogle('Wilks')" [routerLink]="['wilks']"
+          [ngClass]="{'settings-element-active': showComponent === 'Wilks'}">
+          <a class="fas fa-dumbbell"></a> <span class="settings-name">Wilks</span>
+        </div>
+        <div class="settings-element" (click)="toogle('Body-fat')" [routerLink]="['body-fat']"
+          [ngClass]="{'settings-element-active': showComponent === 'Body-fat'}">
+          <a class="fas fa-ruler-combined"></a> <span class="settings-name">Body fat</span>
+        </div>
+        <div class="settings-element" (click)="toogle('BMR')"
+          [ngClass]="{'settings-element-active': showComponent === 'BMR'}">
+          <a class="fas fa-balance-scale-right"></a> <span class="settings-name">BMR</span>
+        </div>
+        <div class="settings-element" (click)="toogle('one-rep-max')"
+          [ngClass]="{'settings-element-active': showComponent === 'one-rep-max'}">
+          <a class="fas fa-dumbbell"></a> <span class="settings-name">1 rep max</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-panel">
+    <router-outlet></router-outlet>
+  </div>
+</div>
