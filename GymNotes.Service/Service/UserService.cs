@@ -13,7 +13,7 @@ using GymNotes.Service.Utils;
 
 namespace GymNotes.Service.Service
 {
-  public class ApplicationUserService : IApplicationUserService
+  public class UserService : IApplicationUserService
   {
     private readonly IApplicationUserRepository _userRepo;
     private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace GymNotes.Service.Service
     private readonly IAchievementsRepository _achievementsRepo;
     private readonly ICoachingRequestRepository _coachingRequestRepo;
 
-    public ApplicationUserService(
+    public UserService(
       IApplicationUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork,
@@ -271,6 +271,7 @@ namespace GymNotes.Service.Service
       return await PaginatedList<ApplicationUserVm>.CreateAsync(orderedQuery, pageQuery.Page, pageQuery.Pagesize);
     }
 
+    //TODO: Sprawdziæ
     public async Task<bool> SendCoachingRequest(CoachingRequestVm coachRequestVm)
     {
       try

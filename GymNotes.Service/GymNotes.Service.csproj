@@ -25,4 +25,10 @@
     <ProjectReference Include="..\GymNotes.Repository\GymNotes.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\UserInfo\" />
+    <Folder Include="ViewModels\Training\" />
+    <Folder Include="ViewModels\UserSettings\" />
+  </ItemGroup>
+
 </Project>

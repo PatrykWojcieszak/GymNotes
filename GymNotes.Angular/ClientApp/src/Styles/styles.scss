@@ -32,11 +32,11 @@ code {
 	height: 50px;
 	font-family: Poppins-Medium;
 	font-size: 18px;
-	color: #ed2a54;
+	color: $red;
 	line-height: 1.2;
 	text-transform: uppercase;
 	border-radius: 8px;
-	border-color: #ed2a54;
+	border-color: $red;
 	background-color: transparent;
 	outline: none;
 	display: inline-block;
@@ -45,8 +45,8 @@ code {
 
 .btn-primary:hover {
 	color: #fff;
-	border-color: #ed2a54;
-	background-color: #ed2a54;
+	border-color: $red;
+	background-color: $red;
 }
 
 .btn-primary:focus {
@@ -59,19 +59,19 @@ code {
 }
 
 body {
-	background: #1b1a1f;
+	background: $main-color;
 	margin: 0;
 }
 
 .mat-dialog-container {
-	background: #1b1a1f;
+	background: $main-color;
 	border-radius: 20px !important;
 }
 
 .input-text {
 	font-family: Poppins-Medium;
 	font-size: 18px;
-	color: #a09faf;
+	color: $main-text-color;
 	display: block;
 	width: 100%;
 	background: #232228;

@@ -25,7 +25,7 @@ namespace GymNotes.Controllers
 {
   [Route("api/user")]
   [ApiController]
-  public class ApplicationUserController : ControllerBase
+  public class UserController : ControllerBase
   {
     private readonly ICoachService _coachService;
     private IApplicationUserService _userService;
@@ -33,9 +33,8 @@ namespace GymNotes.Controllers
     private SignInManager<ApplicationUser> _signInManager;
     private ApplicationSettings _appSettings;
     private IUnitOfWork _unitOfWork;
-    // private IApplicationUserRepository _userRepo;
 
-    public ApplicationUserController(IApplicationUserService userService,
+    public UserController(IApplicationUserService userService,
       IUnitOfWork unitOfWork,
       UserManager<ApplicationUser> userManager,
       SignInManager<ApplicationUser> signInManager,
@@ -50,10 +49,7 @@ namespace GymNotes.Controllers
       _coachService = coachService;
     }
 
-    [Authorize]
-    [HttpGet("search")]
-    public async Task<ActionResult<PaginatedList<ApplicationUserVm>>> GetUsers([FromQuery] PageQuery pageQuery, [FromQuery] string search) =>
-        Ok(await _userService.GetUsers(pageQuery, search));
+    #region POST
 
     [AllowAnonymous]
     [HttpPost("register")]
@@ -212,6 +208,84 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [HttpPost("addOrUpdateUserAchievements/{id}")]
+    public async Task<IActionResult> AddOrUpdateUserAchievements(string id, [FromBody] AchievementDyscyplineVm achievementDyscyplineVm)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      var result = await _userService.AddOrUpdateUserAchievement(id, achievementDyscyplineVm);
+
+      if (result)
+        return Ok();
+      else
+        return BadRequest("Something went wrong");
+    }
+
+    //TODO: Sprawdzić
+    [Authorize]
+    [HttpPost("coachingRequest")]
+    public async Task<IActionResult> SendCoachingRequest([FromBody] CoachingRequestVm coachRequestVm)
+    {
+      var result = await _userService.SendCoachingRequest(coachRequestVm);
+
+      if (result)
+        return Ok();
+      else
+        return BadRequest("Something went wrong!");
+    }
+
+    //TODO: Sprawdzić
+    [Authorize]
+    [HttpPost("coachCancelManagment")]
+    public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm)
+    {
+      var result = await _coachService.CoachCancelManagment(coachCancelManagmentVm);
+
+      if (result)
+        return Ok();
+      else
+        return BadRequest("Something went wrong!");
+    }
+
+    #endregion POST
+
+    #region DELETE
+
+    [Authorize]
+    [HttpDelete("deleteUserAchievementsList/{userId}/{id}")]
+    public async Task<IActionResult> DeleteUserAchievementsList(string userId, int id)
+    {
+      var result = await _userService.DeleteUserAchievementDyscypline(userId, id);
+
+      if (result)
+        return Ok();
+      else
+        return BadRequest("Something went wrong!");
+    }
+
+    [Authorize]
+    [HttpDelete("deleteUserAchievement/{userId}/{id}")]
+    public async Task<IActionResult> DeleteUserAchievement(string userId, int id)
+    {
+      var result = await _userService.DeleteUserAchievement(userId, id);
+
+      if (result)
+        return Ok();
+      else
+        return BadRequest("Something went wrong!");
+    }
+
+    #endregion DELETE
+
+    #region GET
+
+    [Authorize]
+    [HttpGet("search")]
+    public async Task<ActionResult<PaginatedList<ApplicationUserVm>>> GetUsers([FromQuery] PageQuery pageQuery, [FromQuery] string search) =>
+        Ok(await _userService.GetUsers(pageQuery, search));
+
+    [Authorize]
     [HttpGet("getUserUpdateInfo/{id}")]
     public IActionResult GetUserUpdateInfo(string id)
     {
@@ -233,21 +307,6 @@ namespace GymNotes.Controllers
         return Ok(result);
       else
         return BadRequest("Something went wrong!");
-    }
-
-    [Authorize]
-    [HttpPost("addOrUpdateUserAchievements/{id}")]
-    public async Task<IActionResult> AddOrUpdateUserAchievements(string id, [FromBody] AchievementDyscyplineVm achievementDyscyplineVm)
-    {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
-
-      var result = await _userService.AddOrUpdateUserAchievement(id, achievementDyscyplineVm);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong");
     }
 
     [Authorize]
@@ -274,52 +333,6 @@ namespace GymNotes.Controllers
         return BadRequest("Something went wrong!");
     }
 
-    [Authorize]
-    [HttpDelete("deleteUserAchievementsList/{userId}/{id}")]
-    public async Task<IActionResult> DeleteUserAchievementsList(string userId, int id)
-    {
-      var result = await _userService.DeleteUserAchievementDyscypline(userId, id);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
-
-    [Authorize]
-    [HttpDelete("deleteUserAchievement/{userId}/{id}")]
-    public async Task<IActionResult> DeleteUserAchievement(string userId, int id)
-    {
-      var result = await _userService.DeleteUserAchievement(userId, id);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
-
-    [Authorize]
-    [HttpPost("coachingRequest")]
-    public async Task<IActionResult> SendCoachingRequest([FromBody] CoachingRequestVm coachRequestVm)
-    {
-      var result = await _userService.SendCoachingRequest(coachRequestVm);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
-
-    [Authorize]
-    [HttpPost("coachCancelManagment")]
-    public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm)
-    {
-      var result = await _coachService.CoachCancelManagment(coachCancelManagmentVm);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
+    #endregion GET
   }
 }

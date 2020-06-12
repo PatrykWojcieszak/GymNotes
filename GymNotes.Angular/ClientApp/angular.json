@@ -27,8 +27,14 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/angular-calendar/css/angular-calendar.css",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/styles.css"
+              "src/Styles/_main.scss",
+              "src/Styles/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/Styles"
+              ]
+            },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js"
             ]
@@ -130,6 +136,11 @@
   },
   "defaultProject": "ClientApp",
   "cli": {
-    "analytics": "b2bbae6e-4a12-42bf-b9f6-746c64a3640d"
+    "analytics": false
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
   }
 }

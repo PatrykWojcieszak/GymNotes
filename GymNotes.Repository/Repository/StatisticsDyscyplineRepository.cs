@@ -10,7 +10,7 @@ using System.Text;
 
 namespace GymNotes.Repository.Repository
 {
-  public class StatisticsDisciplineRepository : IStatisticsDisciplineRepository 
+  public class StatisticsDisciplineRepository : IStatisticsDisciplineRepository
   {
     private readonly ApplicationDbContext _context;
 
@@ -19,27 +19,24 @@ namespace GymNotes.Repository.Repository
       _context = context;
     }
 
-    public StatisticsDiscipline GetStatisticsDiscipline(int id)
+    public StatisticsDyscypline GetStatisticsDiscipline(int id)
     {
-      return _context.StatisticsDisciplines.Include(x=>x.StatisticsExercises).FirstOrDefault(x => x.Id == id);
+      return _context.StatisticsDyscyplines.Include(x => x.StatisticsExercises).FirstOrDefault(x => x.Id == id);
     }
 
-    public async void AddStatisticsDiscipline(StatisticsDiscipline model)
+    public async void AddStatisticsDiscipline(StatisticsDyscypline model)
     {
-      await _context.StatisticsDisciplines.AddAsync(model);
-     
+      await _context.StatisticsDyscyplines.AddAsync(model);
     }
 
-    public void UpdateStatisticsDiscipline(StatisticsDiscipline model)
+    public void UpdateStatisticsDiscipline(StatisticsDyscypline model)
     {
-      _context.StatisticsDisciplines.Update(model);
+      _context.StatisticsDyscyplines.Update(model);
     }
 
-    public void DeleteStatisticsDiscipline(StatisticsDiscipline model)
+    public void DeleteStatisticsDiscipline(StatisticsDyscypline model)
     {
-      _context.StatisticsDisciplines.Remove(model);
+      _context.StatisticsDyscyplines.Remove(model);
     }
-
-    
   }
 }

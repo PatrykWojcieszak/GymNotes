@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Text;
 using AutoMapper;
 using GymNotes.Data;
 using GymNotes.Entity.Models;
 using GymNotes.Models;
+using GymNotes.Repository.Base;
 using GymNotes.Repository.IRepository;
 using GymNotes.Repository.Repository;
 using GymNotes.Service.Chat;
@@ -140,11 +142,24 @@ namespace GymNotes
       services.AddScoped<IUserOpinionLikesRepository, UserOpinionLikesRepository>();
       services.AddScoped<IChatRepository, ChatRepository>();
 
+      //services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+      System.Reflection.Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(item => item.GetInterfaces()
+            .Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IBaseRepository<>)) && !item.IsAbstract && !item.IsInterface)
+            .ToList()
+            .ForEach(assignedTypes =>
+            {
+              var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IBaseRepository<>));
+              services.AddScoped(serviceType, assignedTypes);
+            });
+
       #endregion Repositories
 
       #region Services
 
-      services.AddScoped<IApplicationUserService, ApplicationUserService>();
+      services.AddScoped<IApplicationUserService, UserService>();
       services.AddScoped<IUserOpinionService, UserOpinionService>();
       services.AddScoped<IUserInfoService, UserInfoService>();
       services.AddScoped<ICoachService, CoachService>();

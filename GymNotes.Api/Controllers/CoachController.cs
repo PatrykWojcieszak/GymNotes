@@ -23,61 +23,67 @@ using NETCore.MailKit.Core;
 
 namespace GymNotes.Controllers
 {
-    [Route("api/coach")]
-    [ApiController]
-    public class CoachController : ControllerBase
+  [Route("api/coach")]
+  [ApiController]
+  public class CoachController : ControllerBase
+  {
+    private readonly ICoachService _coachService;
+
+    public CoachController(ICoachService coachService)
     {
-        private readonly ICoachService _coachService;
-
-        public CoachController(ICoachService coachService)
-        {
-            _coachService = coachService;
-            
-        }
-        [Authorize]
-        [HttpPost("coachManagmentRequest")]
-        public async Task<IActionResult> CoachManagmentRequest([FromBody] CoachManagmentRequestVm coachManagmentRequestVm)
-        {
-            var result = await _coachService.CoachManagmentRequest(coachManagmentRequestVm);
-
-            if (result)
-                return Ok();
-            else
-                return BadRequest("Something went wrong!");
-        }
-        [Authorize]
-        [HttpPost("coachCancelManagment")]
-        public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm)
-        {
-            var result = await _coachService.CoachCancelManagment(coachCancelManagmentVm);
-
-            if (result)
-                return Ok();
-            else
-                return BadRequest("Something went wrong!");
-        }
-        [Authorize]
-        [HttpGet("coachPupilList/{coachId}")]
-        public IActionResult CoachPupilList(string coachId)
-        {
-            var list = _coachService.CoachPupilList(coachId);
-
-            if (list != null)
-                return Ok(list);
-            else
-                return BadRequest("Something went wrong!");
-        }
-        [Authorize]
-        [HttpGet("coachRequestList/{coachId}")]
-        public IActionResult CoachRequestList(string coachId)
-        {
-            var list = _coachService.CoachRequestList(coachId);
-
-            if (list != null)
-                return Ok(list);
-            else
-                return BadRequest("Something went wrong!");
-        }
-
+      _coachService = coachService;
     }
+
+    //TODO: Sprawdzić
+    [Authorize]
+    [HttpPost("coachManagmentRequest")]
+    public async Task<IActionResult> CoachManagmentRequest([FromBody] CoachManagmentRequestVm coachManagmentRequestVm)
+    {
+      var result = await _coachService.CoachManagmentRequest(coachManagmentRequestVm);
+
+      if (result)
+        return Ok();
+      else
+        return BadRequest("Something went wrong!");
+    }
+
+    //TODO: Sprawdzić
+    [Authorize]
+    [HttpPost("coachCancelManagment")]
+    public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm)
+    {
+      var result = await _coachService.CoachCancelManagment(coachCancelManagmentVm);
+
+      if (result)
+        return Ok();
+      else
+        return BadRequest("Something went wrong!");
+    }
+
+    //TODO: Sprawdzić
+    [Authorize]
+    [HttpGet("coachPupilList/{coachId}")]
+    public IActionResult CoachPupilList(string coachId)
+    {
+      var list = _coachService.CoachPupilList(coachId);
+
+      if (list != null)
+        return Ok(list);
+      else
+        return BadRequest("Something went wrong!");
+    }
+
+    //TODO: Sprawdzić
+    [Authorize]
+    [HttpGet("coachRequestList/{coachId}")]
+    public IActionResult CoachRequestList(string coachId)
+    {
+      var list = _coachService.CoachRequestList(coachId);
+
+      if (list != null)
+        return Ok(list);
+      else
+        return BadRequest("Something went wrong!");
+    }
+  }
 }

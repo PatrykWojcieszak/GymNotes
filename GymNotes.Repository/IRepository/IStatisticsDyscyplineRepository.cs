@@ -8,12 +8,12 @@ namespace GymNotes.Repository.IRepository
 {
   public interface IStatisticsDisciplineRepository
   {
-    void AddStatisticsDiscipline(StatisticsDiscipline model);
+    void AddStatisticsDiscipline(StatisticsDyscypline model);
 
-    void UpdateStatisticsDiscipline(StatisticsDiscipline model);
+    void UpdateStatisticsDiscipline(StatisticsDyscypline model);
 
-    StatisticsDiscipline GetStatisticsDiscipline(int id);
+    StatisticsDyscypline GetStatisticsDiscipline(int id);
 
-    void DeleteStatisticsDiscipline(StatisticsDiscipline model);
+    void DeleteStatisticsDiscipline(StatisticsDyscypline model);
   }
 }

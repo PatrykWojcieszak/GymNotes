@@ -21,12 +21,12 @@ namespace GymNotes.Repository.Repository
 
     public List<Statistics> GetStatisticsList(string userId)
     {
-      return _context.Statistics.Include(x=>x.StatisticsDisciplines).ThenInclude(x=>x.StatisticsExercises).Where(x => x.ApplicationUserId == userId).ToList();
+      return _context.Statistics.Include(x => x.StatisticsDyscyplines).ThenInclude(x => x.StatisticsExercises).Where(x => x.ApplicationUserId == userId).ToList();
     }
 
     public Statistics GetStatistics(int id)
     {
-      return _context.Statistics.Include(x => x.StatisticsDisciplines).ThenInclude(x => x.StatisticsExercises).FirstOrDefault(x => x.Id == id);
+      return _context.Statistics.Include(x => x.StatisticsDyscyplines).ThenInclude(x => x.StatisticsExercises).FirstOrDefault(x => x.Id == id);
     }
 
     public async void AddStatistics(Statistics model)
