@@ -11,6 +11,7 @@ using GymNotes.Entity.Models;
 using System.Threading.Tasks;
 using GymNotes.Service.Utils;
 using GymNotes.Repository.IRepository.User;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymNotes.Service.Service
 {
@@ -115,15 +116,15 @@ namespace GymNotes.Service.Service
 
           model.ApplicationUserId = id;
 
-          _achievementDyscyplineRepo.AddAchievementDyscypline(model);
+          _achievementDyscyplineRepo.Create(model);
         }
         else
         {
-          var model = _achievementDyscyplineRepo.GetAchievementDyscypline(achievementDyscyplineVm.Id);
+          var model = _achievementDyscyplineRepo.FindByCondition(x => x.Id == achievementDyscyplineVm.Id).FirstOrDefault();
 
           _mapper.Map<AchievementDyscyplineVm, AchievementDyscypline>(achievementDyscyplineVm, model);
 
-          _achievementDyscyplineRepo.UpdateAchievementDyscypline(model);
+          _achievementDyscyplineRepo.Update(model);
         }
 
         await _unitOfWork.CompleteAsync();
@@ -145,7 +146,7 @@ namespace GymNotes.Service.Service
         if (user == null)
           return null;
 
-        var model = _achievementDyscyplineRepo.GetUserAchievements(id);
+        var model = _achievementDyscyplineRepo.FindByCondition(x => x.Id == id).Include(x => x.Achievements).FirstOrDefault();
 
         var result = _mapper.Map<AchievementDyscypline, AchievementDyscyplineVm>(model);
 
@@ -166,7 +167,7 @@ namespace GymNotes.Service.Service
         if (user == null)
           return null;
 
-        var model = _achievementDyscyplineRepo.GetUserAchievementsList(userId);
+        var model = _achievementDyscyplineRepo.FindByCondition(x => x.ApplicationUserId == userId).Include(x => x.Achievements).ToList();
 
         var result = _mapper.Map<List<AchievementDyscypline>, List<AchievementDyscyplineVm>>(model);
 
@@ -185,12 +186,12 @@ namespace GymNotes.Service.Service
       if (user == null)
         return false;
 
-      var model = _achievementDyscyplineRepo.GetUserAchievements(id);
+      var model = _achievementDyscyplineRepo.FindByCondition(x => x.Id == id).Include(x => x.Achievements).FirstOrDefault();
 
       if (model == null)
         return false;
 
-      _achievementDyscyplineRepo.DeleteAchievementDyscypline(model);
+      _achievementDyscyplineRepo.Delete(model);
 
       await _unitOfWork.CompleteAsync();
 
@@ -204,12 +205,12 @@ namespace GymNotes.Service.Service
       if (user == null)
         return false;
 
-      var model = _achievementsRepo.GetAchievement(id);
+      var model = _achievementsRepo.FindByCondition(x => x.Id == id).FirstOrDefault();
 
       if (model == null)
         return false;
 
-      _achievementsRepo.DeleteAchievement(model);
+      _achievementsRepo.Delete(model);
 
       await _unitOfWork.CompleteAsync();
 

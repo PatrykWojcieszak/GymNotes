@@ -28,4 +28,13 @@
     <ProjectReference Include="..\GymNotes.Entity\GymNotes.Entity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IRepository\Chat\" />
+    <Folder Include="IRepository\Coaching\" />
+    <Folder Include="IRepository\Statistics\" />
+    <Folder Include="Repository\Chat\" />
+    <Folder Include="Repository\Coaching\" />
+    <Folder Include="Repository\Statistics\" />
+  </ItemGroup>
+
 </Project>
