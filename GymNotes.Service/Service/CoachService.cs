@@ -54,13 +54,13 @@ namespace GymNotes.Service.Service
 
           model.ProfilePupilId = coachManagmentRequestVm.ProfilePupilId;
 
-          _pupilRepo.AddPupil(model);
+          _pupilRepo.Create(model);
 
-          var coachRequest = _coachingRequestRepo.GetCoachingRequest(userCoach.Id, user.Id);
+          var coachRequest = _coachingRequestRepo.FindByCondition(x => x.CoachId == userCoach.Id && x.ApplicationUserId == user.Id).FirstOrDefault();
 
-          coachRequest.Status = (CoachingRequestStatus)1;
+          coachRequest.Status = CoachingRequestStatus.Accepted; //(CoachingRequestStatus)1;
 
-          _coachingRequestRepo.UpdateCoachRequest(coachRequest);
+          _coachingRequestRepo.Update(coachRequest);
 
           await _unitOfWork.CompleteAsync();
 
@@ -68,11 +68,11 @@ namespace GymNotes.Service.Service
         }
         if (status == false)
         {
-          var coachRequest = _coachingRequestRepo.GetCoachingRequest(userCoach.Id, user.Id);
+          var coachRequest = _coachingRequestRepo.FindByCondition(x => x.CoachId == userCoach.Id && x.ApplicationUserId == user.Id).FirstOrDefault();
 
           coachRequest.Status = (CoachingRequestStatus)2;
 
-          _coachingRequestRepo.UpdateCoachRequest(coachRequest);
+          _coachingRequestRepo.Update(coachRequest);
 
           await _unitOfWork.CompleteAsync();
 
@@ -101,17 +101,17 @@ namespace GymNotes.Service.Service
         if (user == null && userCoach == null && user.Id != userCoach.Id && status == true)
           return false;
 
-        var pupil = _pupilRepo.GetPupil(userCoach.Id, user.Id);
+        var pupil = _pupilRepo.FindByCondition(x => x.ProfileCoachId == userCoach.Id && x.ProfilePupilId == user.Id).FirstOrDefault();
 
         pupil.Partnership = status;
 
-        _pupilRepo.UpdatePupil(pupil);
+        _pupilRepo.Update(pupil);
 
-        var coachRequest = _coachingRequestRepo.GetCoachingRequest(userCoach.Id, user.Id);
+        var coachRequest = _coachingRequestRepo.FindByCondition(x => x.CoachId == userCoach.Id && x.ApplicationUserId == user.Id).FirstOrDefault();
 
         coachRequest.Status = (CoachingRequestStatus)2;
 
-        _coachingRequestRepo.UpdateCoachRequest(coachRequest);
+        _coachingRequestRepo.Update(coachRequest);
 
         await _unitOfWork.CompleteAsync();
 
@@ -130,7 +130,7 @@ namespace GymNotes.Service.Service
       {
         if (coachId == null)
           return null;
-        var list = _pupilRepo.GetCoachPupilList(coachId);
+        var list = _pupilRepo.FindByCondition(x => x.ProfileCoachId == coachId && x.Partnership == true).ToList();
         var result = _mapper.Map<List<Pupil>, List<CoachManagmentRequestVm>>(list);
         return result;
       }
@@ -147,7 +147,7 @@ namespace GymNotes.Service.Service
       {
         if (coachId == null)
           return null;
-        var list = _coachingRequestRepo.CoachRequestList(coachId);
+        var list = _coachingRequestRepo.FindByCondition(x => x.CoachId == coachId && x.Status == CoachingRequestStatus.Sent).ToList();
         var result = _mapper.Map<List<CoachingRequest>, List<CoachingRequestVm>>(list);
         return result;
       }
