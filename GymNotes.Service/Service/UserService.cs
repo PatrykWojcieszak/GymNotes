@@ -10,46 +10,47 @@ using GymNotes.Service.ViewModels;
 using GymNotes.Entity.Models;
 using System.Threading.Tasks;
 using GymNotes.Service.Utils;
+using GymNotes.Repository.IRepository.User;
 
 namespace GymNotes.Service.Service
 {
   public class UserService : IApplicationUserService
   {
-    private readonly IApplicationUserRepository _userRepo;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAchievementDyscyplineRepository _achievementDyscyplineRepo;
     private readonly IAchievementsRepository _achievementsRepo;
     private readonly ICoachingRequestRepository _coachingRequestRepo;
+    private readonly IUserRepository _userRepo;
 
     public UserService(
-      IApplicationUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork,
       IAchievementDyscyplineRepository achievementDyscyplineRepo,
       IAchievementsRepository achievementsRepo,
-      ICoachingRequestRepository coachingRequestRepo)
+      ICoachingRequestRepository coachingRequestRepo,
+      IUserRepository userRepo)
     {
-      _userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
       _achievementDyscyplineRepo = achievementDyscyplineRepo;
       _achievementsRepo = achievementsRepo;
       _coachingRequestRepo = coachingRequestRepo;
+      _userRepo = userRepo;
     }
 
-    public async Task<bool> UpdateUserInfo(string id, ApplicationUserVm UserModel)
+    public async Task<bool> UpdateUserInfo(string id, ApplicationUserVm userVm)
     {
       try
       {
-        var user = _userRepo.GetUserById(id);
+        var userModel = _userRepo.FindByCondition(x => x.Id == id).FirstOrDefault();
 
-        if (user == null)
+        if (userModel == null)
           return false;
 
-        _mapper.Map<ApplicationUserVm, ApplicationUser>(UserModel, user);
+        _mapper.Map(userVm, userModel);
 
-        _userRepo.UpdateUserInfo(user);
+        _userRepo.Update(userModel);
 
         await _unitOfWork.CompleteAsync();
 
@@ -65,7 +66,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(id);
+        var user = _userRepo.FindByCondition(x => x.Id == id).FirstOrDefault();
 
         if (user == null)
           return null;
@@ -84,7 +85,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(id);
+        var user = _userRepo.FindByCondition(x => x.Id == id).FirstOrDefault();
 
         if (user == null)
           return null;
@@ -103,7 +104,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(id);
+        var user = _userRepo.FindByCondition(x => x.Id == id).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -139,7 +140,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(userId);
+        var user = _userRepo.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
         if (user == null)
           return null;
@@ -160,7 +161,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(userId);
+        var user = _userRepo.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
         if (user == null)
           return null;
@@ -179,7 +180,7 @@ namespace GymNotes.Service.Service
 
     public async Task<bool> DeleteUserAchievementDyscypline(string userId, int id)
     {
-      var user = _userRepo.GetUserById(userId);
+      var user = _userRepo.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
       if (user == null)
         return false;
@@ -198,7 +199,7 @@ namespace GymNotes.Service.Service
 
     public async Task<bool> DeleteUserAchievement(string userId, int id)
     {
-      var user = _userRepo.GetUserById(userId);
+      var user = _userRepo.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
       if (user == null)
         return false;
@@ -244,7 +245,7 @@ namespace GymNotes.Service.Service
 
     public ApplicationUserVm GetUserByEmail(string email)
     {
-      var user = _userRepo.GetUserByEmail(email);
+      var user = _userRepo.FindByCondition(x => x.Email == email).FirstOrDefault();
       return _mapper.Map<ApplicationUserVm>(user);
     }
 
@@ -264,7 +265,7 @@ namespace GymNotes.Service.Service
 
     public async Task<PaginatedList<ApplicationUserVm>> GetUsers(PageQuery pageQuery, string searchString = null)
     {
-      var query = _userRepo.GetUsers();
+      var query = _userRepo.FindAll();
       query = GetSearchQuery(query, searchString); // filtered when will be on DB
 
       IQueryable<ApplicationUserVm> orderedQuery = _userRepo.OrderBy(query, pageQuery.Orderby).Select(x => _mapper.Map<ApplicationUserVm>(x));
@@ -276,8 +277,8 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(coachRequestVm.ApplicationUserId);
-        var userCoach = _userRepo.GetUserById(coachRequestVm.CoachId);
+        var user = _userRepo.FindByCondition(x => x.Id == coachRequestVm.ApplicationUserId).FirstOrDefault();
+        var userCoach = _userRepo.FindByCondition(x => x.Id == coachRequestVm.CoachId).FirstOrDefault();
 
         if (user == null && userCoach == null && user.Id != userCoach.Id)
           return false;

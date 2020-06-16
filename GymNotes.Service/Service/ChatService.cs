@@ -2,6 +2,7 @@
 using GymNotes.Entity.Models;
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
+using GymNotes.Repository.IRepository.User;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using GymNotes.Service.ViewModels.Chat;
@@ -17,13 +18,13 @@ namespace GymNotes.Service.Service
 {
   public class ChatService : IChatService
   {
-    private readonly IApplicationUserRepository _userRepo;
+    private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IChatRepository _chatRepository;
 
     public ChatService(
-      IApplicationUserRepository userRepo,
+      IUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork,
       IChatRepository chatRepository)
@@ -85,7 +86,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(userId);
+        var user = _userRepo.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
         if (user == null)
           return null;
@@ -102,7 +103,7 @@ namespace GymNotes.Service.Service
             contacts[i].SenderId = userId;
           }
 
-          var receipent = _userRepo.GetUserById(contacts[i].ReceiverId);
+          var receipent = _userRepo.FindByCondition(x => x.Id == contacts[i].ReceiverId).FirstOrDefault();
 
           var res = _mapper.Map<ApplicationUser, ApplicationUserVm>(receipent);
 
@@ -121,8 +122,8 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var sender = _userRepo.GetUserById(contactVm.UserId);
-        var receiver = _userRepo.GetUserById(contactVm.ReceipentId);
+        var sender = _userRepo.FindByCondition(x => x.Id == contactVm.UserId).FirstOrDefault();
+        var receiver = _userRepo.FindByCondition(x => x.Id == contactVm.ReceipentId).FirstOrDefault();
 
         if (sender == null || receiver == null)
           return null;
@@ -171,8 +172,8 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var sender = _userRepo.GetUserById(contactVm.UserId);
-        var receiver = _userRepo.GetUserById(contactVm.ReceipentId);
+        var sender = _userRepo.FindByCondition(x => x.Id == contactVm.UserId).FirstOrDefault();
+        var receiver = _userRepo.FindByCondition(x => x.Id == contactVm.ReceipentId).FirstOrDefault();
 
         if (sender == null || receiver == null)
           return null;

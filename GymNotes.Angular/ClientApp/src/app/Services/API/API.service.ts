@@ -7,7 +7,7 @@ import { AriaDescriber } from '@angular/cdk/a11y';
 	providedIn: 'root'
 })
 export class APIService {
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	public Post(data, address) {
 		return this.http.post(address, data);
@@ -26,7 +26,7 @@ export class APIService {
 	}
 
 	public BuildAddress(Controller: string, Method: string, Parameters: string[]) {
-		let address: string = 'https://localhost:5001/api/';
+		let address: string = 'https://localhost:44346/api/';
 		address += Controller + Method;
 
 		if (Parameters != null) {

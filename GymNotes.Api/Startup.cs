@@ -7,7 +7,9 @@ using GymNotes.Entity.Models;
 using GymNotes.Models;
 using GymNotes.Repository.Base;
 using GymNotes.Repository.IRepository;
+using GymNotes.Repository.IRepository.User;
 using GymNotes.Repository.Repository;
+using GymNotes.Repository.Repository.User;
 using GymNotes.Service.Chat;
 using GymNotes.Service.IService;
 using GymNotes.Service.Mapping;
@@ -132,7 +134,7 @@ namespace GymNotes
 
       #region Repositories
 
-      services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+      //services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddScoped<IAchievementsRepository, AchievementRepository>();
       services.AddScoped<IAchievementDyscyplineRepository, AchievementDyscyplineRepository>();
@@ -141,6 +143,7 @@ namespace GymNotes
       services.AddScoped<IUserOpinionRepository, UserOpinionRepository>();
       services.AddScoped<IUserOpinionLikesRepository, UserOpinionLikesRepository>();
       services.AddScoped<IChatRepository, ChatRepository>();
+      services.AddScoped<IUserRepository, UserRepository>();
 
       //services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 

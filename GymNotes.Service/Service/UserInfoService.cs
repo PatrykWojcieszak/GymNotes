@@ -2,11 +2,13 @@
 using GymNotes.Entity.Models;
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
+using GymNotes.Repository.IRepository.User;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,12 +16,12 @@ namespace GymNotes.Service.Service
 {
   public class UserInfoService : IUserInfoService
   {
-    private readonly IApplicationUserRepository _userRepo;
+    private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
     public UserInfoService(
-      IApplicationUserRepository userRepo,
+      IUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork)
     {
@@ -32,7 +34,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(updateURLVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -53,7 +55,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(updateURLVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -74,7 +76,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(updateURLVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -95,7 +97,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(updateURLVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -116,7 +118,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(stringUpdateVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -137,7 +139,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(stringUpdateVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -158,7 +160,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(stringUpdateVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -179,7 +181,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(numberUpdateVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -200,7 +202,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(numberUpdateVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -221,7 +223,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(dateUpdateVm.UserId);
+        var user = _userRepo.FindByCondition(x => x.Id == dateUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -242,8 +244,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(stringUpdateVm.UserId);
-
+        var user = _userRepo.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
         if (user == null)
           return false;
 

@@ -9,19 +9,20 @@ using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using GymNotes.Entity.Models;
 using System.Threading.Tasks;
+using GymNotes.Repository.IRepository.User;
 
 namespace GymNotes.Service.Service
 {
   public class CoachService : ICoachService
   {
-    private readonly IApplicationUserRepository _userRepo;
+    private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICoachingRequestRepository _coachingRequestRepo;
     private readonly IPupilRepository _pupilRepo;
 
     public CoachService(
-      IApplicationUserRepository userRepo,
+      IUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork,
       ICoachingRequestRepository coachingRequestRepo,
@@ -39,8 +40,8 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(coachManagmentRequestVm.ProfilePupilId);
-        var userCoach = _userRepo.GetUserById(coachManagmentRequestVm.ProfileCoachId);
+        var user = _userRepo.FindByCondition(x => x.Id == coachManagmentRequestVm.ProfilePupilId).FirstOrDefault();
+        var userCoach = _userRepo.FindByCondition(x => x.Id == coachManagmentRequestVm.ProfileCoachId).FirstOrDefault();
         var status = coachManagmentRequestVm.Partnership;
 
         if (user == null && userCoach == null && user.Id != userCoach.Id)
@@ -93,8 +94,8 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(coachCancelManagmentVm.ProfilePupilId);
-        var userCoach = _userRepo.GetUserById(coachCancelManagmentVm.ProfileCoachId);
+        var user = _userRepo.FindByCondition(x => x.Id == coachCancelManagmentVm.ProfilePupilId).FirstOrDefault();
+        var userCoach = _userRepo.FindByCondition(x => x.Id == coachCancelManagmentVm.ProfileCoachId).FirstOrDefault();
         var status = coachCancelManagmentVm.Partnership;
 
         if (user == null && userCoach == null && user.Id != userCoach.Id && status == true)

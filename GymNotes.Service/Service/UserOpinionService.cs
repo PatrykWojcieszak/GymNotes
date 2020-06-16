@@ -2,11 +2,13 @@
 using GymNotes.Entity.Models;
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
+using GymNotes.Repository.IRepository.User;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,14 +16,14 @@ namespace GymNotes.Service.Service
 {
   public class UserOpinionService : IUserOpinionService
   {
-    private readonly IApplicationUserRepository _userRepo;
+    private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserOpinionRepository _userOpinionRepository;
     private readonly IUserOpinionLikesRepository _userOpinionLikesRepository;
 
     public UserOpinionService(
-      IApplicationUserRepository userRepo,
+      IUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork,
       IUserOpinionRepository userOpinionRepository,
@@ -38,7 +40,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(addUserOpinionVm.ProfileUserId);
+        var user = _userRepo.FindByCondition(x => x.Id == addUserOpinionVm.ProfileUserId).FirstOrDefault();
 
         var opinion = await _userOpinionRepository.GetUserOpinions(addUserOpinionVm.ProfileUserId);
 
@@ -112,7 +114,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.GetUserById(userId);
+        var user = _userRepo.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
         if (user == null)
           return null;

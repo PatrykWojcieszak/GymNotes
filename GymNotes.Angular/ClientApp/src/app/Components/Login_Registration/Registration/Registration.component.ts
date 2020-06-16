@@ -63,9 +63,11 @@ export class RegistrationComponent implements OnInit {
 		var registerModel = {
 			Email: this.registerForm.value.email,
 			Password: this.registerForm.value.password,
-			FirstName: this.registerForm.value.firstname,
-			LastName: this.registerForm.value.lastname
+			FirstName: this.registerForm.value.firstName,
+			LastName: this.registerForm.value.lastName
 		};
+
+		console.warn(registerModel);
 
 		this.UserService.Register(registerModel).subscribe(
 			(res: any) => {
