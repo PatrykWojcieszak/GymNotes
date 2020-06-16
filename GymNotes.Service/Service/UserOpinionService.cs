@@ -42,7 +42,7 @@ namespace GymNotes.Service.Service
       {
         var user = _userRepo.FindByCondition(x => x.Id == addUserOpinionVm.ProfileUserId).FirstOrDefault();
 
-        var opinion = await _userOpinionRepository.GetUserOpinions(addUserOpinionVm.ProfileUserId);
+        var opinion = _userOpinionRepository.FindByCondition(x => x.ProfileUserId == addUserOpinionVm.ProfileUserId).ToList();
 
         if (user == null)
           return false;
@@ -51,10 +51,11 @@ namespace GymNotes.Service.Service
 
         var model = _mapper.Map<AddUserOpinionVm, UserOpinion>(addUserOpinionVm);
 
-        var result = await _userOpinionRepository.AddUserOpinion(model);
+        //var result = _userOpinionRepository.Create(model);
+        _userOpinionRepository.Create(model);
 
-        if (result <= 0)
-          return false;
+        //if (result <= 0)
+        //  return false;
 
         await _unitOfWork.CompleteAsync();
 
@@ -70,14 +71,14 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var opinion = await _userOpinionRepository.GetUserOpinion(userOpinionLikesVm.UserOpinionId);
+        var opinion = _userOpinionRepository.FindByCondition(x => x.Id == userOpinionLikesVm.UserOpinionId).FirstOrDefault();
 
         if (opinion == null)
           return false;
 
         var likeModel = _mapper.Map<UserOpinionLikesVm, UserOpinionLikes>(userOpinionLikesVm);
 
-        _userOpinionLikesRepository.AddLike(likeModel);
+        _userOpinionLikesRepository.Create(likeModel);
 
         await _unitOfWork.CompleteAsync();
 
@@ -93,14 +94,14 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var opinionLike = await _userOpinionLikesRepository.GetUserOpinionLike(opinionId, userId);
+        //var opinionLike = await _userOpinionLikesRepository.GetUserOpinionLike(opinionId, userId);
 
-        if (opinionLike == null)
-          return false;
+        //if (opinionLike == null)
+        //  return false;
 
-        _userOpinionLikesRepository.RemoveLike(opinionLike);
+        //_userOpinionLikesRepository.RemoveLike(opinionLike);
 
-        await _unitOfWork.CompleteAsync();
+        //await _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -119,7 +120,7 @@ namespace GymNotes.Service.Service
         if (user == null)
           return null;
 
-        var opinionList = await _userOpinionRepository.GetUserOpinions(userId);
+        var opinionList = _userOpinionRepository.FindByCondition(x => x.ProfileUserId == userId).ToList();
 
         if (opinionList == null)
           return null;
