@@ -29,9 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IRepository\Chat\" />
     <Folder Include="IRepository\Statistics\" />
-    <Folder Include="Repository\Chat\" />
     <Folder Include="Repository\Statistics\" />
   </ItemGroup>
 

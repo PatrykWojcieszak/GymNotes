@@ -287,9 +287,9 @@ namespace GymNotes.Service.Service
         var model = _mapper.Map<CoachingRequestVm, CoachingRequest>(coachRequestVm);
 
         model.ApplicationUserId = coachRequestVm.ApplicationUserId;
-        model.Status = (CoachingRequestStatus)0;
+        model.Status = CoachingRequestStatus.Sent;
 
-        _coachingRequestRepo.AddCoachRequest(model);
+        _coachingRequestRepo.Create(model);
 
         await _unitOfWork.CompleteAsync();
 

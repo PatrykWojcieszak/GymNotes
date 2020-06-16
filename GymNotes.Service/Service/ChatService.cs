@@ -2,6 +2,7 @@
 using GymNotes.Entity.Models;
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
+using GymNotes.Repository.IRepository.Chat;
 using GymNotes.Repository.IRepository.User;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
@@ -21,18 +22,21 @@ namespace GymNotes.Service.Service
     private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IChatRepository _chatRepository;
+    private readonly IContactRepository _contactRepository;
+    private readonly IMessageRepository _messageRepository;
 
     public ChatService(
       IUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork,
-      IChatRepository chatRepository)
+      IContactRepository contactRepository,
+      IMessageRepository messageRepository)
     {
       _userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
-      _chatRepository = chatRepository;
+      _contactRepository = contactRepository;
+      _messageRepository = messageRepository;
     }
 
     public async Task<bool> AddContact(ContactVm addContactVm)
@@ -91,7 +95,7 @@ namespace GymNotes.Service.Service
         if (user == null)
           return null;
 
-        var contacts = await _chatRepository.GetListOfContacts(userId);
+        var contacts = _contactRepository.FindByCondition(x => x.ReceiverId == userId || x.SenderId == userId).ToList();
 
         var contactList = new List<ApplicationUserVm>();
 
@@ -142,21 +146,21 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var contact = await _chatRepository.GetContact(chatMessageVm.ReceiverId, chatMessageVm.SenderId);
+        var contact = _contactRepository.FindByCondition(x => x.ReceiverId == chatMessageVm.ReceiverId && x.SenderId == chatMessageVm.SenderId).FirstOrDefault();
         var msg = _mapper.Map<ChatMessageVm, Message>(chatMessageVm);
         msg.SenderId = chatMessageVm.SenderId;
 
         if (contact == null)
         {
           var con = _mapper.Map<ChatMessageVm, Contact>(chatMessageVm);
-          await _chatRepository.AddContact(con);
+          _contactRepository.Create(con);
           await _unitOfWork.CompleteAsync();
         }
 
-        contact = await _chatRepository.GetContact(chatMessageVm.ReceiverId, chatMessageVm.SenderId);
+        contact = _contactRepository.FindByCondition(x => x.ReceiverId == chatMessageVm.ReceiverId && x.SenderId == chatMessageVm.SenderId).FirstOrDefault();
 
         msg.ContactId = contact.Id;
-        _chatRepository.AddMessage(msg);
+        _messageRepository.Create(msg);
 
         await _unitOfWork.CompleteAsync();
 
@@ -178,21 +182,26 @@ namespace GymNotes.Service.Service
         if (sender == null || receiver == null)
           return null;
 
-        var contact = await _chatRepository.GetContact(contactVm.UserId, contactVm.ReceipentId);
+        var contact = _contactRepository.
+          FindByCondition(
+          x => x.ReceiverId == contactVm.UserId &&
+          x.SenderId == contactVm.ReceipentId ||
+          x.ReceiverId == contactVm.ReceipentId &&
+          x.SenderId == contactVm.UserId).FirstOrDefault();
 
         if (contact == null)
           return null;
 
-        var message = await _chatRepository.GetMessages(contact.Id);
+        var message = _messageRepository.FindByCondition(x => x.ContactId == contact.Id);
+        var msg = message.Skip(Math.Max(0, message.Count() - 50)).ToList();
+        var result = _mapper.Map<List<Message>, List<ChatMessageVm>>(msg);
 
-        var result = _mapper.Map<List<Message>, List<ChatMessageVm>>(message);
-
-        foreach (var msg in result)
+        foreach (var item in result)
         {
-          if (msg.SenderId == contactVm.UserId)
-            msg.IsSender = true;
+          if (item.SenderId == contactVm.UserId)
+            item.IsSender = true;
           else
-            msg.IsSender = false;
+            item.IsSender = false;
         }
 
         return result;

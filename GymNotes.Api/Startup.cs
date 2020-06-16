@@ -7,8 +7,10 @@ using GymNotes.Entity.Models;
 using GymNotes.Models;
 using GymNotes.Repository.Base;
 using GymNotes.Repository.IRepository;
+using GymNotes.Repository.IRepository.Chat;
 using GymNotes.Repository.IRepository.User;
 using GymNotes.Repository.Repository;
+using GymNotes.Repository.Repository.Chat;
 using GymNotes.Repository.Repository.User;
 using GymNotes.Service.Chat;
 using GymNotes.Service.IService;
@@ -142,7 +144,9 @@ namespace GymNotes
       services.AddScoped<IPupilRepository, PupilRepository>();
       services.AddScoped<IUserOpinionRepository, UserOpinionRepository>();
       services.AddScoped<IUserOpinionLikesRepository, UserOpinionLikesRepository>();
-      services.AddScoped<IChatRepository, ChatRepository>();
+      //services.AddScoped<IChatRepository, ChatRepository>();
+      services.AddScoped<IMessageRepository, MessageRepository>();
+      services.AddScoped<IContactRepository, ContactRepository>();
       services.AddScoped<IUserRepository, UserRepository>();
 
       //services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
