@@ -16,25 +16,15 @@ namespace GymNotes.Service.Service
 {
   public class UserOpinionService : IUserOpinionService
   {
-    //private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
-
     private readonly IUnitOfWork _unitOfWork;
-    //private readonly IUserOpinionRepository _userOpinionRepository;
-    //private readonly IUserOpinionLikesRepository _userOpinionLikesRepository;
 
     public UserOpinionService(
-      IUserRepository userRepo,
       IMapper mapper,
-      IUnitOfWork unitOfWork,
-      IUserOpinionRepository userOpinionRepository,
-      IUserOpinionLikesRepository userOpinionLikesRepository)
+      IUnitOfWork unitOfWork)
     {
-      //_userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
-      //_userOpinionRepository = userOpinionRepository;
-      //_userOpinionLikesRepository = userOpinionLikesRepository;
     }
 
     public async Task<bool> AddUserOpinion(AddUserOpinionVm addUserOpinionVm)
@@ -58,7 +48,7 @@ namespace GymNotes.Service.Service
         //if (result <= 0)
         //  return false;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -81,7 +71,7 @@ namespace GymNotes.Service.Service
 
         _unitOfWork.userOpinionLikesRepository.Create(likeModel);
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }

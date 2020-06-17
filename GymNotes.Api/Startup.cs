@@ -136,31 +136,32 @@ namespace GymNotes
 
       #region Repositories
 
-      //services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
       services.AddScoped<IUnitOfWork, UnitOfWork>();
-      services.AddScoped<IAchievementRepository, AchievementRepository>();
-      services.AddScoped<IAchievementDyscyplineRepository, AchievementDyscyplineRepository>();
-      services.AddScoped<ICoachingRequestRepository, CoachingRequestRepository>();
-      services.AddScoped<IPupilRepository, PupilRepository>();
-      services.AddScoped<IUserOpinionRepository, UserOpinionRepository>();
-      services.AddScoped<IUserOpinionLikesRepository, UserOpinionLikesRepository>();
+
+      //services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+      //services.AddScoped<IAchievementRepository, AchievementRepository>();
+      //services.AddScoped<IAchievementDyscyplineRepository, AchievementDyscyplineRepository>();
+      //services.AddScoped<ICoachingRequestRepository, CoachingRequestRepository>();
+      //services.AddScoped<IPupilRepository, PupilRepository>();
+      //services.AddScoped<IUserOpinionRepository, UserOpinionRepository>();
+      //services.AddScoped<IUserOpinionLikesRepository, UserOpinionLikesRepository>();
       //services.AddScoped<IChatRepository, ChatRepository>();
-      services.AddScoped<IMessageRepository, MessageRepository>();
-      services.AddScoped<IContactRepository, ContactRepository>();
-      services.AddScoped<IUserRepository, UserRepository>();
+      //services.AddScoped<IMessageRepository, MessageRepository>();
+      //services.AddScoped<IContactRepository, ContactRepository>();
+      //services.AddScoped<IUserRepository, UserRepository>();
 
       //services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
-      System.Reflection.Assembly.GetExecutingAssembly()
-            .GetTypes()
-            .Where(item => item.GetInterfaces()
-            .Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IBaseRepository<>)) && !item.IsAbstract && !item.IsInterface)
-            .ToList()
-            .ForEach(assignedTypes =>
-            {
-              var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IBaseRepository<>));
-              services.AddScoped(serviceType, assignedTypes);
-            });
+      //System.Reflection.Assembly.GetExecutingAssembly()
+      //      .GetTypes()
+      //      .Where(item => item.GetInterfaces()
+      //      .Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IBaseRepository<>)) && !item.IsAbstract && !item.IsInterface)
+      //      .ToList()
+      //      .ForEach(assignedTypes =>
+      //      {
+      //        var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IBaseRepository<>));
+      //        services.AddScoped(serviceType, assignedTypes);
+      //      });
 
       #endregion Repositories
 

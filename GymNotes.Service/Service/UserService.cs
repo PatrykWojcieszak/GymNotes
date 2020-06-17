@@ -19,25 +19,13 @@ namespace GymNotes.Service.Service
   {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    //private readonly IAchievementDyscyplineRepository _achievementDyscyplineRepo;
-    //private readonly IAchievementRepository _achievementsRepo;
-    //private readonly ICoachingRequestRepository _coachingRequestRepo;
-    //private readonly IUserRepository _userRepo;
 
     public UserService(
       IMapper mapper,
-      IUnitOfWork unitOfWork,
-      IAchievementDyscyplineRepository achievementDyscyplineRepo,
-      IAchievementRepository achievementsRepo,
-      ICoachingRequestRepository coachingRequestRepo,
-      IUserRepository userRepo)
+      IUnitOfWork unitOfWork)
     {
       _mapper = mapper;
       _unitOfWork = unitOfWork;
-      //_achievementDyscyplineRepo = achievementDyscyplineRepo;
-      //_achievementsRepo = achievementsRepo;
-      //_coachingRequestRepo = coachingRequestRepo;
-      //_userRepo = userRepo;
     }
 
     public async Task<bool> UpdateUserInfo(string id, ApplicationUserVm userVm)
@@ -53,7 +41,7 @@ namespace GymNotes.Service.Service
 
         _unitOfWork.userRepository.Update(userModel);
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -127,7 +115,7 @@ namespace GymNotes.Service.Service
           _unitOfWork.achievementDyscyplineRepository.Update(model);
         }
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -193,7 +181,7 @@ namespace GymNotes.Service.Service
 
       _unitOfWork.achievementDyscyplineRepository.Delete(model);
 
-      await _unitOfWork.CompleteAsync();
+      _unitOfWork.CompleteAsync();
 
       return true;
     }
@@ -212,7 +200,7 @@ namespace GymNotes.Service.Service
 
       _unitOfWork.achievementsRepository.Delete(model);
 
-      await _unitOfWork.CompleteAsync();
+      _unitOfWork.CompleteAsync();
 
       return true;
     }
@@ -291,7 +279,7 @@ namespace GymNotes.Service.Service
 
         _unitOfWork.coachingRequestRepository.Create(model);
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }

@@ -72,7 +72,7 @@ namespace GymNotes.Controllers
 
       if (user != null && result.Succeeded)
       {
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 

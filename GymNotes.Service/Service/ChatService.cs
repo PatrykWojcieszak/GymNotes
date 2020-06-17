@@ -19,25 +19,15 @@ namespace GymNotes.Service.Service
 {
   public class ChatService : IChatService
   {
-    // private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
-
     private readonly IUnitOfWork _unitOfWork;
-    //private readonly IContactRepository _contactRepository;
-    //private readonly IMessageRepository _messageRepository;
 
     public ChatService(
-      IUserRepository userRepo,
       IMapper mapper,
-      IUnitOfWork unitOfWork,
-      IContactRepository contactRepository,
-      IMessageRepository messageRepository)
+      IUnitOfWork unitOfWork)
     {
-      //_userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
-      //_contactRepository = contactRepository;
-      //_messageRepository = messageRepository;
     }
 
     public async Task<bool> AddContact(ContactVm addContactVm)
@@ -155,7 +145,7 @@ namespace GymNotes.Service.Service
         {
           var con = _mapper.Map<ChatMessageVm, Contact>(chatMessageVm);
           _unitOfWork.contactRepository.Create(con);
-          await _unitOfWork.CompleteAsync();
+          _unitOfWork.CompleteAsync();
         }
 
         contact = _unitOfWork.contactRepository.FindByCondition(x => x.ReceiverId == chatMessageVm.ReceiverId && x.SenderId == chatMessageVm.SenderId).FirstOrDefault();
@@ -163,7 +153,7 @@ namespace GymNotes.Service.Service
         msg.ContactId = contact.Id;
         _unitOfWork.messageRepository.Create(msg);
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }

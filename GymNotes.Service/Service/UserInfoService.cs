@@ -16,17 +16,13 @@ namespace GymNotes.Service.Service
 {
   public class UserInfoService : IUserInfoService
   {
-    //private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
-
     private readonly IUnitOfWork _unitOfWork;
 
     public UserInfoService(
-      IUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork)
     {
-      //_userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
     }
@@ -41,8 +37,9 @@ namespace GymNotes.Service.Service
           return false;
 
         user.Instagram = updateURLVm.URL;
+        _unitOfWork.userRepository.Update(user);
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -63,7 +60,7 @@ namespace GymNotes.Service.Service
 
         user.Facebook = updateURLVm.URL;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -84,7 +81,7 @@ namespace GymNotes.Service.Service
 
         user.Twitter = updateURLVm.URL;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -105,7 +102,7 @@ namespace GymNotes.Service.Service
 
         user.Youtube = updateURLVm.URL;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -126,7 +123,7 @@ namespace GymNotes.Service.Service
 
         user.Description = stringUpdateVm.Content;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -147,7 +144,7 @@ namespace GymNotes.Service.Service
 
         user.Discipline = stringUpdateVm.Content;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -168,7 +165,7 @@ namespace GymNotes.Service.Service
 
         user.Gender = stringUpdateVm.Content;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -189,7 +186,7 @@ namespace GymNotes.Service.Service
 
         user.YearsOfExperience = numberUpdateVm.Value;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -210,7 +207,7 @@ namespace GymNotes.Service.Service
 
         user.Height = numberUpdateVm.Value;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -231,7 +228,7 @@ namespace GymNotes.Service.Service
 
         user.Birthday = dateUpdateVm.Date;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -251,7 +248,7 @@ namespace GymNotes.Service.Service
 
         user.IsCoach = Convert.ToBoolean(stringUpdateVm.Content);
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }

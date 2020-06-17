@@ -15,26 +15,15 @@ namespace GymNotes.Service.Service
 {
   public class CoachService : ICoachService
   {
-    //private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
-
     private readonly IUnitOfWork _unitOfWork;
-    //private readonly ICoachingRequestRepository _coachingRequestRepo;
-    //private readonly IPupilRepository _pupilRepo;
 
     public CoachService(
-      IUserRepository userRepo,
       IMapper mapper,
-      IUnitOfWork unitOfWork,
-      ICoachingRequestRepository coachingRequestRepo,
-      IPupilRepository pupilRepo
-      )
+      IUnitOfWork unitOfWork)
     {
-      //_userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
-      //_coachingRequestRepo = coachingRequestRepo;
-      //_pupilRepo = pupilRepo;
     }
 
     //TODO: Sprawdzić
@@ -64,7 +53,7 @@ namespace GymNotes.Service.Service
 
           _unitOfWork.coachingRequestRepository.Update(coachRequest);
 
-          await _unitOfWork.CompleteAsync();
+          _unitOfWork.CompleteAsync();
 
           return true;
         }
@@ -76,7 +65,7 @@ namespace GymNotes.Service.Service
 
           _unitOfWork.coachingRequestRepository.Update(coachRequest);
 
-          await _unitOfWork.CompleteAsync();
+          _unitOfWork.CompleteAsync();
 
           return true;
         }
@@ -115,7 +104,7 @@ namespace GymNotes.Service.Service
 
         _unitOfWork.coachingRequestRepository.Update(coachRequest);
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }

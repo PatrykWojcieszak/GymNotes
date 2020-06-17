@@ -15,19 +15,15 @@ namespace GymNotes.Service.Service
 {
   public class UserSettingsService : IUserSettingsService
   {
-    //private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
-
     private readonly IUnitOfWork _unitOfWork;
     private UserManager<ApplicationUser> _userManager;
 
     public UserSettingsService(
-      IUserRepository userRepo,
       IMapper mapper,
       IUnitOfWork unitOfWork,
       UserManager<ApplicationUser> userManager)
     {
-      //_userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
       _userManager = userManager;
@@ -46,7 +42,7 @@ namespace GymNotes.Service.Service
         user.LastName = updateUserNameVm.LastName;
         user.Alias = updateUserNameVm.Alias;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
@@ -86,7 +82,7 @@ namespace GymNotes.Service.Service
 
         user.Email = userEmailVm.Email;
 
-        await _unitOfWork.CompleteAsync();
+        _unitOfWork.CompleteAsync();
 
         return true;
       }
