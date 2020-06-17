@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <Compile Remove="IRepository\IApplicationUserRepository.cs" />
+    <Compile Remove="IRepository\IChatRepository.cs" />
     <Compile Remove="Repository\ApplicationUserRepository.cs" />
+    <Compile Remove="Repository\ChatRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,11 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GymNotes.Entity\GymNotes.Entity.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="IRepository\Statistics\" />
-    <Folder Include="Repository\Statistics\" />
   </ItemGroup>
 
 </Project>
