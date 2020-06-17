@@ -16,11 +16,12 @@ namespace GymNotes.Service.Service
 {
   public class UserOpinionService : IUserOpinionService
   {
-    private readonly IUserRepository _userRepo;
+    //private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
+
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserOpinionRepository _userOpinionRepository;
-    private readonly IUserOpinionLikesRepository _userOpinionLikesRepository;
+    //private readonly IUserOpinionRepository _userOpinionRepository;
+    //private readonly IUserOpinionLikesRepository _userOpinionLikesRepository;
 
     public UserOpinionService(
       IUserRepository userRepo,
@@ -29,20 +30,20 @@ namespace GymNotes.Service.Service
       IUserOpinionRepository userOpinionRepository,
       IUserOpinionLikesRepository userOpinionLikesRepository)
     {
-      _userRepo = userRepo;
+      //_userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
-      _userOpinionRepository = userOpinionRepository;
-      _userOpinionLikesRepository = userOpinionLikesRepository;
+      //_userOpinionRepository = userOpinionRepository;
+      //_userOpinionLikesRepository = userOpinionLikesRepository;
     }
 
     public async Task<bool> AddUserOpinion(AddUserOpinionVm addUserOpinionVm)
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == addUserOpinionVm.ProfileUserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == addUserOpinionVm.ProfileUserId).FirstOrDefault();
 
-        var opinion = _userOpinionRepository.FindByCondition(x => x.ProfileUserId == addUserOpinionVm.ProfileUserId).ToList();
+        var opinion = _unitOfWork.userOpinionRepository.FindByCondition(x => x.ProfileUserId == addUserOpinionVm.ProfileUserId).ToList();
 
         if (user == null)
           return false;
@@ -52,7 +53,7 @@ namespace GymNotes.Service.Service
         var model = _mapper.Map<AddUserOpinionVm, UserOpinion>(addUserOpinionVm);
 
         //var result = _userOpinionRepository.Create(model);
-        _userOpinionRepository.Create(model);
+        _unitOfWork.userOpinionRepository.Create(model);
 
         //if (result <= 0)
         //  return false;
@@ -71,14 +72,14 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var opinion = _userOpinionRepository.FindByCondition(x => x.Id == userOpinionLikesVm.UserOpinionId).FirstOrDefault();
+        var opinion = _unitOfWork.userOpinionRepository.FindByCondition(x => x.Id == userOpinionLikesVm.UserOpinionId).FirstOrDefault();
 
         if (opinion == null)
           return false;
 
         var likeModel = _mapper.Map<UserOpinionLikesVm, UserOpinionLikes>(userOpinionLikesVm);
 
-        _userOpinionLikesRepository.Create(likeModel);
+        _unitOfWork.userOpinionLikesRepository.Create(likeModel);
 
         await _unitOfWork.CompleteAsync();
 
@@ -115,12 +116,12 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == userId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
         if (user == null)
           return null;
 
-        var opinionList = _userOpinionRepository.FindByCondition(x => x.ProfileUserId == userId).ToList();
+        var opinionList = _unitOfWork.userOpinionRepository.FindByCondition(x => x.ProfileUserId == userId).ToList();
 
         if (opinionList == null)
           return null;

@@ -13,9 +13,12 @@ namespace GymNotes.Repository.Repository
 {
   public class CoachingRequestRepository : BaseRepository<CoachingRequest>, ICoachingRequestRepository
   {
+    private readonly ApplicationDbContext _context;
+
     public CoachingRequestRepository(ApplicationDbContext context) :
       base(context)
     {
+      _context = context;
     }
 
     //public async void AddCoachRequest(CoachingRequest model)

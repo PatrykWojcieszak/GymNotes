@@ -13,9 +13,12 @@ namespace GymNotes.Repository.Repository
 {
   public class PupilRepository : BaseRepository<Pupil>, IPupilRepository
   {
+    private readonly ApplicationDbContext _context;
+
     public PupilRepository(ApplicationDbContext context) :
       base(context)
     {
+      _context = context;
     }
 
     //public async void AddPupil(Pupil model)

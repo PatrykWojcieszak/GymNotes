@@ -15,9 +15,12 @@ namespace GymNotes.Repository.Repository
 {
   public class UserOpinionLikesRepository : BaseRepository<UserOpinionLikes>, IUserOpinionLikesRepository
   {
+    private readonly ApplicationDbContext _context;
+
     public UserOpinionLikesRepository(ApplicationDbContext context) :
       base(context)
     {
+      _context = context;
     }
 
     //public async void AddLike(UserOpinionLikes model)

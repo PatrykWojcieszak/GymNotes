@@ -138,7 +138,7 @@ namespace GymNotes
 
       //services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
       services.AddScoped<IUnitOfWork, UnitOfWork>();
-      services.AddScoped<IAchievementsRepository, AchievementRepository>();
+      services.AddScoped<IAchievementRepository, AchievementRepository>();
       services.AddScoped<IAchievementDyscyplineRepository, AchievementDyscyplineRepository>();
       services.AddScoped<ICoachingRequestRepository, CoachingRequestRepository>();
       services.AddScoped<IPupilRepository, PupilRepository>();

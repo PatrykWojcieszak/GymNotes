@@ -10,11 +10,14 @@ using System.Text;
 
 namespace GymNotes.Repository.Repository
 {
-  public class AchievementRepository : BaseRepository<Achievement>, IAchievementsRepository
+  public class AchievementRepository : BaseRepository<Achievement>, IAchievementRepository
   {
+    private readonly ApplicationDbContext _context;
+
     public AchievementRepository(ApplicationDbContext context) :
       base(context)
     {
+      _context = context;
     }
 
     //public Achievement GetAchievement(int id)

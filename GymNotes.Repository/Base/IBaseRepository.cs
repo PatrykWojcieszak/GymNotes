@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GymNotes.Repository.Base
 {
-  public interface IBaseRepository<T>
+  public interface IBaseRepository<T> where T : class
   {
     IQueryable<T> FindAll();
 

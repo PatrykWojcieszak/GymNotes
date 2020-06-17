@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GymNotes.Repository.IRepository
 {
-  public interface IAchievementsRepository : IBaseRepository<Achievement>
+  public interface IAchievementRepository : IBaseRepository<Achievement>
   {
     //Achievement GetAchievement(int id);
 

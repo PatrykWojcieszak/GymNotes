@@ -15,9 +15,12 @@ namespace GymNotes.Repository.Repository
 {
   public class UserOpinionRepository : BaseRepository<UserOpinion>, IUserOpinionRepository
   {
+    private readonly ApplicationDbContext _context;
+
     public UserOpinionRepository(ApplicationDbContext context) :
       base(context)
     {
+      _context = context;
     }
 
     //public async Task<int> AddUserOpinion(UserOpinion userOpinion)

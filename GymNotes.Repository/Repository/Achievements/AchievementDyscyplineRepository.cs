@@ -13,9 +13,12 @@ namespace GymNotes.Repository.Repository
 {
   public class AchievementDyscyplineRepository : BaseRepository<AchievementDyscypline>, IAchievementDyscyplineRepository
   {
+    private readonly ApplicationDbContext _context;
+
     public AchievementDyscyplineRepository(ApplicationDbContext context) :
       base(context)
     {
+      _context = context;
     }
 
     //public AchievementDyscypline GetAchievementDyscypline(int id)

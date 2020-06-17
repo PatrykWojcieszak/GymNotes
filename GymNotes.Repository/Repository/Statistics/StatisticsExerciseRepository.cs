@@ -13,9 +13,12 @@ namespace GymNotes.Repository.Repository
 {
   public class StatisticsExerciseRepository : BaseRepository<StatisticsExercise>, IStatisticsExerciseRepository
   {
+    private readonly ApplicationDbContext _context;
+
     public StatisticsExerciseRepository(ApplicationDbContext context) :
       base(context)
     {
+      _context = context;
     }
   }
 }

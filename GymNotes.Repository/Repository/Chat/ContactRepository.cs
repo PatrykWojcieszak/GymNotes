@@ -10,9 +10,12 @@ namespace GymNotes.Repository.Repository.Chat
 {
   public class ContactRepository : BaseRepository<Contact>, IContactRepository
   {
+    private readonly ApplicationDbContext _context;
+
     public ContactRepository(ApplicationDbContext context) :
       base(context)
     {
+      _context = context;
     }
   }
 }

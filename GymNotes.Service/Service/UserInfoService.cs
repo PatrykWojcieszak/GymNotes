@@ -16,8 +16,9 @@ namespace GymNotes.Service.Service
 {
   public class UserInfoService : IUserInfoService
   {
-    private readonly IUserRepository _userRepo;
+    //private readonly IUserRepository _userRepo;
     private readonly IMapper _mapper;
+
     private readonly IUnitOfWork _unitOfWork;
 
     public UserInfoService(
@@ -25,7 +26,7 @@ namespace GymNotes.Service.Service
       IMapper mapper,
       IUnitOfWork unitOfWork)
     {
-      _userRepo = userRepo;
+      //_userRepo = userRepo;
       _mapper = mapper;
       _unitOfWork = unitOfWork;
     }
@@ -34,7 +35,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -55,7 +56,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -76,7 +77,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -97,7 +98,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -118,7 +119,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -139,7 +140,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -160,7 +161,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -181,7 +182,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -202,7 +203,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -223,7 +224,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == dateUpdateVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == dateUpdateVm.UserId).FirstOrDefault();
 
         if (user == null)
           return false;
@@ -244,7 +245,7 @@ namespace GymNotes.Service.Service
     {
       try
       {
-        var user = _userRepo.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
+        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
         if (user == null)
           return false;
 
