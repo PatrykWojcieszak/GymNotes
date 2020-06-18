@@ -12,8 +12,5 @@ namespace GymNotes.Service.ViewModels
 
     [Required]
     public string URL { get; set; }
-
-    [Required]
-    public string test { get; set; }
   }
 }

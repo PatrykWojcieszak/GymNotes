@@ -75,8 +75,8 @@ namespace GymNotes.Controllers
     [HttpGet("getUserFullName/{userId}")]
     public IActionResult GetUserFullName(string userId)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = _userSettingsService.GetuserFullName(userId);
 
@@ -90,8 +90,8 @@ namespace GymNotes.Controllers
     [HttpGet("getUserEmail/{userId}")]
     public IActionResult GetUserEmail(string userId)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = _userSettingsService.GetUserEmail(userId);
 

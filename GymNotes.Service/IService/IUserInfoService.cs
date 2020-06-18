@@ -9,26 +9,26 @@ namespace GymNotes.Service.IService
 {
   public interface IUserInfoService
   {
-    Task<bool> UpdateInstagramURL(UpdateURLVm updateURLVm);
+    Task<ApiResponse> UpdateInstagramURL(UpdateURLVm updateURLVm);
 
-    Task<bool> UpdateFacebookURL(UpdateURLVm updateURLVm);
+    Task<ApiResponse> UpdateFacebookURL(UpdateURLVm updateURLVm);
 
-    Task<bool> UpdateTwitterURL(UpdateURLVm updateURLVm);
+    Task<ApiResponse> UpdateTwitterURL(UpdateURLVm updateURLVm);
 
-    Task<bool> UpdateYoutubeURL(UpdateURLVm updateURLVm);
+    Task<ApiResponse> UpdateYoutubeURL(UpdateURLVm updateURLVm);
 
-    Task<bool> UpdateIsCoach(StringUpdateVm stringUpdateVm);
+    Task<ApiResponse> UpdateIsCoach(StringUpdateVm stringUpdateVm);
 
-    Task<bool> UpdateBirthday(DateUpdateVm dateUpdateVm);
+    Task<ApiResponse> UpdateBirthday(DateUpdateVm dateUpdateVm);
 
-    Task<bool> UpdateHeight(NumberUpdateVm numberUpdateVm);
+    Task<ApiResponse> UpdateHeight(NumberUpdateVm numberUpdateVm);
 
-    Task<bool> UpdateYearsOfExperience(NumberUpdateVm numberUpdateVm);
+    Task<ApiResponse> UpdateYearsOfExperience(NumberUpdateVm numberUpdateVm);
 
-    Task<bool> UpdateGender(StringUpdateVm stringUpdateVm);
+    Task<ApiResponse> UpdateGender(StringUpdateVm stringUpdateVm);
 
-    Task<bool> UpdateDiscipline(StringUpdateVm stringUpdateVm);
+    Task<ApiResponse> UpdateDiscipline(StringUpdateVm stringUpdateVm);
 
-    Task<bool> UpdateDescription(StringUpdateVm stringUpdateVm);
+    Task<ApiResponse> UpdateDescription(StringUpdateVm stringUpdateVm);
   }
 }

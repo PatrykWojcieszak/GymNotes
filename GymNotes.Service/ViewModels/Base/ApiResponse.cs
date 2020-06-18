@@ -12,10 +12,19 @@ namespace GymNotes.Service.ViewModels
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string Message { get; private set; }
 
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    public object Result { get; private set; }
+
     public ApiResponse(int statusCode, string message)
         : this(statusCode)
     {
       this.Message = message;
+    }
+
+    public ApiResponse(object result) :
+      this(200)
+    {
+      Result = result;
     }
 
     public ApiResponse(int statusCode)
