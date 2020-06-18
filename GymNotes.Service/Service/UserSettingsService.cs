@@ -42,6 +42,7 @@ namespace GymNotes.Service.Service
         user.LastName = updateUserNameVm.LastName;
         user.Alias = updateUserNameVm.Alias;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -82,6 +83,7 @@ namespace GymNotes.Service.Service
 
         user.Email = userEmailVm.Email;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;

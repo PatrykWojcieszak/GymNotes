@@ -40,7 +40,6 @@ namespace GymNotes.Service.Service
         _mapper.Map(userVm, userModel);
 
         _unitOfWork.userRepository.Update(userModel);
-
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -180,7 +179,6 @@ namespace GymNotes.Service.Service
         return false;
 
       _unitOfWork.achievementDyscyplineRepository.Delete(model);
-
       _unitOfWork.CompleteAsync();
 
       return true;
@@ -199,7 +197,6 @@ namespace GymNotes.Service.Service
         return false;
 
       _unitOfWork.achievementsRepository.Delete(model);
-
       _unitOfWork.CompleteAsync();
 
       return true;
@@ -278,7 +275,6 @@ namespace GymNotes.Service.Service
         model.Status = CoachingRequestStatus.Sent;
 
         _unitOfWork.coachingRequestRepository.Create(model);
-
         _unitOfWork.CompleteAsync();
 
         return true;

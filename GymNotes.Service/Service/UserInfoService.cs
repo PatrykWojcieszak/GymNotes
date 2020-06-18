@@ -37,8 +37,8 @@ namespace GymNotes.Service.Service
           return false;
 
         user.Instagram = updateURLVm.URL;
-        _unitOfWork.userRepository.Update(user);
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -60,6 +60,7 @@ namespace GymNotes.Service.Service
 
         user.Facebook = updateURLVm.URL;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -81,6 +82,7 @@ namespace GymNotes.Service.Service
 
         user.Twitter = updateURLVm.URL;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -102,6 +104,7 @@ namespace GymNotes.Service.Service
 
         user.Youtube = updateURLVm.URL;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -123,6 +126,7 @@ namespace GymNotes.Service.Service
 
         user.Description = stringUpdateVm.Content;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -144,6 +148,7 @@ namespace GymNotes.Service.Service
 
         user.Discipline = stringUpdateVm.Content;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -165,6 +170,7 @@ namespace GymNotes.Service.Service
 
         user.Gender = stringUpdateVm.Content;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -186,6 +192,7 @@ namespace GymNotes.Service.Service
 
         user.YearsOfExperience = numberUpdateVm.Value;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -207,6 +214,7 @@ namespace GymNotes.Service.Service
 
         user.Height = numberUpdateVm.Value;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -228,6 +236,7 @@ namespace GymNotes.Service.Service
 
         user.Birthday = dateUpdateVm.Date;
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;
@@ -248,6 +257,7 @@ namespace GymNotes.Service.Service
 
         user.IsCoach = Convert.ToBoolean(stringUpdateVm.Content);
 
+        _unitOfWork.userRepository.Update(user);
         _unitOfWork.CompleteAsync();
 
         return true;

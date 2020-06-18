@@ -42,11 +42,7 @@ namespace GymNotes.Service.Service
 
         var model = _mapper.Map<AddUserOpinionVm, UserOpinion>(addUserOpinionVm);
 
-        //var result = _userOpinionRepository.Create(model);
         _unitOfWork.userOpinionRepository.Create(model);
-
-        //if (result <= 0)
-        //  return false;
 
         _unitOfWork.CompleteAsync();
 
