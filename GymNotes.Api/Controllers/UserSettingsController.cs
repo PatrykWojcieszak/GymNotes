@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GymNotes.Filters;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -23,11 +24,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("changeName/")]
     public async Task<IActionResult> ChangeName([FromBody] UpdateUserNameVm updateUserNameVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userSettingsService.ChangeName(updateUserNameVm);
 
@@ -38,11 +40,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("changePassword/")]
     public async Task<IActionResult> ChangePassword([FromBody] UpdatePasswordVm updatePasswordVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userSettingsService.ChangePassword(updatePasswordVm);
 
@@ -53,11 +56,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("changeEmail/")]
     public async Task<IActionResult> ChangeEmail([FromBody] UserEmailVm userEmailVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userSettingsService.ChangeEmail(userEmailVm);
 

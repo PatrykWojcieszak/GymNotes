@@ -40,9 +40,6 @@ namespace GymNotes
 {
   public class Startup
   {
-    //private string FACEBOOK_APPid = "828215644330366";
-    //private string FACEBOOK_APPsECRET = "6f4360e5b8bde9e7dfea98d2a3308693";
-
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
@@ -104,12 +101,6 @@ namespace GymNotes
       {
         configuration.RootPath = "ClientApp/dist";
       });
-
-      //services.AddAuthentication().AddFacebook(facebookOptions =>
-      //{
-      //  facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-      //  facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-      //});
 
       services.ConfigureApplicationCookie(options =>
       {

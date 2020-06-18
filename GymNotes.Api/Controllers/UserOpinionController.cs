@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GymNotes.Filters;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -23,11 +24,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpGet("getUserOpinions/{userId}")]
     public async Task<IActionResult> GetUserOpinions(string userId)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userOpinionService.GetUserOpinions(userId);
 
@@ -38,11 +40,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("addUserOpinion/")]
     public async Task<IActionResult> AddUserOpinion([FromBody] AddUserOpinionVm addUserOpinionVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userOpinionService.AddUserOpinion(addUserOpinionVm);
 
@@ -53,6 +56,7 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("addLikeToOpinion/")]
     public async Task<IActionResult> AddLikeToOpinion([FromBody] UserOpinionLikesVm userOpinionLikesVm)
     {

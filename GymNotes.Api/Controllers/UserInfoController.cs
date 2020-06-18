@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GymNotes.Filters;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -22,11 +23,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateInstagramUrl/")]
     public async Task<IActionResult> UpdateInstagramURL([FromBody] UpdateURLVm updateURLVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateInstagramURL(updateURLVm);
 
@@ -37,11 +39,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateFacebookUrl/")]
     public async Task<IActionResult> UpdateFacebookURL([FromBody] UpdateURLVm updateURLVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateFacebookURL(updateURLVm);
 
@@ -52,11 +55,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateTwitterUrl/")]
     public async Task<IActionResult> UpdateTwitterURL([FromBody] UpdateURLVm updateURLVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateTwitterURL(updateURLVm);
 
@@ -67,11 +71,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateYoutubeUrl/")]
     public async Task<IActionResult> UpdateYoutubeUrl([FromBody] UpdateURLVm updateURLVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateYoutubeURL(updateURLVm);
 
@@ -82,11 +87,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateDescription/")]
     public async Task<IActionResult> UpdateDescription([FromBody] StringUpdateVm stringUpdateVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateDescription(stringUpdateVm);
 
@@ -97,11 +103,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateDiscipline/")]
     public async Task<IActionResult> UpdateDiscipline([FromBody] StringUpdateVm stringUpdateVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateDiscipline(stringUpdateVm);
 
@@ -112,11 +119,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateGender/")]
     public async Task<IActionResult> UpdateGender([FromBody] StringUpdateVm stringUpdateVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateGender(stringUpdateVm);
 
@@ -127,11 +135,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateYearsOfExperience/")]
     public async Task<IActionResult> UpdateYearsOfExperience([FromBody] NumberUpdateVm numberUpdateVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateYearsOfExperience(numberUpdateVm);
 
@@ -142,11 +151,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateHeight/")]
     public async Task<IActionResult> UpdateHeight([FromBody] NumberUpdateVm numberUpdateVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateHeight(numberUpdateVm);
 
@@ -157,11 +167,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateIsCoach/")]
     public async Task<IActionResult> UpdateIsCoach([FromBody] StringUpdateVm stringUpdateVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateIsCoach(stringUpdateVm);
 
@@ -172,11 +183,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateBirthday/")]
     public async Task<IActionResult> UpdateBirthday([FromBody] DateUpdateVm dateUpdateVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userInfoService.UpdateBirthday(dateUpdateVm);
 

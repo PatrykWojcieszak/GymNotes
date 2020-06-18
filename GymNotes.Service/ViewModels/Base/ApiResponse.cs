@@ -10,30 +10,17 @@ namespace GymNotes.Service.ViewModels
     public int StatusCode { get; private set; }
 
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    public string StatusDescription { get; private set; }
-
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string Message { get; private set; }
 
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    public object Result { get; private set; }
-
-    public ApiResponse(int statusCode, string statusDescription)
-    {
-      this.StatusCode = statusCode;
-      this.StatusDescription = statusDescription;
-    }
-
-    public ApiResponse(int statusCode, string statusDescription, string message)
-        : this(statusCode, statusDescription)
+    public ApiResponse(int statusCode, string message)
+        : this(statusCode)
     {
       this.Message = message;
     }
 
-    public ApiResponse(int statusCode, object result)
+    public ApiResponse(int statusCode)
     {
       this.StatusCode = statusCode;
-      this.Result = result;
     }
   }
 }

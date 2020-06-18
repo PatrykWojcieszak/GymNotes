@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using GymNotes.Entity.Models;
+using GymNotes.Filters;
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
 using GymNotes.Service.Email;
@@ -36,6 +37,7 @@ namespace GymNotes.Controllers
 
     //TODO: Sprawdzić
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("coachManagmentRequest")]
     public async Task<IActionResult> CoachManagmentRequest([FromBody] CoachManagmentRequestVm coachManagmentRequestVm)
     {
@@ -49,6 +51,7 @@ namespace GymNotes.Controllers
 
     //TODO: Sprawdzić
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("coachCancelManagment")]
     public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm)
     {

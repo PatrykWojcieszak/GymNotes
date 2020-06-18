@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using GymNotes.Entity.Models;
+using GymNotes.Filters;
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
 using GymNotes.Service.Email;
@@ -52,11 +53,12 @@ namespace GymNotes.Controllers
     #region POST
 
     [AllowAnonymous]
+    [ApiValidationFilter]
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] UserRegisterVm userModel)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var applicationUser = new ApplicationUser()
       {
@@ -92,11 +94,12 @@ namespace GymNotes.Controllers
     }
 
     [AllowAnonymous]
+    [ApiValidationFilter]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] UserLoginVm model)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var user = await _userManager.FindByNameAsync(model.Email);
       if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -125,11 +128,12 @@ namespace GymNotes.Controllers
     }
 
     [AllowAnonymous]
+    [ApiValidationFilter]
     [HttpPost("confirmEmailAddress")]
     public async Task<IActionResult> ConfirmEmailAddress([FromBody] EmailConfirmationVm model)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var user = await _userManager.FindByEmailAsync(model.Email);
       if (user != null)
@@ -149,11 +153,12 @@ namespace GymNotes.Controllers
     }
 
     [AllowAnonymous]
+    [ApiValidationFilter]
     [HttpPost("forgotPassword")]
     public async Task<IActionResult> ForgotPassword(EmailVm model)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var user = await _userManager.FindByEmailAsync(model.Email);
 
@@ -173,11 +178,12 @@ namespace GymNotes.Controllers
     }
 
     [AllowAnonymous]
+    [ApiValidationFilter]
     [HttpPost("resetPassword")]
     public async Task<IActionResult> ResetPassword(PasswordResetVm model)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var user = await _userManager.FindByEmailAsync(model.Email);
 
@@ -193,11 +199,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("updateUserInfo/{id}")]
     public async Task<IActionResult> UpdateUserInfo(string id, [FromBody] ApplicationUserVm model)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userService.UpdateUserInfo(id, model);
 
@@ -208,11 +215,12 @@ namespace GymNotes.Controllers
     }
 
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("addOrUpdateUserAchievements/{id}")]
     public async Task<IActionResult> AddOrUpdateUserAchievements(string id, [FromBody] AchievementDyscyplineVm achievementDyscyplineVm)
     {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+      //if (!ModelState.IsValid)
+      //  return BadRequest(ModelState);
 
       var result = await _userService.AddOrUpdateUserAchievement(id, achievementDyscyplineVm);
 
@@ -224,6 +232,7 @@ namespace GymNotes.Controllers
 
     //TODO: Sprawdzić
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("coachingRequest")]
     public async Task<IActionResult> SendCoachingRequest([FromBody] CoachingRequestVm coachRequestVm)
     {
@@ -237,6 +246,7 @@ namespace GymNotes.Controllers
 
     //TODO: Sprawdzić
     [Authorize]
+    [ApiValidationFilter]
     [HttpPost("coachCancelManagment")]
     public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm)
     {
