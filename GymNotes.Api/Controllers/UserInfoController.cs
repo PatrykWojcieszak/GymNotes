@@ -41,16 +41,9 @@ namespace GymNotes.Controllers
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateFacebookUrl/")]
-    public async Task<IActionResult> UpdateFacebookURL([FromBody] UpdateURLVm updateURLVm)
+    public async Task<ApiResponse> UpdateFacebookURL([FromBody] UpdateURLVm updateURLVm)
     {
-      var result = await _userInfoService.UpdateFacebookURL(updateURLVm);
-
-      if (result.StatusCode != (int)HttpStatusCode.OK)
-      {
-        return BadRequest(result);
-      }
-
-      return Ok(result);
+      return await _userInfoService.UpdateFacebookURL(updateURLVm);
     }
 
     [Authorize]

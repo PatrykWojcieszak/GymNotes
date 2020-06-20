@@ -6,6 +6,8 @@ using GymNotes.Repository.IRepository.User;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,12 +37,12 @@ namespace GymNotes.Service.Service
         var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
         if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + updateURLVm.UserId + "not found");
+          return new ApiResponse((int)HttpStatusCode.NotFound, "User not found");
 
         user.Instagram = updateURLVm.URL;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -62,7 +64,7 @@ namespace GymNotes.Service.Service
         user.Facebook = updateURLVm.URL;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -84,7 +86,7 @@ namespace GymNotes.Service.Service
         user.Twitter = updateURLVm.URL;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -106,7 +108,7 @@ namespace GymNotes.Service.Service
         user.Youtube = updateURLVm.URL;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -128,7 +130,7 @@ namespace GymNotes.Service.Service
         user.Description = stringUpdateVm.Content;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -150,7 +152,7 @@ namespace GymNotes.Service.Service
         user.Discipline = stringUpdateVm.Content;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -172,7 +174,7 @@ namespace GymNotes.Service.Service
         user.Gender = stringUpdateVm.Content;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -194,7 +196,7 @@ namespace GymNotes.Service.Service
         user.YearsOfExperience = numberUpdateVm.Value;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -216,7 +218,7 @@ namespace GymNotes.Service.Service
         user.Height = numberUpdateVm.Value;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -238,7 +240,7 @@ namespace GymNotes.Service.Service
         user.Birthday = dateUpdateVm.Date;
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }
@@ -259,7 +261,7 @@ namespace GymNotes.Service.Service
         user.IsCoach = Convert.ToBoolean(stringUpdateVm.Content);
 
         _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
         return new ApiResponse((int)HttpStatusCode.OK);
       }

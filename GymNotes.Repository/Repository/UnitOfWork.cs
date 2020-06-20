@@ -165,14 +165,14 @@ namespace GymNotes.Repository.Repository
       }
     }
 
-    public void CompleteAsync()
+    public async Task CompleteAsync()
     {
-      var t = _context.SaveChanges();
+      await _context.SaveChangesAsync();
     }
 
-    public void Dispose()
+    public async Task Dispose()
     {
-      _context.Dispose();
+      await _context.DisposeAsync();
     }
   }
 }

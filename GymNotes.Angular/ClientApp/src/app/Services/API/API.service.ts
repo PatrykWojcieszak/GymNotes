@@ -26,7 +26,7 @@ export class APIService {
 	}
 
 	public BuildAddress(Controller: string, Method: string, Parameters: string[]) {
-		let address: string = 'https://localhost:44346/api/';
+		let address: string = 'https://localhost:5001/api/';
 		address += Controller + Method;
 
 		if (Parameters != null) {

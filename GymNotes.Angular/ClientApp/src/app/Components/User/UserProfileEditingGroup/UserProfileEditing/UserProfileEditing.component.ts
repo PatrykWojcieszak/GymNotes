@@ -125,7 +125,7 @@ export class UserProfileEditingComponent implements OnInit {
       userId: this.userAuthentication.UserId,
       uRL: this.UserInfo.instagram,
     }
-
+    console.warn(model);
     this.userInfo.UpdateInstagramUrl(model).subscribe(
 			(res: any) => {
         
@@ -138,7 +138,7 @@ export class UserProfileEditingComponent implements OnInit {
 
   updateFacebookURL(e: any){
     const model = {
-      userId: this.userAuthentication.UserId,
+      userId: "this.userAuthentication.UserId",
       uRL: this.UserInfo.facebook,
     }
 

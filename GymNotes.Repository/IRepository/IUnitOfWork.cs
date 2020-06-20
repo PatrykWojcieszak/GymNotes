@@ -27,8 +27,8 @@ namespace GymNotes.Repository.IRepository
     IAchievementRepository achievementsRepository { get; }
     IAchievementDyscyplineRepository achievementDyscyplineRepository { get; }
 
-    void CompleteAsync();
+    Task CompleteAsync();
 
-    void Dispose();
+    Task Dispose();
   }
 }
