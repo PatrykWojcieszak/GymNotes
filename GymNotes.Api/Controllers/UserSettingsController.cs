@@ -23,6 +23,8 @@ namespace GymNotes.Controllers
       _userSettingsService = userSettingsService;
     }
 
+    #region Post
+
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("changeName/")]
@@ -41,6 +43,10 @@ namespace GymNotes.Controllers
     public async Task<IActionResult> ChangeEmail([FromBody] UserEmailVm userEmailVm) =>
       Ok(await _userSettingsService.ChangeEmail(userEmailVm));
 
+    #endregion Post
+
+    #region Get
+
     [Authorize]
     [HttpGet("getUserFullName/{userId}")]
     public IActionResult GetUserFullName(string userId) =>
@@ -50,5 +56,7 @@ namespace GymNotes.Controllers
     [HttpGet("getUserEmail/{userId}")]
     public IActionResult GetUserEmail(string userId) =>
       Ok(_userSettingsService.GetUserEmail(userId));
+
+    #endregion Get
   }
 }

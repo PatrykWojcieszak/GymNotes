@@ -35,6 +35,8 @@ namespace GymNotes.Controllers
       _coachService = coachService;
     }
 
+    #region Post
+
     //TODO: Sprawdzić
     [Authorize]
     [ApiValidationFilter]
@@ -49,6 +51,10 @@ namespace GymNotes.Controllers
     public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm) =>
       Ok(await _coachService.CoachCancelManagment(coachCancelManagmentVm));
 
+    #endregion Post
+
+    #region Get
+
     //TODO: Sprawdzić
     [Authorize]
     [HttpGet("coachPupilList/{coachId}")]
@@ -60,5 +66,7 @@ namespace GymNotes.Controllers
     [HttpGet("coachRequestList/{coachId}")]
     public IActionResult CoachRequestList(string coachId) =>
       Ok(_coachService.CoachRequestList(coachId));
+
+    #endregion Get
   }
 }

@@ -23,11 +23,23 @@ namespace GymNotes.Controllers
       _chatService = chatService;
     }
 
+    #region Post
+
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("addContact/")]
     public async Task<IActionResult> AddContact([FromBody] ContactVm contactVm) =>
       Ok(await _chatService.AddContact(contactVm));
+
+    [Authorize]
+    [ApiValidationFilter]
+    [HttpPost("addMessage/")]
+    public async Task<IActionResult> AddMessage([FromBody] ChatMessageVm chatMessageVm) =>
+      Ok(await _chatService.AddMessage(chatMessageVm));
+
+    #endregion Post
+
+    #region Get
 
     [Authorize]
     [ApiValidationFilter]
@@ -43,14 +55,10 @@ namespace GymNotes.Controllers
 
     [Authorize]
     [ApiValidationFilter]
-    [HttpPost("addMessage/")]
-    public async Task<IActionResult> AddMessage([FromBody] ChatMessageVm chatMessageVm) =>
-      Ok(await _chatService.AddMessage(chatMessageVm));
-
-    [Authorize]
-    [ApiValidationFilter]
     [HttpGet("getMessageList/")]
     public IActionResult GetMessageList([FromQuery] ContactVm contactVm) =>
       Ok(_chatService.GetMessageList(contactVm));
+
+    #endregion Get
   }
 }

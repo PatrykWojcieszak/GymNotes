@@ -23,11 +23,7 @@ namespace GymNotes.Controllers
       _userOpinionService = userOpinionService;
     }
 
-    [Authorize]
-    [ApiValidationFilter]
-    [HttpGet("getUserOpinions/{userId}")]
-    public IActionResult GetUserOpinions(string userId) =>
-      Ok(_userOpinionService.GetUserOpinions(userId));
+    #region Post
 
     [Authorize]
     [ApiValidationFilter]
@@ -45,5 +41,17 @@ namespace GymNotes.Controllers
     [HttpPost("removeLikeFromOpinion/{userId}/{opinionId}")]
     public async Task<IActionResult> RemoveLikeFromOpinion(string userId, int opinionId) =>
       Ok(await _userOpinionService.RemoveLikeFromUserOpinion(userId, opinionId));
+
+    #endregion Post
+
+    #region Get
+
+    [Authorize]
+    [ApiValidationFilter]
+    [HttpGet("getUserOpinions/{userId}")]
+    public IActionResult GetUserOpinions(string userId) =>
+      Ok(_userOpinionService.GetUserOpinions(userId));
+
+    #endregion Get
   }
 }

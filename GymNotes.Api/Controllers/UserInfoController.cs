@@ -23,6 +23,8 @@ namespace GymNotes.Controllers
       _userInfoService = userInfoService;
     }
 
+    #region Post
+
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateInstagramUrl/")]
@@ -88,5 +90,7 @@ namespace GymNotes.Controllers
     [HttpPost("updateBirthday/")]
     public async Task<IActionResult> UpdateBirthday([FromBody] DateUpdateVm dateUpdateVm) =>
       Ok(await _userInfoService.UpdateBirthday(dateUpdateVm));
+
+    #endregion Post
   }
 }
