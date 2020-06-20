@@ -26,81 +26,31 @@ namespace GymNotes.Controllers
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("addContact/")]
-    public async Task<IActionResult> AddContact([FromBody] ContactVm contactVm)
-    {
-      //if (!ModelState.IsValid)
-      //  return BadRequest(ModelState);
-
-      var result = await _chatService.AddContact(contactVm);
-
-      if (result)
-        return Ok(result);
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public async Task<IActionResult> AddContact([FromBody] ContactVm contactVm) =>
+      Ok(await _chatService.AddContact(contactVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpGet("getContactList/{userId}")]
-    public async Task<IActionResult> GetContactList(string userId)
-    {
-      //if (!ModelState.IsValid)
-      //  return BadRequest(ModelState);
-
-      var result = await _chatService.GetContactList(userId);
-
-      if (result != null)
-        return Ok(result);
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public IActionResult GetContactList(string userId) =>
+      Ok(_chatService.GetContactList(userId));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpGet("getContact/")]
-    public IActionResult GetContact([FromQuery] ContactVm contactVm)
-    {
-      //if (!ModelState.IsValid)
-      //  return BadRequest(ModelState);
-
-      var result = _chatService.GetContact(contactVm); ;
-
-      if (result != null)
-        return Ok(result);
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public IActionResult GetContact([FromQuery] ContactVm contactVm) =>
+      Ok(_chatService.GetContact(contactVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("addMessage/")]
-    public async Task<IActionResult> AddMessage([FromBody] ChatMessageVm chatMessageVm)
-    {
-      //if (!ModelState.IsValid)
-      //  return BadRequest(ModelState);
-
-      var result = await _chatService.AddMessage(chatMessageVm);
-
-      if (result)
-        return Ok(result);
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public async Task<IActionResult> AddMessage([FromBody] ChatMessageVm chatMessageVm) =>
+      Ok(await _chatService.AddMessage(chatMessageVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpGet("getMessageList/")]
-    public async Task<IActionResult> GetMessageList([FromQuery] ContactVm contactVm)
-    {
-      //if (!ModelState.IsValid)
-      //  return BadRequest(ModelState);
-
-      var result = await _chatService.GetMessageList(contactVm);
-
-      if (result != null)
-        return Ok(result);
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public IActionResult GetMessageList([FromQuery] ContactVm contactVm) =>
+      Ok(_chatService.GetMessageList(contactVm));
   }
 }

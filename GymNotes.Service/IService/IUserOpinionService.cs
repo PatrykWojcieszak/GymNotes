@@ -9,12 +9,12 @@ namespace GymNotes.Service.IService
 {
   public interface IUserOpinionService
   {
-    Task<bool> AddUserOpinion(AddUserOpinionVm addUserOpinionVm);
+    Task<ApiResponse> AddUserOpinion(AddUserOpinionVm addUserOpinionVm);
 
-    Task<bool> AddLikeToUserOpinion(UserOpinionLikesVm userOpinionLikesVm);
+    Task<ApiResponse> AddLikeToUserOpinion(UserOpinionLikesVm userOpinionLikesVm);
 
-    Task<bool> RemoveLikeFromUserOpinion(string userId, int opinionId);
+    Task<ApiResponse> RemoveLikeFromUserOpinion(string userId, int opinionId);
 
-    Task<List<UserOpinionVm>> GetUserOpinions(string userId);
+    List<UserOpinionVm> GetUserOpinions(string userId);
   }
 }

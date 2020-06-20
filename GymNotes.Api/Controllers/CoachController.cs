@@ -39,54 +39,26 @@ namespace GymNotes.Controllers
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("coachManagmentRequest")]
-    public async Task<IActionResult> CoachManagmentRequest([FromBody] CoachManagmentRequestVm coachManagmentRequestVm)
-    {
-      var result = await _coachService.CoachManagmentRequest(coachManagmentRequestVm);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public async Task<IActionResult> CoachManagmentRequest([FromBody] CoachManagmentRequestVm coachManagmentRequestVm) =>
+      Ok(await _coachService.CoachManagmentRequest(coachManagmentRequestVm));
 
     //TODO: Sprawdzić
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("coachCancelManagment")]
-    public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm)
-    {
-      var result = await _coachService.CoachCancelManagment(coachCancelManagmentVm);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm) =>
+      Ok(await _coachService.CoachCancelManagment(coachCancelManagmentVm));
 
     //TODO: Sprawdzić
     [Authorize]
     [HttpGet("coachPupilList/{coachId}")]
-    public IActionResult CoachPupilList(string coachId)
-    {
-      var list = _coachService.CoachPupilList(coachId);
-
-      if (list != null)
-        return Ok(list);
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public IActionResult CoachPupilList(string coachId) =>
+      Ok(_coachService.CoachPupilList(coachId));
 
     //TODO: Sprawdzić
     [Authorize]
     [HttpGet("coachRequestList/{coachId}")]
-    public IActionResult CoachRequestList(string coachId)
-    {
-      var list = _coachService.CoachRequestList(coachId);
-
-      if (list != null)
-        return Ok(list);
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public IActionResult CoachRequestList(string coachId) =>
+      Ok(_coachService.CoachRequestList(coachId));
   }
 }

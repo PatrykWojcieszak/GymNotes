@@ -12,194 +12,295 @@ using System.Threading.Tasks;
 using GymNotes.Service.Utils;
 using GymNotes.Repository.IRepository.User;
 using Microsoft.EntityFrameworkCore;
+using GymNotes.Service.Exceptions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.WebUtilities;
+using GymNotes.Service.Email;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace GymNotes.Service.Service
 {
-  public class UserService : IApplicationUserService
+  public class UserService : IUserService
   {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private UserManager<ApplicationUser> _userManager;
+    private SignInManager<ApplicationUser> _signInManager;
+    private ApplicationSettings _appSettings;
 
     public UserService(
       IMapper mapper,
-      IUnitOfWork unitOfWork)
+      IUnitOfWork unitOfWork,
+      UserManager<ApplicationUser> userManager,
+      SignInManager<ApplicationUser> signInManager,
+      IOptions<ApplicationSettings> appSettings)
     {
       _mapper = mapper;
       _unitOfWork = unitOfWork;
+      _userManager = userManager;
+      _signInManager = signInManager;
+      _appSettings = appSettings.Value;
     }
 
-    public async Task<bool> UpdateUserInfo(string id, ApplicationUserVm userVm)
+    public async Task<ApiResponse> Register(UserRegisterVm userModel)
     {
-      try
+      var applicationUser = new ApplicationUser()
       {
-        var userModel = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+        Email = userModel.Email,
+        FirstName = userModel.FirstName,
+        LastName = userModel.LastName,
+        UserName = userModel.Email,
+      };
 
-        if (userModel == null)
-          return false;
+      var result = await _userManager.CreateAsync(applicationUser, userModel.Password);
 
-        _mapper.Map(userVm, userModel);
+      var user = await _userManager.FindByEmailAsync(applicationUser.Email);
 
-        _unitOfWork.userRepository.Update(userModel);
-        _unitOfWork.CompleteAsync();
-
-        return true;
-      }
-      catch (Exception ex)
+      if (user != null && result.Succeeded)
       {
-        return false;
+        await _unitOfWork.CompleteAsync();
+
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        byte[] tokenGeneratedBytes = Encoding.UTF8.GetBytes(token);
+        var codeEncoded = WebEncoders.Base64UrlEncode(tokenGeneratedBytes);
+
+        var url = "http://localhost:5000/emailConfirmation" + "?email=" + user.Email + "&token=" + codeEncoded;
+
+        SendEmail.Send(user.Email, "Email confirmation", url);
+
+        return new ApiResponse(result.Succeeded);
       }
+      else
+      {
+        throw new MyException(ApiResponseDescription.EMAIL_ALREADY_IN_USE);
+      }
+    }
+
+    public async Task<UserAuthenticatedVm> Login(UserLoginVm model)
+    {
+      var user = await _userManager.FindByNameAsync(model.Email);
+
+      if (user == null)
+        throw new MyException(ApiResponseDescription.INCORECT_EMAIL);
+
+      if (await _userManager.CheckPasswordAsync(user, model.Password))
+      {
+        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.isPersistent, lockoutOnFailure: false);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+          Subject = new ClaimsIdentity(new Claim[] {
+          new Claim ("UserID", user.Id.ToString ()),
+          }),
+          Expires = DateTime.UtcNow.AddDays(1),
+          SigningCredentials = new SigningCredentials(
+          new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),
+          SecurityAlgorithms.HmacSha256Signature)
+        };
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+        var token = tokenHandler.WriteToken((securityToken));
+
+        return new UserAuthenticatedVm()
+        {
+          Token = token,
+          Id = user.Id,
+          FirstName = user.FirstName,
+          LastName = user.LastName,
+          Email = user.Email,
+          Alias = user.Alias
+        };
+      }
+      else
+        throw new MyException(ApiResponseDescription.INCORECT_PAASWORD);
+    }
+
+    public async Task<ApiResponse> ConfirmEmailAddress(EmailConfirmationVm model)
+    {
+      var user = await _userManager.FindByEmailAsync(model.Email);
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var codeDecodedBytes = WebEncoders.Base64UrlDecode(model.Token);
+      var codeDecoded = Encoding.UTF8.GetString(codeDecodedBytes);
+
+      var result = await _userManager.ConfirmEmailAsync(user, codeDecoded);
+
+      if (result.Succeeded)
+        return new ApiResponse(true);
+      else
+        throw new MyException(ApiResponseDescription.EMAIL_ADDRESS_COULD_NOT_BE_CONFIRMED);
+    }
+
+    public async Task<ApiResponse> ForgotPassword(EmailVm model)
+    {
+      var user = await _userManager.FindByEmailAsync(model.Email);
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+      byte[] tokenGeneratedBytes = Encoding.UTF8.GetBytes(token);
+      var codeEncoded = WebEncoders.Base64UrlEncode(tokenGeneratedBytes);
+
+      var url = "http://localhost:5000/forgotPassword" + "?email=" + user.Email + "&token=" + codeEncoded;
+
+      SendEmail.Send(user.Email, "Password reset request", url);
+
+      return new ApiResponse(true);
+    }
+
+    public async Task<ApiResponse> ResetPassword(PasswordResetVm model)
+    {
+      var user = await _userManager.FindByEmailAsync(model.Email);
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var codeDecodedBytes = WebEncoders.Base64UrlDecode(model.Token);
+      var tokenDecoded = Encoding.UTF8.GetString(codeDecodedBytes);
+
+      var result = await _userManager.ResetPasswordAsync(user, tokenDecoded, model.Password);
+
+      return new ApiResponse(result.Succeeded);
+    }
+
+    public async Task<ApiResponse> UpdateUserInfo(string id, ApplicationUserVm userVm)
+    {
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      _mapper.Map(userVm, user);
+
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
     }
 
     public UserUpdateInfoVm GetUserUpdateInfo(string id)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
 
-        if (user == null)
-          return null;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var result = _mapper.Map<ApplicationUser, UserUpdateInfoVm>(user);
+      var result = _mapper.Map<ApplicationUser, UserUpdateInfoVm>(user);
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
 
     public ApplicationUserVm GetUser(string id)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
 
-        if (user == null)
-          return null;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var result = _mapper.Map<ApplicationUser, ApplicationUserVm>(user);
+      var result = _mapper.Map<ApplicationUser, ApplicationUserVm>(user);
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
 
-    public async Task<bool> AddOrUpdateUserAchievement(string id, AchievementDyscyplineVm achievementDyscyplineVm)
+    public async Task<ApiResponse> AddOrUpdateUserAchievement(string id, AchievementDyscyplineVm achievementDyscyplineVm)
     {
-      try
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      if (achievementDyscyplineVm.Id == 0)
       {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+        var model = _mapper.Map<AchievementDyscyplineVm, AchievementDyscypline>(achievementDyscyplineVm);
 
-        if (user == null)
-          return false;
+        model.ApplicationUserId = id;
 
-        if (achievementDyscyplineVm.Id == 0)
-        {
-          var model = _mapper.Map<AchievementDyscyplineVm, AchievementDyscypline>(achievementDyscyplineVm);
-
-          model.ApplicationUserId = id;
-
-          _unitOfWork.achievementDyscyplineRepository.Create(model);
-        }
-        else
-        {
-          var model = _unitOfWork.achievementDyscyplineRepository.FindByCondition(x => x.Id == achievementDyscyplineVm.Id).FirstOrDefault();
-
-          _mapper.Map<AchievementDyscyplineVm, AchievementDyscypline>(achievementDyscyplineVm, model);
-
-          _unitOfWork.achievementDyscyplineRepository.Update(model);
-        }
-
-        _unitOfWork.CompleteAsync();
-
-        return true;
+        _unitOfWork.achievementDyscyplineRepository.Create(model);
       }
-      catch (Exception ex)
+      else
       {
-        return false;
+        var model = _unitOfWork.achievementDyscyplineRepository.FindByCondition(x => x.Id == achievementDyscyplineVm.Id).FirstOrDefault();
+
+        _mapper.Map<AchievementDyscyplineVm, AchievementDyscypline>(achievementDyscyplineVm, model);
+
+        _unitOfWork.achievementDyscyplineRepository.Update(model);
       }
+
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
     }
 
     public AchievementDyscyplineVm GetUserAchievements(string userId, int id)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
-        if (user == null)
-          return null;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var model = _unitOfWork.achievementDyscyplineRepository.FindByCondition(x => x.Id == id).Include(x => x.Achievements).FirstOrDefault();
+      var model = _unitOfWork.achievementDyscyplineRepository.FindByCondition(x => x.Id == id).Include(x => x.Achievements).FirstOrDefault();
 
-        var result = _mapper.Map<AchievementDyscypline, AchievementDyscyplineVm>(model);
+      var result = _mapper.Map<AchievementDyscypline, AchievementDyscyplineVm>(model);
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
 
     public List<AchievementDyscyplineVm> GetUserAchievementsList(string userId)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
-        if (user == null)
-          return null;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var model = _unitOfWork.achievementDyscyplineRepository.FindByCondition(x => x.ApplicationUserId == userId).Include(x => x.Achievements).ToList();
+      var model = _unitOfWork.achievementDyscyplineRepository.FindByCondition(x => x.ApplicationUserId == userId).Include(x => x.Achievements).ToList();
 
-        var result = _mapper.Map<List<AchievementDyscypline>, List<AchievementDyscyplineVm>>(model);
+      var result = _mapper.Map<List<AchievementDyscypline>, List<AchievementDyscyplineVm>>(model);
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
 
-    public async Task<bool> DeleteUserAchievementDyscypline(string userId, int id)
+    public async Task<ApiResponse> DeleteUserAchievementDyscypline(string userId, int id)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
       if (user == null)
-        return false;
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      var model = _unitOfWork.achievementDyscyplineRepository.FindByCondition(x => x.Id == id).Include(x => x.Achievements).FirstOrDefault();
+      var achievementDyscyplines = _unitOfWork.achievementDyscyplineRepository.FindByCondition(x => x.Id == id).Include(x => x.Achievements).FirstOrDefault();
 
-      if (model == null)
-        return false;
+      if (achievementDyscyplines == null)
+        throw new MyNotFoundException(ApiResponseDescription.ACHIEVEMENT_DYSCYPLINE_NOT_FOUND);
 
-      _unitOfWork.achievementDyscyplineRepository.Delete(model);
-      _unitOfWork.CompleteAsync();
+      _unitOfWork.achievementDyscyplineRepository.Delete(achievementDyscyplines);
+      await _unitOfWork.CompleteAsync();
 
-      return true;
+      return new ApiResponse(true);
     }
 
-    public async Task<bool> DeleteUserAchievement(string userId, int id)
+    public async Task<ApiResponse> DeleteUserAchievement(string userId, int id)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
       if (user == null)
-        return false;
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
       var model = _unitOfWork.achievementsRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
 
       if (model == null)
-        return false;
+        throw new MyNotFoundException(ApiResponseDescription.ACHIEVEMENT_NOT_FOUND);
 
       _unitOfWork.achievementsRepository.Delete(model);
-      _unitOfWork.CompleteAsync();
+      await _unitOfWork.CompleteAsync();
 
-      return true;
+      return new ApiResponse(true);
     }
 
     public IQueryable<ApplicationUser> OrderBy(IQueryable<ApplicationUser> query, string orderBy)
@@ -259,30 +360,23 @@ namespace GymNotes.Service.Service
     }
 
     //TODO: Sprawdziæ
-    public async Task<bool> SendCoachingRequest(CoachingRequestVm coachRequestVm)
+    public async Task<ApiResponse> SendCoachingRequest(CoachingRequestVm coachRequestVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachRequestVm.ApplicationUserId).FirstOrDefault();
-        var userCoach = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachRequestVm.CoachId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachRequestVm.ApplicationUserId).FirstOrDefault();
+      var userCoach = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachRequestVm.CoachId).FirstOrDefault();
 
-        if (user == null && userCoach == null && user.Id != userCoach.Id)
-          return false;
+      if (user == null && userCoach == null && user.Id != userCoach.Id)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var model = _mapper.Map<CoachingRequestVm, CoachingRequest>(coachRequestVm);
+      var model = _mapper.Map<CoachingRequestVm, CoachingRequest>(coachRequestVm);
 
-        model.ApplicationUserId = coachRequestVm.ApplicationUserId;
-        model.Status = CoachingRequestStatus.Sent;
+      model.ApplicationUserId = coachRequestVm.ApplicationUserId;
+      model.Status = CoachingRequestStatus.Sent;
 
-        _unitOfWork.coachingRequestRepository.Create(model);
-        _unitOfWork.CompleteAsync();
+      _unitOfWork.coachingRequestRepository.Create(model);
+      await _unitOfWork.CompleteAsync();
 
-        return true;
-      }
-      catch (Exception ex)
-      {
-        return false;
-      }
+      return new ApiResponse(true);
     }
   }
 }

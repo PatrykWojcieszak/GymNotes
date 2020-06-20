@@ -10,6 +10,7 @@ using GymNotes.Service.ViewModels;
 using GymNotes.Entity.Models;
 using System.Threading.Tasks;
 using GymNotes.Repository.IRepository.User;
+using GymNotes.Service.Exceptions;
 
 namespace GymNotes.Service.Service
 {
@@ -27,125 +28,96 @@ namespace GymNotes.Service.Service
     }
 
     //TODO: Sprawdzić
-    public async Task<bool> CoachManagmentRequest(CoachManagmentRequestVm coachManagmentRequestVm)
+    public async Task<ApiResponse> CoachManagmentRequest(CoachManagmentRequestVm coachManagmentRequestVm)
     {
-      try
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachManagmentRequestVm.ProfilePupilId).FirstOrDefault();
+      var userCoach = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachManagmentRequestVm.ProfileCoachId).FirstOrDefault();
+      var status = coachManagmentRequestVm.Partnership;
+
+      if (user == null && userCoach == null && user.Id != userCoach.Id)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      if (status == true)
       {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachManagmentRequestVm.ProfilePupilId).FirstOrDefault();
-        var userCoach = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachManagmentRequestVm.ProfileCoachId).FirstOrDefault();
-        var status = coachManagmentRequestVm.Partnership;
+        var model = _mapper.Map<CoachManagmentRequestVm, Pupil>(coachManagmentRequestVm);
 
-        if (user == null && userCoach == null && user.Id != userCoach.Id)
+        model.ProfilePupilId = coachManagmentRequestVm.ProfilePupilId;
 
-          return false;
+        _unitOfWork.pupilRepository.Create(model);
 
-        if (status == true)
-        {
-          var model = _mapper.Map<CoachManagmentRequestVm, Pupil>(coachManagmentRequestVm);
+        var coachRequest = _unitOfWork.coachingRequestRepository.FindByCondition(x => x.CoachId == userCoach.Id && x.ApplicationUserId == user.Id).FirstOrDefault();
 
-          model.ProfilePupilId = coachManagmentRequestVm.ProfilePupilId;
+        coachRequest.Status = CoachingRequestStatus.Accepted; //(CoachingRequestStatus)1;
 
-          _unitOfWork.pupilRepository.Create(model);
+        _unitOfWork.coachingRequestRepository.Update(coachRequest);
 
-          var coachRequest = _unitOfWork.coachingRequestRepository.FindByCondition(x => x.CoachId == userCoach.Id && x.ApplicationUserId == user.Id).FirstOrDefault();
+        await _unitOfWork.CompleteAsync();
 
-          coachRequest.Status = CoachingRequestStatus.Accepted; //(CoachingRequestStatus)1;
-
-          _unitOfWork.coachingRequestRepository.Update(coachRequest);
-
-          _unitOfWork.CompleteAsync();
-
-          return true;
-        }
-        if (status == false)
-        {
-          var coachRequest = _unitOfWork.coachingRequestRepository.FindByCondition(x => x.CoachId == userCoach.Id && x.ApplicationUserId == user.Id).FirstOrDefault();
-
-          coachRequest.Status = (CoachingRequestStatus)2;
-
-          _unitOfWork.coachingRequestRepository.Update(coachRequest);
-
-          _unitOfWork.CompleteAsync();
-
-          return true;
-        }
-        else
-        {
-          return false;
-        }
+        return new ApiResponse(true);
       }
-      catch (Exception ex)
+      else
       {
-        return false;
-      }
-    }
-
-    //TODO: Sprawdzić
-    public async Task<bool> CoachCancelManagment(CoachCancelManagmentVm coachCancelManagmentVm)
-    {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachCancelManagmentVm.ProfilePupilId).FirstOrDefault();
-        var userCoach = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachCancelManagmentVm.ProfileCoachId).FirstOrDefault();
-        var status = coachCancelManagmentVm.Partnership;
-
-        if (user == null && userCoach == null && user.Id != userCoach.Id && status == true)
-          return false;
-
-        var pupil = _unitOfWork.pupilRepository.FindByCondition(x => x.ProfileCoachId == userCoach.Id && x.ProfilePupilId == user.Id).FirstOrDefault();
-
-        pupil.Partnership = status;
-
-        _unitOfWork.pupilRepository.Update(pupil);
-
         var coachRequest = _unitOfWork.coachingRequestRepository.FindByCondition(x => x.CoachId == userCoach.Id && x.ApplicationUserId == user.Id).FirstOrDefault();
 
         coachRequest.Status = (CoachingRequestStatus)2;
 
         _unitOfWork.coachingRequestRepository.Update(coachRequest);
 
-        _unitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
-        return true;
+        return new ApiResponse(true);
       }
-      catch (Exception ex)
-      {
-        return false;
-      }
+    }
+
+    //TODO: Sprawdzić
+    public async Task<ApiResponse> CoachCancelManagment(CoachCancelManagmentVm coachCancelManagmentVm)
+    {
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachCancelManagmentVm.ProfilePupilId).FirstOrDefault();
+      var userCoach = _unitOfWork.userRepository.FindByCondition(x => x.Id == coachCancelManagmentVm.ProfileCoachId).FirstOrDefault();
+      var status = coachCancelManagmentVm.Partnership;
+
+      if (user == null && userCoach == null && user.Id != userCoach.Id && status == true)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var pupil = _unitOfWork.pupilRepository.FindByCondition(x => x.ProfileCoachId == userCoach.Id && x.ProfilePupilId == user.Id).FirstOrDefault();
+
+      pupil.Partnership = status;
+
+      _unitOfWork.pupilRepository.Update(pupil);
+
+      var coachRequest = _unitOfWork.coachingRequestRepository.FindByCondition(x => x.CoachId == userCoach.Id && x.ApplicationUserId == user.Id).FirstOrDefault();
+
+      coachRequest.Status = (CoachingRequestStatus)2;
+
+      _unitOfWork.coachingRequestRepository.Update(coachRequest);
+
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
     }
 
     //TODO: Sprawdzić
     public List<CoachManagmentRequestVm> CoachPupilList(string coachId)
     {
-      try
-      {
-        if (coachId == null)
-          return null;
-        var list = _unitOfWork.pupilRepository.FindByCondition(x => x.ProfileCoachId == coachId && x.Partnership == true).ToList();
-        var result = _mapper.Map<List<Pupil>, List<CoachManagmentRequestVm>>(list);
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      if (coachId == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var list = _unitOfWork.pupilRepository.FindByCondition(x => x.ProfileCoachId == coachId && x.Partnership == true).ToList();
+      var result = _mapper.Map<List<Pupil>, List<CoachManagmentRequestVm>>(list);
+
+      return result;
     }
 
     //TODO: Sprawdzić
     public List<CoachingRequestVm> CoachRequestList(string coachId)
     {
-      try
-      {
-        if (coachId == null)
-          return null;
-        var list = _unitOfWork.coachingRequestRepository.FindByCondition(x => x.CoachId == coachId && x.Status == CoachingRequestStatus.Sent).ToList();
-        var result = _mapper.Map<List<CoachingRequest>, List<CoachingRequestVm>>(list);
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      if (coachId == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var list = _unitOfWork.coachingRequestRepository.FindByCondition(x => x.CoachId == coachId && x.Status == CoachingRequestStatus.Sent).ToList();
+      var result = _mapper.Map<List<CoachingRequest>, List<CoachingRequestVm>>(list);
+
+      return result;
     }
   }
 }

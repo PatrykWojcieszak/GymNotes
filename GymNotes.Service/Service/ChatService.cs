@@ -4,6 +4,7 @@ using GymNotes.Models;
 using GymNotes.Repository.IRepository;
 using GymNotes.Repository.IRepository.Chat;
 using GymNotes.Repository.IRepository.User;
+using GymNotes.Service.Exceptions;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using GymNotes.Service.ViewModels.Chat;
@@ -32,175 +33,105 @@ namespace GymNotes.Service.Service
 
     public async Task<bool> AddContact(ContactVm addContactVm)
     {
-      try
-      {
-        //var user = _userRepo.GetUserById(addContactVm.UserId);
-
-        //if (user == null)
-        //  return false;
-
-        //var receipent = _userRepo.GetUserById(addContactVm.ReceipentId);
-
-        //if (user == null)
-        //  return false;
-
-        //var isRecipentExist = user.Contacts.FirstOrDefault(x => x.ReceipentId == receipent.Id);
-
-        //if (isRecipentExist == null)
-        //{
-        //  var currentDate = DateTime.Now;
-
-        //  var contactUser = new Contact()
-        //  {
-        //    ReceipentId = receipent.Id,
-        //    DateAdded = currentDate,
-        //  };
-
-        //  user.Contacts.Add(contactUser);
-
-        //  var contactRecipent = new Contact()
-        //  {
-        //    ReceipentId = user.Id,
-        //    DateAdded = currentDate,
-        //  };
-
-        //  receipent.Contacts.Add(contactRecipent);
-
-        //  await _unitOfWork.CompleteAsync();
-        //}
-
-        return true;
-      }
-      catch (Exception ex)
-      {
-        return false;
-      }
+      return true;
     }
 
-    public async Task<List<ApplicationUserVm>> GetContactList(string userId)
+    public List<ApplicationUserVm> GetContactList(string userId)
     {
-      try
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var contacts = _unitOfWork.contactRepository.FindByCondition(x => x.ReceiverId == userId || x.SenderId == userId).ToList();
+
+      var contactList = new List<ApplicationUserVm>();
+
+      for (int i = 0; i < contacts.Count; i++)
       {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
-
-        if (user == null)
-          return null;
-
-        var contacts = _unitOfWork.contactRepository.FindByCondition(x => x.ReceiverId == userId || x.SenderId == userId).ToList();
-
-        var contactList = new List<ApplicationUserVm>();
-
-        for (int i = 0; i < contacts.Count; i++)
+        if (contacts[i].SenderId != userId)
         {
-          if (contacts[i].SenderId != userId)
-          {
-            contacts[i].ReceiverId = contacts[i].SenderId;
-            contacts[i].SenderId = userId;
-          }
-
-          var receipent = _unitOfWork.userRepository.FindByCondition(x => x.Id == contacts[i].ReceiverId).FirstOrDefault();
-
-          var res = _mapper.Map<ApplicationUser, ApplicationUserVm>(receipent);
-
-          contactList.Add(res);
+          contacts[i].ReceiverId = contacts[i].SenderId;
+          contacts[i].SenderId = userId;
         }
 
-        return contactList;
+        var receipent = _unitOfWork.userRepository.FindByCondition(x => x.Id == contacts[i].ReceiverId).FirstOrDefault();
+
+        var res = _mapper.Map<ApplicationUser, ApplicationUserVm>(receipent);
+
+        contactList.Add(res);
       }
-      catch (Exception ex)
-      {
-        return null;
-      }
+
+      return contactList;
     }
 
     public ApplicationUserVm GetContact(ContactVm contactVm)
     {
-      try
-      {
-        var sender = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.UserId).FirstOrDefault();
-        var receiver = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.ReceipentId).FirstOrDefault();
+      var sender = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.UserId).FirstOrDefault();
+      var receiver = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.ReceipentId).FirstOrDefault();
 
-        if (sender == null || receiver == null)
-          return null;
+      if (sender == null || receiver == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var result = _mapper.Map<ApplicationUser, ApplicationUserVm>(receiver);
+      var result = _mapper.Map<ApplicationUser, ApplicationUserVm>(receiver);
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
 
-    public async Task<bool> AddMessage(ChatMessageVm chatMessageVm)
+    public async Task<ApiResponse> AddMessage(ChatMessageVm chatMessageVm)
     {
-      try
+      var contact = _unitOfWork.contactRepository.FindByCondition(x => x.ReceiverId == chatMessageVm.ReceiverId && x.SenderId == chatMessageVm.SenderId).FirstOrDefault();
+      var msg = _mapper.Map<ChatMessageVm, Message>(chatMessageVm);
+      msg.SenderId = chatMessageVm.SenderId;
+
+      if (contact == null)
       {
-        var contact = _unitOfWork.contactRepository.FindByCondition(x => x.ReceiverId == chatMessageVm.ReceiverId && x.SenderId == chatMessageVm.SenderId).FirstOrDefault();
-        var msg = _mapper.Map<ChatMessageVm, Message>(chatMessageVm);
-        msg.SenderId = chatMessageVm.SenderId;
-
-        if (contact == null)
-        {
-          var con = _mapper.Map<ChatMessageVm, Contact>(chatMessageVm);
-          _unitOfWork.contactRepository.Create(con);
-          _unitOfWork.CompleteAsync();
-        }
-
-        contact = _unitOfWork.contactRepository.FindByCondition(x => x.ReceiverId == chatMessageVm.ReceiverId && x.SenderId == chatMessageVm.SenderId).FirstOrDefault();
-
-        msg.ContactId = contact.Id;
-        _unitOfWork.messageRepository.Create(msg);
-
-        _unitOfWork.CompleteAsync();
-
-        return true;
+        var con = _mapper.Map<ChatMessageVm, Contact>(chatMessageVm);
+        _unitOfWork.contactRepository.Create(con);
+        await _unitOfWork.CompleteAsync();
       }
-      catch (Exception ex)
-      {
-        return false;
-      }
+
+      contact = _unitOfWork.contactRepository.FindByCondition(x => x.ReceiverId == chatMessageVm.ReceiverId && x.SenderId == chatMessageVm.SenderId).FirstOrDefault();
+
+      msg.ContactId = contact.Id;
+      _unitOfWork.messageRepository.Create(msg);
+
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
     }
 
-    public async Task<List<ChatMessageVm>> GetMessageList(ContactVm contactVm)
+    public List<ChatMessageVm> GetMessageList(ContactVm contactVm)
     {
-      try
+      var sender = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.UserId).FirstOrDefault();
+      var receiver = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.ReceipentId).FirstOrDefault();
+
+      if (sender == null || receiver == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var contact = _unitOfWork.contactRepository.
+        FindByCondition(
+        x => x.ReceiverId == contactVm.UserId &&
+        x.SenderId == contactVm.ReceipentId ||
+        x.ReceiverId == contactVm.ReceipentId &&
+        x.SenderId == contactVm.UserId).FirstOrDefault();
+
+      if (contact == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var message = _unitOfWork.messageRepository.FindByCondition(x => x.ContactId == contact.Id);
+      var msg = message.Skip(Math.Max(0, message.Count() - 50)).ToList();
+      var result = _mapper.Map<List<Message>, List<ChatMessageVm>>(msg);
+
+      foreach (var item in result)
       {
-        var sender = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.UserId).FirstOrDefault();
-        var receiver = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.ReceipentId).FirstOrDefault();
-
-        if (sender == null || receiver == null)
-          return null;
-
-        var contact = _unitOfWork.contactRepository.
-          FindByCondition(
-          x => x.ReceiverId == contactVm.UserId &&
-          x.SenderId == contactVm.ReceipentId ||
-          x.ReceiverId == contactVm.ReceipentId &&
-          x.SenderId == contactVm.UserId).FirstOrDefault();
-
-        if (contact == null)
-          return null;
-
-        var message = _unitOfWork.messageRepository.FindByCondition(x => x.ContactId == contact.Id);
-        var msg = message.Skip(Math.Max(0, message.Count() - 50)).ToList();
-        var result = _mapper.Map<List<Message>, List<ChatMessageVm>>(msg);
-
-        foreach (var item in result)
-        {
-          if (item.SenderId == contactVm.UserId)
-            item.IsSender = true;
-          else
-            item.IsSender = false;
-        }
-
-        return result;
+        if (item.SenderId == contactVm.UserId)
+          item.IsSender = true;
+        else
+          item.IsSender = false;
       }
-      catch (Exception ex)
-      {
-        return null;
-      }
+
+      return result;
     }
   }
 }

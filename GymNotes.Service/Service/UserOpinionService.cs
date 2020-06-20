@@ -3,6 +3,7 @@ using GymNotes.Entity.Models;
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
 using GymNotes.Repository.IRepository.User;
+using GymNotes.Service.Exceptions;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -27,99 +28,62 @@ namespace GymNotes.Service.Service
       _unitOfWork = unitOfWork;
     }
 
-    public async Task<bool> AddUserOpinion(AddUserOpinionVm addUserOpinionVm)
+    public async Task<ApiResponse> AddUserOpinion(AddUserOpinionVm addUserOpinionVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == addUserOpinionVm.ProfileUserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == addUserOpinionVm.ProfileUserId).FirstOrDefault();
 
-        var opinion = _unitOfWork.userOpinionRepository.FindByCondition(x => x.ProfileUserId == addUserOpinionVm.ProfileUserId).ToList();
+      var opinion = _unitOfWork.userOpinionRepository.FindByCondition(x => x.ProfileUserId == addUserOpinionVm.ProfileUserId).ToList();
 
-        if (user == null)
-          return false;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        addUserOpinionVm.DateAdded = DateTime.Now;
+      addUserOpinionVm.DateAdded = DateTime.Now;
 
-        var model = _mapper.Map<AddUserOpinionVm, UserOpinion>(addUserOpinionVm);
+      var model = _mapper.Map<AddUserOpinionVm, UserOpinion>(addUserOpinionVm);
 
-        _unitOfWork.userOpinionRepository.Create(model);
+      _unitOfWork.userOpinionRepository.Create(model);
 
-        _unitOfWork.CompleteAsync();
+      await _unitOfWork.CompleteAsync();
 
-        return true;
-      }
-      catch (Exception ex)
-      {
-        return false;
-      }
+      return new ApiResponse(true);
     }
 
-    public async Task<bool> AddLikeToUserOpinion(UserOpinionLikesVm userOpinionLikesVm)
+    public async Task<ApiResponse> AddLikeToUserOpinion(UserOpinionLikesVm userOpinionLikesVm)
     {
-      try
-      {
-        var opinion = _unitOfWork.userOpinionRepository.FindByCondition(x => x.Id == userOpinionLikesVm.UserOpinionId).FirstOrDefault();
+      var opinion = _unitOfWork.userOpinionRepository.FindByCondition(x => x.Id == userOpinionLikesVm.UserOpinionId).FirstOrDefault();
 
-        if (opinion == null)
-          return false;
+      if (opinion == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var likeModel = _mapper.Map<UserOpinionLikesVm, UserOpinionLikes>(userOpinionLikesVm);
+      var likeModel = _mapper.Map<UserOpinionLikesVm, UserOpinionLikes>(userOpinionLikesVm);
 
-        _unitOfWork.userOpinionLikesRepository.Create(likeModel);
+      _unitOfWork.userOpinionLikesRepository.Create(likeModel);
 
-        _unitOfWork.CompleteAsync();
+      await _unitOfWork.CompleteAsync();
 
-        return true;
-      }
-      catch (Exception ex)
-      {
-        return false;
-      }
+      return new ApiResponse(true);
     }
 
-    public async Task<bool> RemoveLikeFromUserOpinion(string userId, int opinionId)
+    public async Task<ApiResponse> RemoveLikeFromUserOpinion(string userId, int opinionId)
     {
-      try
-      {
-        //var opinionLike = await _userOpinionLikesRepository.GetUserOpinionLike(opinionId, userId);
-
-        //if (opinionLike == null)
-        //  return false;
-
-        //_userOpinionLikesRepository.RemoveLike(opinionLike);
-
-        //await _unitOfWork.CompleteAsync();
-
-        return true;
-      }
-      catch (Exception ex)
-      {
-        return false;
-      }
+      return new ApiResponse(true);
     }
 
-    public async Task<List<UserOpinionVm>> GetUserOpinions(string userId)
+    public List<UserOpinionVm> GetUserOpinions(string userId)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
-        if (user == null)
-          return null;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var opinionList = _unitOfWork.userOpinionRepository.FindByCondition(x => x.ProfileUserId == userId).ToList();
+      var opinionList = _unitOfWork.userOpinionRepository.FindByCondition(x => x.ProfileUserId == userId).ToList();
 
-        if (opinionList == null)
-          return null;
+      if (opinionList == null)
+        throw new MyNotFoundException(ApiResponseDescription.OPINION_NOT_FOUND);
 
-        var result = _mapper.Map<List<UserOpinion>, List<UserOpinionVm>>(opinionList);
+      var result = _mapper.Map<List<UserOpinion>, List<UserOpinionVm>>(opinionList);
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
   }
 }

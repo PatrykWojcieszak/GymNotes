@@ -36,233 +36,163 @@ namespace GymNotes.Service.Service
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
       if (user == null)
-        throw new MyNotFoundException(ErrorDescription.UserNotFound);
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
       user.Instagram = updateURLVm.URL;
 
       _unitOfWork.userRepository.Update(user);
       await _unitOfWork.CompleteAsync();
 
-      return new ApiResponse((int)HttpStatusCode.OK);
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateFacebookURL(UpdateURLVm updateURLVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + updateURLVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Facebook = updateURLVm.URL;
+      user.Facebook = updateURLVm.URL;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateTwitterURL(UpdateURLVm updateURLVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + updateURLVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Twitter = updateURLVm.URL;
+      user.Twitter = updateURLVm.URL;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateYoutubeURL(UpdateURLVm updateURLVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + updateURLVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Youtube = updateURLVm.URL;
+      user.Youtube = updateURLVm.URL;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateDescription(StringUpdateVm stringUpdateVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + stringUpdateVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Description = stringUpdateVm.Content;
+      user.Description = stringUpdateVm.Content;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateDiscipline(StringUpdateVm stringUpdateVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + stringUpdateVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Discipline = stringUpdateVm.Content;
+      user.Discipline = stringUpdateVm.Content;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateGender(StringUpdateVm stringUpdateVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + stringUpdateVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Gender = stringUpdateVm.Content;
+      user.Gender = stringUpdateVm.Content;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateYearsOfExperience(NumberUpdateVm numberUpdateVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + numberUpdateVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.YearsOfExperience = numberUpdateVm.Value;
+      user.YearsOfExperience = numberUpdateVm.Value;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateHeight(NumberUpdateVm numberUpdateVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + numberUpdateVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Height = numberUpdateVm.Value;
+      user.Height = numberUpdateVm.Value;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateBirthday(DateUpdateVm dateUpdateVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == dateUpdateVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == dateUpdateVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + dateUpdateVm.UserId + "not found");
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Birthday = dateUpdateVm.Date;
+      user.Birthday = dateUpdateVm.Date;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<ApiResponse> UpdateIsCoach(StringUpdateVm stringUpdateVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User with ID: " + stringUpdateVm.UserId + "not found");
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.IsCoach = Convert.ToBoolean(stringUpdateVm.Content);
+      user.IsCoach = Convert.ToBoolean(stringUpdateVm.Content);
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse(true);
     }
   }
 }

@@ -2,6 +2,7 @@
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
 using GymNotes.Repository.IRepository.User;
+using GymNotes.Service.Exceptions;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -29,107 +30,72 @@ namespace GymNotes.Service.Service
       _userManager = userManager;
     }
 
-    public async Task<bool> ChangeName(UpdateUserNameVm updateUserNameVm)
+    public async Task<ApiResponse> ChangeName(UpdateUserNameVm updateUserNameVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateUserNameVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateUserNameVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return false;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.FirstName = updateUserNameVm.FirstName;
-        user.LastName = updateUserNameVm.LastName;
-        user.Alias = updateUserNameVm.Alias;
+      user.FirstName = updateUserNameVm.FirstName;
+      user.LastName = updateUserNameVm.LastName;
+      user.Alias = updateUserNameVm.Alias;
 
-        _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return true;
-      }
-      catch (Exception ex)
-      {
-        return false;
-      }
+      return new ApiResponse(true);
     }
 
     public async Task<IdentityResult> ChangePassword(UpdatePasswordVm updatePasswordVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updatePasswordVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updatePasswordVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return null;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var result = await _userManager.ChangePasswordAsync(user, updatePasswordVm.OldPassword, updatePasswordVm.NewPassword);
+      var result = await _userManager.ChangePasswordAsync(user, updatePasswordVm.OldPassword, updatePasswordVm.NewPassword);
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
 
-    public async Task<bool> ChangeEmail(UserEmailVm userEmailVm)
+    public async Task<ApiResponse> ChangeEmail(UserEmailVm userEmailVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userEmailVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userEmailVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return false;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        user.Email = userEmailVm.Email;
+      user.Email = userEmailVm.Email;
 
-        _unitOfWork.userRepository.Update(user);
-        _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return true;
-      }
-      catch (Exception ex)
-      {
-        return false;
-      }
+      return new ApiResponse(true);
     }
 
     public UpdateUserNameVm GetuserFullName(string userId)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
-        if (user == null)
-          return null;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        var result = _mapper.Map<ApplicationUser, UpdateUserNameVm>(user);
+      var result = _mapper.Map<ApplicationUser, UpdateUserNameVm>(user);
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
 
     public UserEmailVm GetUserEmail(string userId)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
-        if (user == null)
-          return null;
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-        UserEmailVm result = new UserEmailVm() { Email = user.Email };
+      UserEmailVm result = new UserEmailVm() { Email = user.Email };
 
-        return result;
-      }
-      catch (Exception ex)
-      {
-        return null;
-      }
+      return result;
     }
   }
 }

@@ -12,12 +12,12 @@ namespace GymNotes.Service.IService
   {
     Task<bool> AddContact(ContactVm addContactVm);
 
-    Task<List<ApplicationUserVm>> GetContactList(string userId);
+    List<ApplicationUserVm> GetContactList(string userId);
 
     ApplicationUserVm GetContact(ContactVm contactVm);
 
-    Task<bool> AddMessage(ChatMessageVm chatMessageVm);
+    Task<ApiResponse> AddMessage(ChatMessageVm chatMessageVm);
 
-    Task<List<ChatMessageVm>> GetMessageList(ContactVm contactVm);
+    List<ChatMessageVm> GetMessageList(ContactVm contactVm);
   }
 }

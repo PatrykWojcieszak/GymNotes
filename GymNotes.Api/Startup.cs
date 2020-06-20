@@ -161,7 +161,7 @@ namespace GymNotes
 
       #region Services
 
-      services.AddScoped<IApplicationUserService, UserService>();
+      services.AddScoped<IUserService, UserService>();
       services.AddScoped<IUserOpinionService, UserOpinionService>();
       services.AddScoped<IUserInfoService, UserInfoService>();
       services.AddScoped<ICoachService, CoachService>();

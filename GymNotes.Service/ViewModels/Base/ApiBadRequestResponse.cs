@@ -6,12 +6,11 @@ using System.Text;
 
 namespace GymNotes.Service.ViewModels.Base
 {
-  public class ApiBadRequestResponse : ApiResponse
+  public class ApiBadRequestResponse
   {
     public IEnumerable<string> Errors { get; }
 
     public ApiBadRequestResponse(ModelStateDictionary modelState)
-        : base(400)
     {
       if (modelState.IsValid)
       {

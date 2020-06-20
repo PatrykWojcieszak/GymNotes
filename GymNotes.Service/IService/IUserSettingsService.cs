@@ -9,11 +9,11 @@ namespace GymNotes.Service.IService
 {
   public interface IUserSettingsService
   {
-    Task<bool> ChangeName(UpdateUserNameVm updateUserNameVm);
+    Task<ApiResponse> ChangeName(UpdateUserNameVm updateUserNameVm);
 
     Task<IdentityResult> ChangePassword(UpdatePasswordVm updatePasswordVm);
 
-    Task<bool> ChangeEmail(UserEmailVm userEmailVm);
+    Task<ApiResponse> ChangeEmail(UserEmailVm userEmailVm);
 
     UpdateUserNameVm GetuserFullName(string userId);
 

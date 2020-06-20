@@ -26,58 +26,24 @@ namespace GymNotes.Controllers
     [Authorize]
     [ApiValidationFilter]
     [HttpGet("getUserOpinions/{userId}")]
-    public async Task<IActionResult> GetUserOpinions(string userId)
-    {
-      //if (!ModelState.IsValid)
-      //  return BadRequest(ModelState);
-
-      var result = await _userOpinionService.GetUserOpinions(userId);
-
-      if (result != null)
-        return Ok(result);
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public IActionResult GetUserOpinions(string userId) =>
+      Ok(_userOpinionService.GetUserOpinions(userId));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("addUserOpinion/")]
-    public async Task<IActionResult> AddUserOpinion([FromBody] AddUserOpinionVm addUserOpinionVm)
-    {
-      //if (!ModelState.IsValid)
-      //  return BadRequest(ModelState);
-
-      var result = await _userOpinionService.AddUserOpinion(addUserOpinionVm);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public async Task<IActionResult> AddUserOpinion([FromBody] AddUserOpinionVm addUserOpinionVm) =>
+      Ok(await _userOpinionService.AddUserOpinion(addUserOpinionVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("addLikeToOpinion/")]
-    public async Task<IActionResult> AddLikeToOpinion([FromBody] UserOpinionLikesVm userOpinionLikesVm)
-    {
-      var result = await _userOpinionService.AddLikeToUserOpinion(userOpinionLikesVm);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public async Task<IActionResult> AddLikeToOpinion([FromBody] UserOpinionLikesVm userOpinionLikesVm) =>
+      Ok(await _userOpinionService.AddLikeToUserOpinion(userOpinionLikesVm));
 
     [Authorize]
     [HttpPost("removeLikeFromOpinion/{userId}/{opinionId}")]
-    public async Task<IActionResult> RemoveLikeFromOpinion(string userId, int opinionId)
-    {
-      var result = await _userOpinionService.RemoveLikeFromUserOpinion(userId, opinionId);
-
-      if (result)
-        return Ok();
-      else
-        return BadRequest("Something went wrong!");
-    }
+    public async Task<IActionResult> RemoveLikeFromOpinion(string userId, int opinionId) =>
+      Ok(await _userOpinionService.RemoveLikeFromUserOpinion(userId, opinionId));
   }
 }
