@@ -3,6 +3,7 @@ using GymNotes.Entity.Models;
 using GymNotes.Models;
 using GymNotes.Repository.IRepository;
 using GymNotes.Repository.IRepository.User;
+using GymNotes.Service.Exceptions;
 using GymNotes.Service.IService;
 using GymNotes.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -32,24 +33,17 @@ namespace GymNotes.Service.Service
 
     public async Task<ApiResponse> UpdateInstagramURL(UpdateURLVm updateURLVm)
     {
-      try
-      {
-        var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
-        if (user == null)
-          return new ApiResponse((int)HttpStatusCode.NotFound, "User not found");
+      if (user == null)
+        throw new MyNotFoundException(ErrorDescription.UserNotFound);
 
-        user.Instagram = updateURLVm.URL;
+      user.Instagram = updateURLVm.URL;
 
-        _unitOfWork.userRepository.Update(user);
-        await _unitOfWork.CompleteAsync();
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
 
-        return new ApiResponse((int)HttpStatusCode.OK);
-      }
-      catch (Exception ex)
-      {
-        return new ApiResponse((int)HttpStatusCode.InternalServerError, "Something went wrong");
-      }
+      return new ApiResponse((int)HttpStatusCode.OK);
     }
 
     public async Task<ApiResponse> UpdateFacebookURL(UpdateURLVm updateURLVm)

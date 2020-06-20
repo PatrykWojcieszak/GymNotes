@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Enum\" />
     <Folder Include="ViewModels\UserInfo\" />
     <Folder Include="ViewModels\Training\" />
     <Folder Include="ViewModels\UserSettings\" />

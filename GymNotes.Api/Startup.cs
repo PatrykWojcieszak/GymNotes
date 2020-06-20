@@ -4,6 +4,7 @@ using System.Text;
 using AutoMapper;
 using GymNotes.Data;
 using GymNotes.Entity.Models;
+using GymNotes.ErrorHandler;
 using GymNotes.Models;
 using GymNotes.Repository.Base;
 using GymNotes.Repository.IRepository;
@@ -123,6 +124,8 @@ namespace GymNotes
       var mailKitOptions = Configuration.GetSection("Email").Get<MailKitOptions>();
       services.AddMailKit(config => config.UseMailKit(mailKitOptions));
 
+      services.AddMvc(option => option.EnableEndpointRouting = false);
+
       #region DependencyInjection
 
       #region Repositories
@@ -186,6 +189,8 @@ namespace GymNotes
       }
 
       app.UseAuthentication();
+      app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+      app.UseMvc();
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseSpaStaticFiles();

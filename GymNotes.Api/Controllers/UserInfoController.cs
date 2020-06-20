@@ -30,10 +30,10 @@ namespace GymNotes.Controllers
     {
       var result = await _userInfoService.UpdateInstagramURL(updateURLVm);
 
-      if (result.StatusCode != (int)HttpStatusCode.OK)
-      {
-        return BadRequest(result);
-      }
+      //if (result.StatusCode != (int)HttpStatusCode.OK)
+      //{
+      //  return BadRequest(result);
+      //}
 
       return Ok(result);
     }
