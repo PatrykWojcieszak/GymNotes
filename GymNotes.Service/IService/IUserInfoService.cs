@@ -9,26 +9,26 @@ namespace GymNotes.Service.IService
 {
   public interface IUserInfoService
   {
-    Task<ApiResponse> UpdateInstagramURL(UpdateURLVm updateURLVm);
+    Task<ApiResponse> UpdateInstagramURL(StringVm updateURLVm);
 
-    Task<ApiResponse> UpdateFacebookURL(UpdateURLVm updateURLVm);
+    Task<ApiResponse> UpdateFacebookURL(StringVm updateURLVm);
 
-    Task<ApiResponse> UpdateTwitterURL(UpdateURLVm updateURLVm);
+    Task<ApiResponse> UpdateTwitterURL(StringVm updateURLVm);
 
-    Task<ApiResponse> UpdateYoutubeURL(UpdateURLVm updateURLVm);
+    Task<ApiResponse> UpdateYoutubeURL(StringVm updateURLVm);
 
-    Task<ApiResponse> UpdateIsCoach(StringUpdateVm stringUpdateVm);
+    Task<ApiResponse> UpdateIsCoach(StringVm stringUpdateVm);
 
-    Task<ApiResponse> UpdateBirthday(DateUpdateVm dateUpdateVm);
+    Task<ApiResponse> UpdateBirthday(DateVm dateUpdateVm);
 
-    Task<ApiResponse> UpdateHeight(NumberUpdateVm numberUpdateVm);
+    Task<ApiResponse> UpdateHeight(NumberVm numberUpdateVm);
 
-    Task<ApiResponse> UpdateYearsOfExperience(NumberUpdateVm numberUpdateVm);
+    Task<ApiResponse> UpdateYearsOfExperience(NumberVm numberUpdateVm);
 
-    Task<ApiResponse> UpdateGender(StringUpdateVm stringUpdateVm);
+    Task<ApiResponse> UpdateGender(StringVm stringUpdateVm);
 
-    Task<ApiResponse> UpdateDiscipline(StringUpdateVm stringUpdateVm);
+    Task<ApiResponse> UpdateDiscipline(StringVm stringUpdateVm);
 
-    Task<ApiResponse> UpdateDescription(StringUpdateVm stringUpdateVm);
+    Task<ApiResponse> UpdateDescription(StringVm stringUpdateVm);
   }
 }

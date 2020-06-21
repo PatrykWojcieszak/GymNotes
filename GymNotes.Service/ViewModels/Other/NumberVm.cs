@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace GymNotes.Service.ViewModels
 {
-  public class NumberUpdateVm
+  public class NumberVm : BaseVm
   {
-    public string UserId { get; set; }
-
+    [Required]
     public int Value { get; set; }
   }
 }

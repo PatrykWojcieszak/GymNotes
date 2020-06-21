@@ -12,8 +12,8 @@ namespace GymNotes.Service.Mapping
       #region DOMAIN_API
 
       //Domain to API resource
-      CreateMap<ApplicationUser, ApplicationUserVm>();
-      CreateMap<ApplicationUser, UserUpdateInfoVm>();
+      CreateMap<ApplicationUser, UserVm>();
+      CreateMap<ApplicationUser, UserInfoVm>();
       CreateMap<AchievementDyscypline, AchievementDyscyplineVm>();
       CreateMap<Achievement, AchievementVm>();
       CreateMap<UserOpinion, UserOpinionVm>();
@@ -28,7 +28,7 @@ namespace GymNotes.Service.Mapping
       #region API_DOMAIN
 
       //API to Domain
-      CreateMap<ApplicationUserVm, ApplicationUser>();
+      CreateMap<UserVm, ApplicationUser>();
       CreateMap<AchievementVm, Achievement>();
       CreateMap<AchievementDyscyplineVm, AchievementDyscypline>();
       CreateMap<CoachingRequestVm, CoachingRequest>();

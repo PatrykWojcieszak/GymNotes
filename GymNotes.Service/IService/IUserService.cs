@@ -11,7 +11,7 @@ namespace GymNotes.Service.IService
 {
   public interface IUserService
   {
-    ApplicationUserVm GetUserByEmail(string email);
+    UserVm GetUserByEmail(string email);
 
     Task<ApiResponse> ResetPassword(PasswordResetVm model);
 
@@ -23,15 +23,15 @@ namespace GymNotes.Service.IService
 
     Task<ApiResponse> Register(UserRegisterVm userModel);
 
-    Task<PaginatedList<ApplicationUserVm>> GetUsers(PageQuery pageQuery, string searchString = null);
+    Task<PaginatedList<UserVm>> GetUsers(PageQuery pageQuery, string searchString = null);
 
     IQueryable<ApplicationUser> OrderBy(IQueryable<ApplicationUser> query, string orderBy);
 
-    Task<ApiResponse> UpdateUserInfo(string id, ApplicationUserVm UserModel);
+    Task<ApiResponse> UpdateUserInfo(string id, UserVm UserModel);
 
-    ApplicationUserVm GetUser(string id);
+    UserVm GetUser(string id);
 
-    UserUpdateInfoVm GetUserUpdateInfo(string id);
+    UserInfoVm GetUserUpdateInfo(string id);
 
     Task<ApiResponse> AddOrUpdateUserAchievement(string id, AchievementDyscyplineVm achievementDyscyplineVm);
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GymNotes.Service.ViewModels
 {
-  public class ApplicationUserVm
+  public class UserVm
   {
     public string Id { get; set; }
 
@@ -42,7 +42,7 @@ namespace GymNotes.Service.ViewModels
 
     public List<AchievementDyscyplineVm> AchievementDyscyplines { get; set; }
 
-    public ApplicationUserVm()
+    public UserVm()
     {
       AchievementDyscyplines = new List<AchievementDyscyplineVm>();
     }

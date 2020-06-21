@@ -28,68 +28,68 @@ namespace GymNotes.Controllers
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateInstagramUrl/")]
-    public async Task<IActionResult> UpdateInstagramURL([FromBody] UpdateURLVm updateURLVm) =>
-      Ok(await _userInfoService.UpdateInstagramURL(updateURLVm));
+    public async Task<IActionResult> UpdateInstagramURL([FromBody] StringVm stringVm) =>
+      Ok(await _userInfoService.UpdateInstagramURL(stringVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateFacebookUrl/")]
-    public async Task<IActionResult> UpdateFacebookURL([FromBody] UpdateURLVm updateURLVm) =>
-      Ok(await _userInfoService.UpdateFacebookURL(updateURLVm));
+    public async Task<IActionResult> UpdateFacebookURL([FromBody] StringVm stringVm) =>
+      Ok(await _userInfoService.UpdateFacebookURL(stringVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateTwitterUrl/")]
-    public async Task<IActionResult> UpdateTwitterURL([FromBody] UpdateURLVm updateURLVm) =>
-      Ok(await _userInfoService.UpdateTwitterURL(updateURLVm));
+    public async Task<IActionResult> UpdateTwitterURL([FromBody] StringVm stringVm) =>
+      Ok(await _userInfoService.UpdateTwitterURL(stringVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateYoutubeUrl/")]
-    public async Task<IActionResult> UpdateYoutubeUrl([FromBody] UpdateURLVm updateURLVm) =>
-      Ok(await _userInfoService.UpdateYoutubeURL(updateURLVm));
+    public async Task<IActionResult> UpdateYoutubeUrl([FromBody] StringVm stringVm) =>
+      Ok(await _userInfoService.UpdateYoutubeURL(stringVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateDescription/")]
-    public async Task<IActionResult> UpdateDescription([FromBody] StringUpdateVm stringUpdateVm) =>
-      Ok(await _userInfoService.UpdateDescription(stringUpdateVm));
+    public async Task<IActionResult> UpdateDescription([FromBody] StringVm stringVm) =>
+      Ok(await _userInfoService.UpdateDescription(stringVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateDiscipline/")]
-    public async Task<IActionResult> UpdateDiscipline([FromBody] StringUpdateVm stringUpdateVm) =>
-      Ok(await _userInfoService.UpdateDiscipline(stringUpdateVm));
+    public async Task<IActionResult> UpdateDiscipline([FromBody] StringVm stringVm) =>
+      Ok(await _userInfoService.UpdateDiscipline(stringVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateGender/")]
-    public async Task<IActionResult> UpdateGender([FromBody] StringUpdateVm stringUpdateVm) =>
-      Ok(await _userInfoService.UpdateGender(stringUpdateVm));
+    public async Task<IActionResult> UpdateGender([FromBody] StringVm stringVm) =>
+      Ok(await _userInfoService.UpdateGender(stringVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateYearsOfExperience/")]
-    public async Task<IActionResult> UpdateYearsOfExperience([FromBody] NumberUpdateVm numberUpdateVm) =>
-      Ok(await _userInfoService.UpdateYearsOfExperience(numberUpdateVm));
+    public async Task<IActionResult> UpdateYearsOfExperience([FromBody] NumberVm numberVm) =>
+      Ok(await _userInfoService.UpdateYearsOfExperience(numberVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateHeight/")]
-    public async Task<IActionResult> UpdateHeight([FromBody] NumberUpdateVm numberUpdateVm) =>
-      Ok(await _userInfoService.UpdateHeight(numberUpdateVm));
+    public async Task<IActionResult> UpdateHeight([FromBody] NumberVm numberVm) =>
+      Ok(await _userInfoService.UpdateHeight(numberVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateIsCoach/")]
-    public async Task<IActionResult> UpdateIsCoach([FromBody] StringUpdateVm stringUpdateVm) =>
-      Ok(await _userInfoService.UpdateIsCoach(stringUpdateVm));
+    public async Task<IActionResult> UpdateIsCoach([FromBody] StringVm stringVm) =>
+      Ok(await _userInfoService.UpdateIsCoach(stringVm));
 
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateBirthday/")]
-    public async Task<IActionResult> UpdateBirthday([FromBody] DateUpdateVm dateUpdateVm) =>
-      Ok(await _userInfoService.UpdateBirthday(dateUpdateVm));
+    public async Task<IActionResult> UpdateBirthday([FromBody] DateVm dateVm) =>
+      Ok(await _userInfoService.UpdateBirthday(dateVm));
 
     #endregion Post
   }

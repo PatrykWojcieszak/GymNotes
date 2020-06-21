@@ -13,10 +13,10 @@ namespace GymNotes.Service.IService
 
     Task<IdentityResult> ChangePassword(UpdatePasswordVm updatePasswordVm);
 
-    Task<ApiResponse> ChangeEmail(UserEmailVm userEmailVm);
+    Task<ApiResponse> ChangeEmail(UpdateEmailVm userEmailVm);
 
     UpdateUserNameVm GetuserFullName(string userId);
 
-    UserEmailVm GetUserEmail(string userId);
+    UpdateEmailVm GetUserEmail(string userId);
   }
 }

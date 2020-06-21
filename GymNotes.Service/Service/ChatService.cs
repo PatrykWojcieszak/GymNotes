@@ -36,7 +36,7 @@ namespace GymNotes.Service.Service
       return true;
     }
 
-    public List<ApplicationUserVm> GetContactList(string userId)
+    public List<UserVm> GetContactList(string userId)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
@@ -45,7 +45,7 @@ namespace GymNotes.Service.Service
 
       var contacts = _unitOfWork.contactRepository.FindByCondition(x => x.ReceiverId == userId || x.SenderId == userId).ToList();
 
-      var contactList = new List<ApplicationUserVm>();
+      var contactList = new List<UserVm>();
 
       for (int i = 0; i < contacts.Count; i++)
       {
@@ -57,7 +57,7 @@ namespace GymNotes.Service.Service
 
         var receipent = _unitOfWork.userRepository.FindByCondition(x => x.Id == contacts[i].ReceiverId).FirstOrDefault();
 
-        var res = _mapper.Map<ApplicationUser, ApplicationUserVm>(receipent);
+        var res = _mapper.Map<ApplicationUser, UserVm>(receipent);
 
         contactList.Add(res);
       }
@@ -65,7 +65,7 @@ namespace GymNotes.Service.Service
       return contactList;
     }
 
-    public ApplicationUserVm GetContact(ContactVm contactVm)
+    public UserVm GetContact(ContactVm contactVm)
     {
       var sender = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.UserId).FirstOrDefault();
       var receiver = _unitOfWork.userRepository.FindByCondition(x => x.Id == contactVm.ReceipentId).FirstOrDefault();
@@ -73,7 +73,7 @@ namespace GymNotes.Service.Service
       if (sender == null || receiver == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      var result = _mapper.Map<ApplicationUser, ApplicationUserVm>(receiver);
+      var result = _mapper.Map<ApplicationUser, UserVm>(receiver);
 
       return result;
     }

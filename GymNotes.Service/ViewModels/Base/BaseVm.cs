@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace GymNotes.Service.ViewModels
 {
-  public class UserEmailVm
+  public class BaseVm
   {
+    [Required]
     public string UserId { get; set; }
-
-    public string Email { get; set; }
   }
 }

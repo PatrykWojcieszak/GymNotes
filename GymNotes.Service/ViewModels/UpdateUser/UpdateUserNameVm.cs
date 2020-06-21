@@ -5,15 +5,14 @@ using System.Text;
 
 namespace GymNotes.Service.ViewModels
 {
-  public class UpdatePasswordVm
+  public class UpdateUserNameVm : BaseVm
   {
     [Required]
-    public string UserId { get; set; }
+    public string FirstName { get; set; }
+
+    public string Alias { get; set; }
 
     [Required]
-    public string OldPassword { get; set; }
-
-    [Required]
-    public string NewPassword { get; set; }
+    public string LastName { get; set; }
   }
 }

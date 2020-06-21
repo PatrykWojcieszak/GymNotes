@@ -59,7 +59,7 @@ namespace GymNotes.Service.Service
       return result;
     }
 
-    public async Task<ApiResponse> ChangeEmail(UserEmailVm userEmailVm)
+    public async Task<ApiResponse> ChangeEmail(UpdateEmailVm userEmailVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userEmailVm.UserId).FirstOrDefault();
 
@@ -86,14 +86,14 @@ namespace GymNotes.Service.Service
       return result;
     }
 
-    public UserEmailVm GetUserEmail(string userId)
+    public UpdateEmailVm GetUserEmail(string userId)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == userId).FirstOrDefault();
 
       if (user == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      UserEmailVm result = new UserEmailVm() { Email = user.Email };
+      UpdateEmailVm result = new UpdateEmailVm() { Email = user.Email };
 
       return result;
     }

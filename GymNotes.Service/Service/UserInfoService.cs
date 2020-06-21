@@ -31,14 +31,14 @@ namespace GymNotes.Service.Service
       _unitOfWork = unitOfWork;
     }
 
-    public async Task<ApiResponse> UpdateInstagramURL(UpdateURLVm updateURLVm)
+    public async Task<ApiResponse> UpdateInstagramURL(StringVm updateURLVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
       if (user == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      user.Instagram = updateURLVm.URL;
+      user.Instagram = updateURLVm.Content;
 
       _unitOfWork.userRepository.Update(user);
       await _unitOfWork.CompleteAsync();
@@ -46,14 +46,14 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateFacebookURL(UpdateURLVm updateURLVm)
+    public async Task<ApiResponse> UpdateFacebookURL(StringVm updateURLVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
       if (user == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      user.Facebook = updateURLVm.URL;
+      user.Facebook = updateURLVm.Content;
 
       _unitOfWork.userRepository.Update(user);
       await _unitOfWork.CompleteAsync();
@@ -61,14 +61,14 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateTwitterURL(UpdateURLVm updateURLVm)
+    public async Task<ApiResponse> UpdateTwitterURL(StringVm updateURLVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
       if (user == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      user.Twitter = updateURLVm.URL;
+      user.Twitter = updateURLVm.Content;
 
       _unitOfWork.userRepository.Update(user);
       await _unitOfWork.CompleteAsync();
@@ -76,14 +76,14 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateYoutubeURL(UpdateURLVm updateURLVm)
+    public async Task<ApiResponse> UpdateYoutubeURL(StringVm updateURLVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == updateURLVm.UserId).FirstOrDefault();
 
       if (user == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      user.Youtube = updateURLVm.URL;
+      user.Youtube = updateURLVm.Content;
 
       _unitOfWork.userRepository.Update(user);
       await _unitOfWork.CompleteAsync();
@@ -91,7 +91,7 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateDescription(StringUpdateVm stringUpdateVm)
+    public async Task<ApiResponse> UpdateDescription(StringVm stringUpdateVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
@@ -106,7 +106,7 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateDiscipline(StringUpdateVm stringUpdateVm)
+    public async Task<ApiResponse> UpdateDiscipline(StringVm stringUpdateVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
@@ -121,7 +121,7 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateGender(StringUpdateVm stringUpdateVm)
+    public async Task<ApiResponse> UpdateGender(StringVm stringUpdateVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
 
@@ -136,7 +136,7 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateYearsOfExperience(NumberUpdateVm numberUpdateVm)
+    public async Task<ApiResponse> UpdateYearsOfExperience(NumberVm numberUpdateVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
 
@@ -151,7 +151,7 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateHeight(NumberUpdateVm numberUpdateVm)
+    public async Task<ApiResponse> UpdateHeight(NumberVm numberUpdateVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
 
@@ -166,7 +166,7 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateBirthday(DateUpdateVm dateUpdateVm)
+    public async Task<ApiResponse> UpdateBirthday(DateVm dateUpdateVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == dateUpdateVm.UserId).FirstOrDefault();
 
@@ -181,7 +181,7 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateIsCoach(StringUpdateVm stringUpdateVm)
+    public async Task<ApiResponse> UpdateIsCoach(StringVm stringUpdateVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == stringUpdateVm.UserId).FirstOrDefault();
       if (user == null)

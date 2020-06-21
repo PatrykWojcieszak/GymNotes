@@ -60,7 +60,7 @@ namespace GymNotes.Controllers
       Ok(await _userService.ConfirmEmailAddress(model));
 
     [AllowAnonymous]
-    [ApiValidationFilter]
+    [ApiValidationFilter] //TODO: Przyjąć email z parametru
     [HttpPost("forgotPassword")]
     public async Task<IActionResult> ForgotPassword(EmailVm model) =>
       Ok(await _userService.ForgotPassword(model));
@@ -74,7 +74,7 @@ namespace GymNotes.Controllers
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateUserInfo/{id}")]
-    public async Task<IActionResult> UpdateUserInfo(string id, [FromBody] ApplicationUserVm model) =>
+    public async Task<IActionResult> UpdateUserInfo(string id, [FromBody] UserVm model) =>
       Ok(await _userService.UpdateUserInfo(id, model));
 
     [Authorize]
@@ -117,7 +117,7 @@ namespace GymNotes.Controllers
 
     [Authorize]
     [HttpGet("search")]
-    public async Task<ActionResult<PaginatedList<ApplicationUserVm>>> GetUsers([FromQuery] PageQuery pageQuery, [FromQuery] string search) =>
+    public async Task<ActionResult<PaginatedList<UserVm>>> GetUsers([FromQuery] PageQuery pageQuery, [FromQuery] string search) =>
         Ok(await _userService.GetUsers(pageQuery, search));
 
     [Authorize]

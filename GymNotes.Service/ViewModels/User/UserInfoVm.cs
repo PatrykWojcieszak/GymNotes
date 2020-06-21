@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GymNotes.Service.ViewModels
 {
-  public class UserUpdateInfoVm
+  public class UserInfoVm
   {
     public string Instagram { get; set; }
 

@@ -171,7 +171,7 @@ namespace GymNotes.Service.Service
       return new ApiResponse(result.Succeeded);
     }
 
-    public async Task<ApiResponse> UpdateUserInfo(string id, ApplicationUserVm userVm)
+    public async Task<ApiResponse> UpdateUserInfo(string id, UserVm userVm)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
 
@@ -186,26 +186,26 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public UserUpdateInfoVm GetUserUpdateInfo(string id)
+    public UserInfoVm GetUserUpdateInfo(string id)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
 
       if (user == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      var result = _mapper.Map<ApplicationUser, UserUpdateInfoVm>(user);
+      var result = _mapper.Map<ApplicationUser, UserInfoVm>(user);
 
       return result;
     }
 
-    public ApplicationUserVm GetUser(string id)
+    public UserVm GetUser(string id)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
 
       if (user == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      var result = _mapper.Map<ApplicationUser, ApplicationUserVm>(user);
+      var result = _mapper.Map<ApplicationUser, UserVm>(user);
 
       return result;
     }
@@ -330,10 +330,10 @@ namespace GymNotes.Service.Service
       }
     }
 
-    public ApplicationUserVm GetUserByEmail(string email)
+    public UserVm GetUserByEmail(string email)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Email == email).FirstOrDefault();
-      return _mapper.Map<ApplicationUserVm>(user);
+      return _mapper.Map<UserVm>(user);
     }
 
     private IQueryable<ApplicationUser> GetSearchQuery(IQueryable<ApplicationUser> query, string searchString)
@@ -350,13 +350,13 @@ namespace GymNotes.Service.Service
               );
     }
 
-    public async Task<PaginatedList<ApplicationUserVm>> GetUsers(PageQuery pageQuery, string searchString = null)
+    public async Task<PaginatedList<UserVm>> GetUsers(PageQuery pageQuery, string searchString = null)
     {
       var query = _unitOfWork.userRepository.FindAll();
       query = GetSearchQuery(query, searchString); // filtered when will be on DB
 
-      IQueryable<ApplicationUserVm> orderedQuery = _unitOfWork.userRepository.OrderBy(query, pageQuery.Orderby).Select(x => _mapper.Map<ApplicationUserVm>(x));
-      return await PaginatedList<ApplicationUserVm>.CreateAsync(orderedQuery, pageQuery.Page, pageQuery.Pagesize);
+      IQueryable<UserVm> orderedQuery = _unitOfWork.userRepository.OrderBy(query, pageQuery.Orderby).Select(x => _mapper.Map<UserVm>(x));
+      return await PaginatedList<UserVm>.CreateAsync(orderedQuery, pageQuery.Page, pageQuery.Pagesize);
     }
 
     //TODO: Sprawdziæ

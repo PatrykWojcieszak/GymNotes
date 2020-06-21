@@ -40,7 +40,7 @@ namespace GymNotes.Controllers
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("changeEmail/")]
-    public async Task<IActionResult> ChangeEmail([FromBody] UserEmailVm userEmailVm) =>
+    public async Task<IActionResult> ChangeEmail([FromBody] UpdateEmailVm userEmailVm) =>
       Ok(await _userSettingsService.ChangeEmail(userEmailVm));
 
     #endregion Post
