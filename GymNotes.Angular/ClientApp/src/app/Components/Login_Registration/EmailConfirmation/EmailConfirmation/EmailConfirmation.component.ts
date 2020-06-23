@@ -21,7 +21,7 @@ export class EmailConfirmationComponent implements OnInit {
 			Email: this.params.get('email'),
 			Token: this.params.get('token'),
 		};
-		
+
 		this.userService.ConfirmEmail(registerModel).subscribe((res: any) => {
 			console.warn(res)},
 			(err) => {
