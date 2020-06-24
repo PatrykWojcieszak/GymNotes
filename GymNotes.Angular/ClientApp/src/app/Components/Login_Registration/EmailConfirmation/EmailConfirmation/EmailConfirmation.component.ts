@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class EmailConfirmationComponent implements OnInit {
 	constructor(private routerLink: Router, private Activatedroute: ActivatedRoute, private userService: UserService) {}
 
+	// tslint:disable-next-line: indent
 	params: any;
 
 	ngOnInit() {

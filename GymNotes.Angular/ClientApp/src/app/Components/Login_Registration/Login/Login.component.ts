@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from './../../../Services/Authentication/Authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
-import { SocialUser } from 'angularx-social-login';
 @Component({
 	selector: 'app-Login',
 	templateUrl: './Login.component.html',
@@ -16,10 +14,10 @@ export class LoginComponent implements OnInit {
 	submitted = false;
 	loginError = false;
 	loginErrorMessage = '';
-	showPass: boolean = false;
+	showPass = false;
 
-	constructor(private formBuilder: FormBuilder, 
-		private authenticationService: AuthenticationService, 
+	constructor(private formBuilder: FormBuilder,
+		private authenticationService: AuthenticationService,
 		private router: Router) {}
 
 	ngOnInit() {
@@ -31,7 +29,7 @@ export class LoginComponent implements OnInit {
 
 		if(this.authenticationService.UserToken != null)
 		{
-      this.router.navigateByUrl('/main/userList');
+      this.router.navigateByUrl('/userList');
 		}
 	}
 
@@ -67,7 +65,7 @@ export class LoginComponent implements OnInit {
 					sessionStorage.setItem('token', res.token),
 					sessionStorage.setItem('id', res.id);
 				};
-				this.router.navigateByUrl('/main/userList');
+				this.router.navigateByUrl('/userList');
 			},
 			(err) => {
 				this.loginError = true;

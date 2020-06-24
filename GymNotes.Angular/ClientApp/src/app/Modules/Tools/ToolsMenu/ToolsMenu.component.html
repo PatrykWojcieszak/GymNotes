@@ -1,0 +1,40 @@
+<div class="main-container">
+  <div class="menu-left">
+    <div class="title">Tools</div>
+    <div class="mobile">
+      <div class="settings-panel">
+        <div class="settings-element"
+          routerLinkActive='settings-element-active'
+          [routerLink]="['bmi']">
+          <a class="fas fa-weight"></a> <span class="settings-name">BMI</span>
+        </div>
+        <div class="settings-element"
+          [routerLink]="['calorie']"
+          routerLinkActive='settings-element-active'>
+          <a class="fas fa-calculator"></a> <span class="settings-name">Calorie calculator</span>
+        </div>
+        <div class="settings-element"
+          [routerLink]="['wilks']"
+          routerLinkActive='settings-element-active'>
+          <a class="fas fa-dumbbell"></a> <span class="settings-name">Wilks</span>
+        </div>
+        <div class="settings-element"
+          [routerLink]="['body-fat']"
+          routerLinkActive='settings-element-active'>
+          <a class="fas fa-ruler-combined"></a> <span class="settings-name">Body fat</span>
+        </div>
+        <div class="settings-element"
+          routerLinkActive='settings-element-active'>
+          <a class="fas fa-balance-scale-right"></a> <span class="settings-name">BMR</span>
+        </div>
+        <div class="settings-element"
+          routerLinkActive='settings-element-active'>
+          <a class="fas fa-dumbbell"></a> <span class="settings-name">1 rep max</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-panel">
+    <router-outlet></router-outlet>
+  </div>
+</div>
