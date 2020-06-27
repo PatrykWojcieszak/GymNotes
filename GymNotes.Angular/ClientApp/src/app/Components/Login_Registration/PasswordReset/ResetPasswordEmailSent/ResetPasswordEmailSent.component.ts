@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-ResetPasswordEmailSent',
   templateUrl: './ResetPasswordEmailSent.component.html',
-  styleUrls: ['./ResetPasswordEmailSent.component.css']
+  styleUrls: ['./ResetPasswordEmailSent.component.scss']
 })
 export class ResetPasswordEmailSentComponent implements OnInit {
 

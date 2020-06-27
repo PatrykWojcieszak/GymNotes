@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-TermsOfService',
   templateUrl: './TermsOfService.component.html',
-  styleUrls: ['./TermsOfService.component.css']
+  styleUrls: ['./TermsOfService.component.scss']
 })
 export class TermsOfServiceComponent implements OnInit {
 

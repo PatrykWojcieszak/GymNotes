@@ -74,21 +74,6 @@ export class LoginComponent implements OnInit {
 		);
 	}
 
-	// facebookLogin()
-	// {
-	// 	this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(x => console.log(x));
-	// }
-
-	// googleLogin()
-	// {
-	// 	this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => console.log(x));
-	// }
-
-	// twitterLogin()
-	// {
-	// 	this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(x => console.log(x));
-	// }
-
 	showPassword()
 	{
 		this.showPass = !this.showPass;

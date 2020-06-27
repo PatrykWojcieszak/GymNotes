@@ -8,7 +8,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 @Component({
   selector: 'app-PasswordResetEmail',
   templateUrl: './PasswordResetEmail.component.html',
-  styleUrls: ['./PasswordResetEmail.component.css']
+  styleUrls: ['./PasswordResetEmail.component.scss']
 })
 export class PasswordResetEmailComponent implements OnInit {
 
@@ -16,8 +16,8 @@ export class PasswordResetEmailComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder, 
-    private router: Router, 
+    private formBuilder: FormBuilder,
+    private router: Router,
     private userService: UserService,
     private matDialog: MatDialog,) { }
 
@@ -30,7 +30,7 @@ export class PasswordResetEmailComponent implements OnInit {
   get form() {
 		return this.emailForm.controls;
   }
-  
+
   submit(){
     this.submitted = true;
 

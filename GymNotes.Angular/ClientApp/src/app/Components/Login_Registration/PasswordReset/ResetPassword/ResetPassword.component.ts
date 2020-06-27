@@ -11,7 +11,7 @@ import { ResetPasswordEmailSentComponent } from '../ResetPasswordEmailSent/Reset
 @Component({
   selector: 'app-ResetPassword',
   templateUrl: './ResetPassword.component.html',
-  styleUrls: ['./ResetPassword.component.css']
+  styleUrls: ['./ResetPassword.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
 
@@ -54,11 +54,11 @@ export class ResetPasswordComponent implements OnInit {
 	get form() {
 		return this.passwordForm.controls;
   }
-  
+
   onSubmit()
   {
 		this.submitted = true;
-		
+
 		if (this.passwordForm.invalid) {
 			return;
 		}

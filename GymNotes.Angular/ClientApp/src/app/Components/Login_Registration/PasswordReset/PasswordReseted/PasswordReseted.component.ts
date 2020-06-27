@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-PasswordReseted',
   templateUrl: './PasswordReseted.component.html',
-  styleUrls: ['./PasswordReseted.component.css']
+  styleUrls: ['./PasswordReseted.component.scss']
 })
 export class PasswordResetedComponent implements OnInit {
 

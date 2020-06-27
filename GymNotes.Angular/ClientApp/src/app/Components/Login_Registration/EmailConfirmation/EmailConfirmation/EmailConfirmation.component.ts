@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
 	selector: 'app-EmailConfirmation',
 	templateUrl: './EmailConfirmation.component.html',
-	styleUrls: [ './EmailConfirmation.component.css' ]
+	styleUrls: [ './EmailConfirmation.component.scss' ]
 })
 export class EmailConfirmationComponent implements OnInit {
 	constructor(private routerLink: Router, private Activatedroute: ActivatedRoute, private userService: UserService) {}

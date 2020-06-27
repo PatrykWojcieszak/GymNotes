@@ -8,11 +8,9 @@ import { AuthenticationService } from 'src/app/Services/Authentication/Authentic
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
-  styleUrls: ['./main-nav.component.css']
+  styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent {
-
-  showComponent = 'userList';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -21,10 +19,6 @@ export class MainNavComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private Authentication: AuthenticationService) {}
-
-  toggle(componentName: string) {
-    this.showComponent = componentName;
-  }
 
   logout(){
     this.Authentication.logout();

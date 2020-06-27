@@ -1,17 +1,9 @@
 import { ToolsModule } from './Modules/Tools/tools.module';
 import { ChatService } from './Services/Chat/Chat.service';
 import { UserSettingsService } from './Services/User/UserSettings.service';
-import { SecurityComponent } from './Components/User/Settings/Security/Security.component';
-import { UserProfileEditAchievementsComponent } from './Components/User/UserProfileEditingGroup/UserProfileEditAchievements/UserProfileEditAchievements.component';
 import { PasswordResetedComponent } from './Components/Login_Registration/PasswordReset/PasswordReseted/PasswordReseted.component';
 import { ResetPasswordEmailSentComponent } from './Components/Login_Registration/PasswordReset/ResetPasswordEmailSent/ResetPasswordEmailSent.component';
 import { TermsOfServiceComponent } from './Components/TermsOfService/TermsOfService.component';
-import { NotificationsComponent } from './Components/User/Settings/Notifications/Notifications.component';
-import { TrainingListComponent } from './Components/TrainingPlan/TrainingList/TrainingList.component';
-import { NotFoundComponent } from './Components/Main/NotFound/NotFound.component';
-import { UserProfileEditingComponent } from './Components/User/UserProfileEditingGroup/UserProfileEditing/UserProfileEditing.component';
-import { UserProfileComponent } from './Components/User/UserProfile/UserProfile.component';
-import { SettingsComponent } from './Components/User/Settings/Settings/Settings.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { UserService } from './Services/User/User.service';
@@ -74,26 +66,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordResetEmailComponent } from './Components/Login_Registration/PasswordReset/PasswordResetEmail/PasswordResetEmail.component';
 import { ResetPasswordComponent } from './Components/Login_Registration/PasswordReset/ResetPassword/ResetPassword.component';
-import { UserListComponent } from './Components/User/UserList/UserList.component';
-import { GeneralSettingsComponent } from './Components/User/Settings/GeneralSettings/GeneralSettings.component';
 import { MainNavComponent } from './Components/main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { AddTrainingPlanComponent } from './Components/TrainingPlan/AddTrainingPlan/AddTrainingPlan.component';
 import { AuthGuard } from './Auth/auth.guard';
 import { AuthInterceptor } from './Auth/auth.interceptor';
-import { Calendar } from './Components/TrainingHistory/Calendar/Calendar.component';
-import { AddTrainingToCalendarComponent } from './Components/TrainingHistory/AddTrainingToCalendar/AddTrainingToCalendar.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { StatisticsListComponent } from './Components/User/Statistics/StatisticsList/StatisticsList.component';
-import { AddDisciplineComponent } from './Components/User/Statistics/AddDiscipline/AddDiscipline.component';
-import { AddOpinionComponent } from './Components/User/AddOpinion/AddOpinion.component';
 import { UserOpinionService } from './Services/User/UserOpinion.service';
 import { UserInfoService } from './Services/User/UserInfo.service';
 import { SelectBoxService } from './Services/Base/SelectBox.service';
 import { NotificationListComponent } from './Components/NotificationsGroup/NotificationList/NotificationList.component';
-import { ChatListComponent } from './Components/Chat/ChatList/ChatList.component';
 import { HomeLayoutComponent } from './Layouts/Home-layout.component';
 import { LoginLayoutComponent } from './Layouts/Login-layout.component';
 
@@ -105,30 +88,13 @@ import { LoginLayoutComponent } from './Layouts/Login-layout.component';
     LoginComponent,
     RegistrationComponent,
     EmailConfirmationComponent,
-    UserListComponent,
-    SettingsComponent,
-    GeneralSettingsComponent,
-    UserProfileComponent,
-    UserProfileEditingComponent,
     MainNavComponent,
     MainNavComponent,
-    NotFoundComponent,
-    TrainingListComponent,
-    AddTrainingPlanComponent,
-    ChatListComponent,
-    NotificationsComponent,
     TermsOfServiceComponent,
     PasswordResetEmailComponent,
     ResetPasswordComponent,
     PasswordResetedComponent,
-    UserProfileEditAchievementsComponent,
-    AddTrainingToCalendarComponent,
-    Calendar,
-    StatisticsListComponent,
-    AddDisciplineComponent,
-    AddOpinionComponent,
     NotificationListComponent,
-    SecurityComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
 	],
@@ -211,12 +177,8 @@ import { LoginLayoutComponent } from './Layouts/Login-layout.component';
   bootstrap: [AppComponent],
   entryComponents: [
     ConfirmationEmailSendedComponent,
-    UserProfileEditingComponent,
     ResetPasswordEmailSentComponent,
     PasswordResetedComponent,
-    UserProfileEditAchievementsComponent,
-    AddTrainingToCalendarComponent,
-    AddOpinionComponent,
   ],
 })
 export class AppModule {}
