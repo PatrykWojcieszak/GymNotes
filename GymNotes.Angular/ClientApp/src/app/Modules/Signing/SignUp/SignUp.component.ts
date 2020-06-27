@@ -1,15 +1,15 @@
-import { Login } from './../../../Models/Login';
+import { Login } from '../../../Models/Login';
 import { UserLoginInfo } from '../../../Models/UserLoginInfo';
 import { Router } from '@angular/router';
-import { AuthenticationService } from './../../../Services/Authentication/Authentication.service';
+import { AuthenticationService } from '../../../Services/Authentication/Authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
-	selector: 'app-Login',
-	templateUrl: './Login.component.html',
-	styleUrls: [ './Login.component.scss' ]
+	selector: 'app-SignUp',
+	templateUrl: './SignUp.component.html',
+	styleUrls: [ './SignUp.component.scss' ]
 })
-export class LoginComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 	loginForm: FormGroup;
 	submitted = false;
 	loginError = false;

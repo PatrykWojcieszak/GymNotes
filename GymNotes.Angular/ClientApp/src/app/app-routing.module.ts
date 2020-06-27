@@ -3,14 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeLayoutComponent } from './Layouts/Home-layout.component';
 import { AuthGuard } from './Auth/auth.guard';
 import { LoginLayoutComponent } from './Layouts/Login-layout.component';
-import { LoginComponent } from './Components/Login_Registration/Login/Login.component';
-import { MainPageComponent } from './Components/Login_Registration/MainPage/MainPage.component';
-import { RegistrationComponent } from './Components/Login_Registration/Registration/Registration.component';
 import { NotificationListComponent } from './Components/NotificationsGroup/NotificationList/NotificationList.component';
-import { EmailConfirmationComponent } from './Components/Login_Registration/EmailConfirmation/EmailConfirmation/EmailConfirmation.component';
-import { PasswordResetEmailComponent } from './Components/Login_Registration/PasswordReset/PasswordResetEmail/PasswordResetEmail.component';
-import { ResetPasswordComponent } from './Components/Login_Registration/PasswordReset/ResetPassword/ResetPassword.component';
-import { TermsOfServiceComponent } from './Components/TermsOfService/TermsOfService.component';
 
 const routes: Routes = [
   {
@@ -60,18 +53,11 @@ const routes: Routes = [
     children: [
       {
         path: 'user',
-        component: MainPageComponent,
-        children: [
-          { path: 'registration', component: RegistrationComponent },
-          { path: 'login', component: LoginComponent },
-        ],
-      },
+        loadChildren: () => import('./Modules/Signing/signing.module')
+        .then(m => m.SigningModule)
+      }
     ]
   },
-  { path: 'emailConfirmation', component: EmailConfirmationComponent },
-  { path: 'forgotPasswordEmail', component: PasswordResetEmailComponent },
-  { path: 'forgotPassword', component: ResetPasswordComponent },
-  { path: 'terms', component: TermsOfServiceComponent },
   { path: '**', redirectTo: '' }
 ];
 

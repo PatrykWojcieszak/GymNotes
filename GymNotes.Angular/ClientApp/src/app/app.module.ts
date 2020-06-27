@@ -1,13 +1,5 @@
-import { ToolsModule } from './Modules/Tools/tools.module';
-import { ChatService } from './Services/Chat/Chat.service';
-import { UserSettingsService } from './Services/User/UserSettings.service';
-import { PasswordResetedComponent } from './Components/Login_Registration/PasswordReset/PasswordReseted/PasswordReseted.component';
-import { ResetPasswordEmailSentComponent } from './Components/Login_Registration/PasswordReset/ResetPasswordEmailSent/ResetPasswordEmailSent.component';
-import { TermsOfServiceComponent } from './Components/TermsOfService/TermsOfService.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
-import { UserService } from './Services/User/User.service';
-import { APIService } from './Services/API/API.service';
 import { CommonModule } from '@angular/common';
 import { A11yModule } from '@angular/cdk/a11y';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -17,83 +9,42 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTreeModule } from '@angular/material/tree';
-import { AppRoutingModule } from './app-routing.module';
-import { LoginComponent } from './Components/Login_Registration/Login/Login.component';
-import { RegistrationComponent } from './Components/Login_Registration/Registration/Registration.component';
-import { MainPageComponent } from './Components/Login_Registration/MainPage/MainPage.component';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { EmailConfirmationComponent } from './Components/Login_Registration/EmailConfirmation/EmailConfirmation/EmailConfirmation.component';
-import { ConfirmationEmailSendedComponent } from './Components/Login_Registration/EmailConfirmation/ConfirmationEmailSended/ConfirmationEmailSended.component';
-import { AuthenticationService } from './Services/Authentication/Authentication.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PasswordResetEmailComponent } from './Components/Login_Registration/PasswordReset/PasswordResetEmail/PasswordResetEmail.component';
-import { ResetPasswordComponent } from './Components/Login_Registration/PasswordReset/ResetPassword/ResetPassword.component';
-import { MainNavComponent } from './Components/main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { AuthGuard } from './Auth/auth.guard';
-import { AuthInterceptor } from './Auth/auth.interceptor';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UserOpinionService } from './Services/User/UserOpinion.service';
-import { UserInfoService } from './Services/User/UserInfo.service';
 import { SelectBoxService } from './Services/Base/SelectBox.service';
+
+import { UserOpinionService } from './Services/User/UserOpinion.service';
+import { AuthInterceptor } from './Auth/auth.interceptor';
+import { AuthenticationService } from './Services/Authentication/Authentication.service';
+import { ChatService } from './Services/Chat/Chat.service';
+import { UserSettingsService } from './Services/User/UserSettings.service';
+import { UserInfoService } from './Services/User/UserInfo.service';
+import { UserService } from './Services/User/User.service';
+import { APIService } from './Services/API/API.service';
+
+import { MainNavComponent } from './Components/main-nav/main-nav.component';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
 import { NotificationListComponent } from './Components/NotificationsGroup/NotificationList/NotificationList.component';
 import { HomeLayoutComponent } from './Layouts/Home-layout.component';
 import { LoginLayoutComponent } from './Layouts/Login-layout.component';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MainPageComponent,
-    LoginComponent,
-    RegistrationComponent,
-    EmailConfirmationComponent,
     MainNavComponent,
     MainNavComponent,
-    TermsOfServiceComponent,
-    PasswordResetEmailComponent,
-    ResetPasswordComponent,
-    PasswordResetedComponent,
     NotificationListComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
@@ -107,40 +58,7 @@ import { LoginLayoutComponent } from './Layouts/Login-layout.component';
     CdkTableModule,
     CdkTreeModule,
     DragDropModule,
-    MatAutocompleteModule,
-    MatBadgeModule,
-    MatBottomSheetModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatStepperModule,
-    MatDatepickerModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatTreeModule,
+    AngularMaterialModule,
     PortalModule,
     ScrollingModule,
     HttpClientModule,
@@ -175,10 +93,5 @@ import { LoginLayoutComponent } from './Layouts/Login-layout.component';
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    ConfirmationEmailSendedComponent,
-    ResetPasswordEmailSentComponent,
-    PasswordResetedComponent,
-  ],
 })
 export class AppModule {}

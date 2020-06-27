@@ -6,11 +6,11 @@ import { MustMatch } from 'src/app/Validators/MustMatch';
 import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 @Component({
-	selector: 'app-Registration',
-	templateUrl: './Registration.component.html',
-	styleUrls: [ './Registration.component.scss' ]
+	selector: 'app-SignIn',
+	templateUrl: './SignIn.component.html',
+	styleUrls: [ './SignIn.component.scss' ]
 })
-export class RegistrationComponent implements OnInit {
+export class SignInComponent implements OnInit {
 	registerForm: FormGroup;
 	submitted = false;
 	registrationErrorMessage = '';
