@@ -13,4 +13,5 @@ export class User {
   description: string;
   discipline: string;
   yearsOfExperience: number;
+  id: string;
 }

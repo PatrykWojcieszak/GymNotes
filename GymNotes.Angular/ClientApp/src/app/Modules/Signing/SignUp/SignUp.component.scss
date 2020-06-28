@@ -1,72 +1,13 @@
 @import '_main';
 
-.social-container {
-	margin-top: 15px;
-	text-align: center;
-	color: $main-text-color;
-}
-
-.social-container > span {
-	font-size: 17px;
-	display: block;
-	margin-bottom: 8px;
-}
-
-.social-container > a > .fab {
-	font-size: 40px;
-	color: $main-text-color;
-	margin: 10px 25px;
-}
-
-.social-container > a > .fab:hover {
-	color: $red;
-}
-
-.social-container > a > .fa-twitter-square:hover {
-	color: $twitter;
-}
-
-.social-container > a > .fa-facebook-square:hover {
-	color: $facebook;
-}
-
-.social-container > a > .fa-instagram:hover {
-	color: $instagram;
-}
-
-.title-text {
-	font-size: 35px;
-}
-
-.title-wrapper {
-	text-align: center;
-	margin-top: 10px;
-	border-bottom: 1px solid $red;
-}
-
-.form-checkbox {
-	margin-top: 15px;
-	display: inline-block;
-}
-
-.form-forgotPassword {
-	float: right;
-	margin-right: 20px;
-}
-
-.form-forgotPassword a {
-	color: $main-text-color;
-	cursor: pointer;
-}
-
-.rememberMe-container {
+.terms-container {
 	display: inline-block;
 	margin-left: 20px;
+	font-size: 14px;
 }
 
 input[type=checkbox] + label {
-	color: $main-text-color;
-	display: block;
+	color: #a1a4b6;
 	cursor: pointer;
 }
 
@@ -76,7 +17,7 @@ input[type=checkbox] {
 
 label::before {
 	content: "\2713";
-	border: 0.1em solid $main-text-color;
+	border: 0.1em solid #a1a4b6;
 	border-radius: 0.2em;
 	padding: 0 0.3em 0 0.3em;
 	margin-right: 0.6em;
@@ -105,15 +46,10 @@ input[type=checkbox]:checked:disabled + label::before {
 	background-color: $green;
 	border-color: $green;
 }
-.input-field > .fa-eye-slash, .fa-eye{
-	position: absolute;
-	cursor: pointer;
-	top: 18px;
-	right: 10px;
-	font-size: 15px;
+
+.termsLabel {
+	margin-left: 5px;
 	color: $red;
-	-webkit-transition: all 0.3s ease-in-out;
-	-moz-transition: all 0.3s ease-in-out;
-	-ms-transition: all 0.3s ease-in-out;
-	-o-transition: all 0.3s ease-in-out;
+	cursor: pointer;
+	display: inline-block;
 }

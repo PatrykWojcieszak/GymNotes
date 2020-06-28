@@ -1,5 +1,3 @@
-import { SignInComponent } from './SignIn/SignIn.component';
-import { SignUpComponent } from './SignUp/SignUp.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -8,6 +6,8 @@ import { MainPageComponent } from './MainPage/MainPage.component';
 import { EmailConfirmationComponent } from './EmailConfirmation/EmailConfirmation/EmailConfirmation.component';
 import { PasswordResetEmailComponent } from './PasswordReset/PasswordResetEmail/PasswordResetEmail.component';
 import { ResetPasswordComponent } from './PasswordReset/ResetPassword/ResetPassword.component';
+import { SignUpComponent } from './SignUp/SignUp.component';
+import { SignInComponent } from './SignIn/SignIncomponent';
 
 const routes: Routes = [
   {

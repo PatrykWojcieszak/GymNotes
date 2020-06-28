@@ -1,6 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './SignUp/SignUp.component';
-import { SignInComponent } from './SignIn/SignIn.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -13,6 +12,7 @@ import { PasswordResetedComponent } from './PasswordReset/PasswordReseted/Passwo
 import { EmailConfirmationComponent } from './EmailConfirmation/EmailConfirmation/EmailConfirmation.component';
 import { ConfirmationEmailSendedComponent } from './EmailConfirmation/ConfirmationEmailSended/ConfirmationEmailSended.component';
 import { ResetPasswordEmailSentComponent } from './PasswordReset/ResetPasswordEmailSent/ResetPasswordEmailSent.component';
+import { SignInComponent } from './SignIn/SignIncomponent';
 
 import { SigningRoutingModule } from './signing-routing.module';
 

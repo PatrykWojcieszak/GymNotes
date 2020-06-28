@@ -1,81 +1,87 @@
-import { Login } from '../../../Models/Login';
-import { UserLoginInfo } from '../../../Models/UserLoginInfo';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../../../Services/Authentication/Authentication.service';
+import { ConfirmationEmailSendedComponent } from '../EmailConfirmation/ConfirmationEmailSended/ConfirmationEmailSended.component';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserService } from '../../../Services/User/User.service';
+import { MustMatch } from 'src/app/Validators/MustMatch';
+import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 @Component({
 	selector: 'app-SignUp',
 	templateUrl: './SignUp.component.html',
 	styleUrls: [ './SignUp.component.scss' ]
 })
 export class SignUpComponent implements OnInit {
-	loginForm: FormGroup;
+	registerForm: FormGroup;
 	submitted = false;
-	loginError = false;
-	loginErrorMessage = '';
-	showPass = false;
+	registrationErrorMessage = '';
+	registrationError = false;
 
-	constructor(private formBuilder: FormBuilder,
-		private authenticationService: AuthenticationService,
-		private router: Router) {}
+	constructor(
+		private formBuilder: FormBuilder,
+		private UserService: UserService,
+		private matDialog: MatDialog,
+		private routerLink: Router
+	) {}
 
 	ngOnInit() {
-		this.loginForm = this.formBuilder.group({
-			email: [ '', [ Validators.email, Validators.required ] ],
-			password: [ '', Validators.required ],
-			rememberme: [ true ]
-		});
+		this.registerForm = this.formBuilder.group(
+			{
+				firstName: [ '', Validators.required ],
+				lastName: [ '', Validators.required ],
+				termsChk: [ false, Validators.required ],
+				email: [ '', [ Validators.required, Validators.email ] ],
+				password: [ '', [ Validators.required, Validators.minLength(6) ] ],
+				confirmPassword: [ '', Validators.required ]
+			},
+			{
+				validator: MustMatch('password', 'confirmPassword')
+			}
+		);
+	}
 
-		if(this.authenticationService.UserToken != null)
-		{
-      this.router.navigateByUrl('/userList');
+	comparePasswords(formBuilder: FormGroup) {
+		let confirmPswrdCtrl = formBuilder.get('confirmPassword');
+
+		if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
+			if (formBuilder.get('password').value != confirmPswrdCtrl.value)
+				confirmPswrdCtrl.setErrors({ passwordMismatch: true });
+			else confirmPswrdCtrl.setErrors({ passwordMismatch: null });
 		}
 	}
 
 	get form() {
-		return this.loginForm.controls;
+		return this.registerForm.controls;
 	}
 
 	onSubmit() {
 		this.submitted = true;
 
-		if (this.loginForm.invalid) {
+		if (this.registerForm.invalid || this.registerForm.value.termsChk == false) {
 			return;
 		}
 
-		var loginModel: Login = {
-			Email: this.loginForm.value.email,
-			Password: this.loginForm.value.password,
-			isPersistent: this.loginForm.value.rememberme
+		var registerModel = {
+			Email: this.registerForm.value.email,
+			Password: this.registerForm.value.password,
+			FirstName: this.registerForm.value.firstName,
+			LastName: this.registerForm.value.lastName
 		};
 
-		this.authenticationService.isPersistent = loginModel.isPersistent;
+		console.warn(registerModel);
 
-		this.authenticationService.login(loginModel).subscribe(
-			(res: UserLoginInfo) => {
-				if (loginModel.isPersistent) {
-					console.warn(res);
-					localStorage.setItem('token', res.token),
-					localStorage.setItem('FirstName', res.firstName),
-					localStorage.setItem('LastName', res.lastName),
-					localStorage.setItem('Alias', res.alias),
-        	localStorage.setItem('id', res.id);
-				} else {
-					sessionStorage.setItem('token', res.token),
-					sessionStorage.setItem('id', res.id);
-				};
-				this.router.navigateByUrl('/userList');
+		this.UserService.Register(registerModel).subscribe(
+			(res: any) => {
+				const dialogConfig = new MatDialogConfig();
+				this.matDialog.open(ConfirmationEmailSendedComponent, dialogConfig);
+				this.matDialog._afterAllClosed.subscribe((x) => {
+					this.registerForm.reset();
+					this.routerLink.navigateByUrl('/user/login');
+				});
 			},
 			(err) => {
-				this.loginError = true;
-				this.loginErrorMessage = err.error.message;
+				this.registrationError = true;
+				this.registrationErrorMessage = err.error.message;
 			}
 		);
-	}
-
-	showPassword()
-	{
-		this.showPass = !this.showPass;
 	}
 }

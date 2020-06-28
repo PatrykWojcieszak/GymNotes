@@ -33,6 +33,7 @@ export class UserProfileComponent implements OnInit {
     description: '',
     discipline: '',
     yearsOfExperience: 0,
+    id: '',
   };
 
   constructor(
@@ -56,8 +57,8 @@ export class UserProfileComponent implements OnInit {
 
   profileEditing(){
     const dialogRef = this.matDialog.open(UserProfileEditingComponent, {
-      height: "calc(100% - 30px)",
-      maxHeight: "100%"
+      height: 'calc(100% - 30px)',
+      maxHeight: '100%'
     });
   }
 
@@ -69,7 +70,7 @@ export class UserProfileComponent implements OnInit {
 
   AddOpinion(){
     const dialogRef = this.matDialog.open(AddOpinionComponent,{
-      maxHeight: "100%",
+      maxHeight: '100%',
     });
 
     // let parameters: string[] = [this.authentication.UserId];

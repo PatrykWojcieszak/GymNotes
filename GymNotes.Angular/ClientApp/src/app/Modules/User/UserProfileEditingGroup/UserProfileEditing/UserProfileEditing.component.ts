@@ -51,6 +51,7 @@ export class UserProfileEditingComponent implements OnInit {
     description: '',
     discipline: '',
     yearsOfExperience: 0,
+    id: '',
   };
 
   AchievementsList: any[];
