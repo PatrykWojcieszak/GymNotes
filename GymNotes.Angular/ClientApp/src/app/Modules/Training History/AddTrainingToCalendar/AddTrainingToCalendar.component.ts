@@ -7,16 +7,14 @@ import { MatDialogRef } from "@angular/material/dialog";
   styleUrls: ["./AddTrainingToCalendar.component.scss"],
 })
 export class AddTrainingToCalendarComponent implements OnInit {
-  showElement: string = "";
   constructor(
     private dialogRef: MatDialogRef<AddTrainingToCalendarComponent>
   ) {}
 
   ngOnInit() {}
+
   close() {
     this.dialogRef.close();
   }
-  toggle(componentName: string) {
-    this.showElement = componentName;
-  }
+
 }

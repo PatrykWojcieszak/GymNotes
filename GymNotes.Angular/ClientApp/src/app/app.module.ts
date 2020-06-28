@@ -15,8 +15,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelectBoxService } from './Services/Base/SelectBox.service';
 
@@ -44,7 +42,6 @@ import { AngularMaterialModule } from './angular-material.module';
     AppComponent,
     HomeComponent,
     MainNavComponent,
-    MainNavComponent,
     NotificationListComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
@@ -70,10 +67,6 @@ import { AngularMaterialModule } from './angular-material.module';
     BrowserAnimationsModule,
     LayoutModule,
     RouterModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
     NgbModule,
   ],
   exports: [RouterModule],

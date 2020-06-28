@@ -1,6 +1,9 @@
+import { MatDialogModule } from '@angular/material/dialog';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AddOpinionComponent } from './AddOpinion/AddOpinion.component';
 import { UserListComponent } from './UserList/UserList.component';
@@ -21,7 +24,11 @@ import { UserRoutingModule } from './user-routing.module';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    NgbModule,
+    ReactiveFormsModule,
     UserRoutingModule,
+    MatDialogModule,
   ],
   entryComponents: [
     UserProfileEditingComponent,

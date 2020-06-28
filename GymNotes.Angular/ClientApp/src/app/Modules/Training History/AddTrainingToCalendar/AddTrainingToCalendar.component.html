@@ -8,8 +8,8 @@
         </div>
     </div>
     <div class="content-container">
-        <div class="settings-container" [ngClass]="{'settings-container-active': showElement === 'comments'}">
-            <div class="settings-wrapper" (click)="showElement != 'comments' ? toggle('comments') : toggle('')">
+        <div class="settings-container">
+            <div class="settings-wrapper">
                 <div class="left">
                     <div class="icon-wrapper">
                         <i class="fa fa-plus-square"></i>
@@ -20,11 +20,11 @@
                     </div>
                 </div>
                 <div class="icon-right">
-                    <i *ngIf="showElement != 'comments'" class="fas fa-sort-down"></i>
-                    <i *ngIf="showElement === 'comments'" class="fas fa-sort-up"></i>
+                    <i  class="fas fa-sort-down"></i>
+                    <i class="fas fa-sort-up"></i>
                 </div>
             </div>
-            <div class="swtich-container" *ngIf="showElement === 'comments'">
+            <div class="swtich-container">
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -62,8 +62,8 @@
                 </div>
             </div>
 
-            <div class="settings-container" [ngClass]="{'settings-container-active': showElement === 'coaching-request'}">
-                <div class="settings-wrapper" (click)="showElement != 'coaching-request' ? toggle('coaching-request') : toggle('')">
+            <div class="settings-container" >
+                <div class="settings-wrapper" >
                     <div class="left">
                         <div class="icon-wrapper">
                             <i class="fa fa-plus-square"></i>
@@ -74,11 +74,11 @@
                         </div>
                     </div>
                     <div class="icon-right">
-                        <i *ngIf="showElement != 'coaching-request'" class="fas fa-sort-down"></i>
-                        <i *ngIf="showElement === 'coaching-request'" class="fas fa-sort-up"></i>
+                        <i class="fas fa-sort-down"></i>
+                        <i  class="fas fa-sort-up"></i>
                     </div>
                 </div>
-                <div class="swtich-container" *ngIf="showElement === 'coaching-request'">
+                <div class="swtich-container" >
                     CHOOSE DAY
                     <div class="input-field">
 

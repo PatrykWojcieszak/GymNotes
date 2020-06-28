@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './SignUp/SignUp.component';
 import { SignInComponent } from './SignIn/SignIn.component';
 import { NgModule } from '@angular/core';
@@ -30,6 +31,8 @@ import { SigningRoutingModule } from './signing-routing.module';
     CommonModule,
     RouterModule,
     SigningRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   entryComponents: [
     ConfirmationEmailSendedComponent,

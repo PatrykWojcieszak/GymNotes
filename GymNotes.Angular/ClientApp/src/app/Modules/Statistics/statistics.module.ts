@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -19,6 +20,7 @@ import { StatisticsRoutingModule } from './statistics-routing.module';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     StatisticsRoutingModule
   ],
 })
