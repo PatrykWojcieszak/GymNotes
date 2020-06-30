@@ -12,6 +12,7 @@ import { UserProfileEditAchievementsComponent } from './UserProfileEditingGroup/
 import { UserProfileEditingComponent } from './UserProfileEditingGroup/UserProfileEditing/UserProfileEditing.component';
 
 import { UserRoutingModule } from './user-routing.module';
+import { SharedModule } from 'src/app/Shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { UserRoutingModule } from './user-routing.module';
     NgbModule,
     ReactiveFormsModule,
     UserRoutingModule,
+    SharedModule,
     MatDialogModule,
   ],
   entryComponents: [

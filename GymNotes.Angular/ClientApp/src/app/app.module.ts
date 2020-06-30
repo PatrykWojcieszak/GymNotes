@@ -36,7 +36,6 @@ import { LoginLayoutComponent } from './Layouts/Login-layout.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from './angular-material.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,

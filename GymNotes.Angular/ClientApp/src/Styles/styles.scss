@@ -637,7 +637,7 @@ div:focus, img, i {
 .icon{
   position: relative;
   cursor: pointer;
-  display: inline-block;  
+  display: inline-block;
   transition: all 0.3s ease-in-out;
 }
 
@@ -749,7 +749,7 @@ div:focus, img, i {
 	border: solid 1px #232228;
 	resize: none;
 	color: #a09faf;
-	
+
 	-webkit-transition: border 300ms ease-out;
 	-moz-transition: border 300ms ease-out;
 	-o-transition: border 300ms ease-out;
@@ -819,23 +819,43 @@ div:focus, img, i {
     padding: 10px;
     transition: all .2s ease-in-out;
     cursor: pointer
-} 
+}
 
 .dropdown .dropdown-menu {
-    padding: 0;
-    list-style: none
+  padding: 0;
+  list-style: none
 }
 
 .dropdown .dropdown-menu li:hover {
-    background: #232228
+  background: #232228
 }
 
 .dropdown .dropdown-menu li:active {
-    background: #232228
+  background: #232228
 }
 
 .modal-content  {
-    -webkit-border-radius: 20px !important;
-    -moz-border-radius: 20px !important;
-    border-radius: 20px !important; 
+  -webkit-border-radius: 20px !important;
+  -moz-border-radius: 20px !important;
+  border-radius: 20px !important;
+}
+
+.dropdown-menu2{
+  position: absolute;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  background: #232228;
+  color: #a09faf;
+  width: 100%;
+  z-index: 9;
+
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+}
+
+.show{
+  max-height: 500px;
+  transition: max-height 0.45s ease-in;
 }

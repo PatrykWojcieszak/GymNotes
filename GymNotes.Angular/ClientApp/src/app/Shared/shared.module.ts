@@ -4,10 +4,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { ConfirmationDialogComponent } from './Components/ConfirmationDialog/ConfirmationDialog.component';
+import { DropdownDirective } from './Directives/dropdown.directive';
 
 @NgModule({
   declarations: [
     ConfirmationDialogComponent,
+    DropdownDirective,
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { ConfirmationDialogComponent } from './Components/ConfirmationDialog/Con
     FormsModule,
   ],
   exports: [
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    DropdownDirective,
   ],
   entryComponents: [
     ConfirmationDialogComponent,
