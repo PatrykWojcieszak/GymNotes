@@ -1,6 +1,3 @@
-import { UserService } from './../../../Services/User/User.service';
-import { ChatService } from './../../../Services/Chat/Chat.service';
-import { AuthenticationService } from 'src/app/Services/Authentication/Authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
@@ -9,6 +6,10 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { timingSafeEqual } from 'crypto';
+
+import { AuthenticationService } from 'src/app/Auth/Authentication.service';
+import { ChatService } from 'src/app/Core/Services/Http/Chat/Chat.service';
+import { UserService } from 'src/app/Core/Services/Http/User/User.service';
 
 @Component({
   selector: 'app-ChatList',
@@ -22,7 +23,7 @@ export class ChatListComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-    
+
   public hubConnection: HubConnection;
   connectionId: any = '';
 	receiverUsers: any[] = [];
@@ -35,7 +36,7 @@ export class ChatListComponent implements OnInit {
   msg: any = {
 		text: ''
   };
-	
+
 	receipentId: string = '';
 	receipent: any = {};
 	receipentList: any[] = [];
@@ -43,9 +44,9 @@ export class ChatListComponent implements OnInit {
 	userFullName: string = '';
 
 	constructor(
-		private breakpointObserver: BreakpointObserver, 
-		private authentication: AuthenticationService, 
-		private route: ActivatedRoute, 
+		private breakpointObserver: BreakpointObserver,
+		private authentication: AuthenticationService,
+		private route: ActivatedRoute,
 		private chatService: ChatService,
 		private userService: UserService) { }
 
@@ -90,7 +91,7 @@ export class ChatListComponent implements OnInit {
 			this._messages.push(msg);
 		}
   }
-  
+
   send(msg) {
 		this.hubConnection.invoke('Send', this.receipent.id, msg).catch(err => console.error(err));
 	}
@@ -145,7 +146,7 @@ export class ChatListComponent implements OnInit {
 		this.saveMessage(scopeMsg);
 		this.send(sndMsg);
   }
-	
+
 	selectRecipent(receipent: any){
 		this.receipent = receipent;
 

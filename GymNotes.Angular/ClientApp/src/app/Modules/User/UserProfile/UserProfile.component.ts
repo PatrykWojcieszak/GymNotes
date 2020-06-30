@@ -1,13 +1,14 @@
-import { User } from './../../../Models/User';
-import { UserOpinionService } from './../../../Services/User/UserOpinion.service';
-import { AddOpinionComponent } from './../AddOpinion/AddOpinion.component';
-import { AuthenticationService } from './../../../Services/Authentication/Authentication.service';
-import { UserService } from './../../../Services/User/User.service';
-import { UserProfileEditAchievementsComponent } from './../UserProfileEditingGroup/UserProfileEditAchievements/UserProfileEditAchievements.component';
-import { UserProfileEditingComponent } from '../UserProfileEditingGroup/UserProfileEditing/UserProfileEditing.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { UserOpinion } from 'src/app/Models/UserOpinion';
+
+import { UserOpinion } from 'src/app/Shared/Models/UserOpinion';
+import { UserService } from 'src/app/Core/Services/Http/User/User.service';
+import { UserOpinionService } from 'src/app/Core/Services/Http/User/UserOpinion.service';
+import { User } from '../../../Shared/Models/User';
+import { AddOpinionComponent } from './../AddOpinion/AddOpinion.component';
+import { AuthenticationService } from '../../../Auth/Authentication.service';
+import { UserProfileEditAchievementsComponent } from './../UserProfileEditingGroup/UserProfileEditAchievements/UserProfileEditAchievements.component';
+import { UserProfileEditingComponent } from '../UserProfileEditingGroup/UserProfileEditing/UserProfileEditing.component';
 
 @Component({
   selector: 'app-UserProfile',

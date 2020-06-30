@@ -1,7 +1,7 @@
-import { Login } from '../../../Models/Login';
-import { UserLoginInfo } from '../../../Models/UserLoginInfo';
+import { Login } from '../../../Shared/Models/Login';
+import { UserLoginInfo } from '../../../Shared/Models/UserLoginInfo';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../../Services/Authentication/Authentication.service';
+import { AuthenticationService } from '../../../Auth/Authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({

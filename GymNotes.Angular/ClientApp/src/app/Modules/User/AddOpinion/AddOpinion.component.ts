@@ -1,8 +1,9 @@
-import { UserOpinionService } from './../../../Services/User/UserOpinion.service';
-import { AddUserOpinion } from './../../../Models/AddUserOpinion';
-import { AuthenticationService } from 'src/app/Services/Authentication/Authentication.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { AddUserOpinion } from '../../../Shared/Models/AddUserOpinion';
+import { AuthenticationService } from 'src/app/Auth/Authentication.service';
+import { UserOpinionService } from 'src/app/Core/Services/Http/User/UserOpinion.service';
 
 @Component({
   selector: 'app-AddOpinion',

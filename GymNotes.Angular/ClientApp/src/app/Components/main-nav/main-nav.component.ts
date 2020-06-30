@@ -1,9 +1,9 @@
-import { UserLoginInfo } from '../../Models/UserLoginInfo';
+import { UserLoginInfo } from '../../Shared/Models/UserLoginInfo';
 import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/Services/Authentication/Authentication.service';
+import { AuthenticationService } from 'src/app/Auth/Authentication.service';
 
 @Component({
   selector: 'app-main-nav',

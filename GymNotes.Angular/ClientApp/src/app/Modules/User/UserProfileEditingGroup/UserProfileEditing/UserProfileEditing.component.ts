@@ -1,13 +1,15 @@
-import { UserInfoService } from './../../../../Services/User/UserInfo.service';
-import { SelectBoxService } from './../../../../Services/Base/SelectBox.service';
-import { UserService } from './../../../../Services/User/User.service';
-import { User } from './../../../../Models/User';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserProfileEditAchievementsComponent } from '../UserProfileEditAchievements/UserProfileEditAchievements.component';
-import { AuthenticationService } from 'src/app/Services/Authentication/Authentication.service';
 import { formatDate  } from '@angular/common';
+
+import { SelectBoxService } from '../../../../Core/Services/Utility/SelectBox.service';
+import { User } from '../../../../Shared/Models/User';
+import { UserProfileEditAchievementsComponent } from '../UserProfileEditAchievements/UserProfileEditAchievements.component';
+import { AuthenticationService } from 'src/app/Auth/Authentication.service';
 import * as $ from 'jquery';
+import { UserService } from 'src/app/Core/Services/Http/User/User.service';
+import { UserInfoService } from 'src/app/Core/Services/Http/User/UserInfo.service';
+
 @Component({
   selector: 'app-UserProfileEditing',
   templateUrl: './UserProfileEditing.component.html',

@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from "rxjs/operators";
-import { AuthenticationService } from '../Services/Authentication/Authentication.service';
+import { AuthenticationService } from './Authentication.service';
 
 
 @Injectable()

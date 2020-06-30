@@ -1,9 +1,10 @@
-import { AuthenticationService } from './../../../../Services/Authentication/Authentication.service';
-import { UserService } from './../../../../Services/User/User.service';
-import { Achievement } from './../../../../Models/Achievement';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, Validators, FormArray, FormBuilder, FormControl } from '@angular/forms';
+
+import { AuthenticationService } from '../../../../Auth/Authentication.service';
+import { Achievement } from '../../../../Shared/Models/Achievement';
+import { UserService } from 'src/app/Core/Services/Http/User/User.service';
 
 @Component({
   selector: 'app-UserProfileEditAchievements',

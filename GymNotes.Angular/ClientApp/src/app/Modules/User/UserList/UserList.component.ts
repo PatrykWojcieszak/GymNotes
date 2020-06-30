@@ -1,12 +1,13 @@
-import { AuthenticationService } from './../../../Services/Authentication/Authentication.service';
-import { ChatService } from './../../../Services/Chat/Chat.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, SimpleChanges, OnChanges } from '@angular/core';
-import { UserService } from './../../../Services/User/User.service';
-import { User } from '../../../Models/User';
-import { PaginatedList } from '../../../Models/PaginatedList';
+
+import { AuthenticationService } from '../../../Auth/Authentication.service';
+import { UserService } from 'src/app/Core/Services/Http/User/User.service';
+import { User } from '../../../Shared/Models/User';
+import { PaginatedList } from '../../../Shared/Models/PaginatedList';
 import { HttpParams } from '@angular/common/http';
 import { IQueryAPI } from '../../../../Common';
+import { ChatService } from 'src/app/Core/Services/Http/Chat/Chat.service';
 
 @Component({
   selector: 'app-UserList',

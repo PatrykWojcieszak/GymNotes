@@ -16,20 +16,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SelectBoxService } from './Services/Base/SelectBox.service';
 
-import { UserOpinionService } from './Services/User/UserOpinion.service';
+import { AuthenticationService } from './Auth/Authentication.service';
+import { UserService } from './Core/Services/Http/User/User.service';
+import { UserOpinionService } from './Core/Services/Http/User/UserOpinion.service';
+import { UserInfoService } from './Core/Services/Http/User/UserInfo.service';
+import { UserSettingsService } from './Core/Services/Http/User/UserSettings.service';
+import { ChatService } from './Core/Services/Http/Chat/Chat.service';
+import { APIService } from './Core/Services/Http/API/API.service';
 import { AuthInterceptor } from './Auth/auth.interceptor';
-import { AuthenticationService } from './Services/Authentication/Authentication.service';
-import { ChatService } from './Services/Chat/Chat.service';
-import { UserSettingsService } from './Services/User/UserSettings.service';
-import { UserInfoService } from './Services/User/UserInfo.service';
-import { UserService } from './Services/User/User.service';
-import { APIService } from './Services/API/API.service';
+import { SelectBoxService } from './Core/Services/Utility/SelectBox.service';
 
 import { MainNavComponent } from './Components/main-nav/main-nav.component';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { NotificationListComponent } from './Components/NotificationsGroup/NotificationList/NotificationList.component';
 import { HomeLayoutComponent } from './Layouts/Home-layout.component';
 import { LoginLayoutComponent } from './Layouts/Login-layout.component';
@@ -37,10 +36,10 @@ import { LoginLayoutComponent } from './Layouts/Login-layout.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from './angular-material.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     MainNavComponent,
     NotificationListComponent,
     HomeLayoutComponent,

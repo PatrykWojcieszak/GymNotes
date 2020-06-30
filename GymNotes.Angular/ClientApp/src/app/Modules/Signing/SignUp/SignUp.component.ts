@@ -1,10 +1,12 @@
-import { ConfirmationEmailSendedComponent } from '../EmailConfirmation/ConfirmationEmailSended/ConfirmationEmailSended.component';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../../../Services/User/User.service';
-import { MustMatch } from 'src/app/Validators/MustMatch';
 import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+
+import { ConfirmationEmailSendedComponent } from '../EmailConfirmation/ConfirmationEmailSended/ConfirmationEmailSended.component';
+import { UserService } from '../../../Core/Services/Http/User/User.service';
+import { MustMatch } from 'src/app/Shared/Validators/MustMatch';
+
 @Component({
 	selector: 'app-SignUp',
 	templateUrl: './SignUp.component.html',

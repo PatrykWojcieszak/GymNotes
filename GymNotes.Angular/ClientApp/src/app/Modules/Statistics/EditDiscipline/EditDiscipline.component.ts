@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ɵCompiler_compileModuleSync__POST_R3__ } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { StatisticsExercise } from 'src/app/Models/StatisticsExcercise';
+import { StatisticsExercise } from 'src/app/Shared/Models/StatisticsExcercise';
 
 @Component({
   selector: "app-EditDiscipline",

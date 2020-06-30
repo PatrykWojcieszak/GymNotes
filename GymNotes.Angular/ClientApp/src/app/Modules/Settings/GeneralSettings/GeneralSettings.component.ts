@@ -1,8 +1,9 @@
-import { AuthenticationService } from 'src/app/Services/Authentication/Authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserLoginInfo } from 'src/app/Models/UserLoginInfo';
-import { UserSettingsService } from 'src/app/Services/User/UserSettings.service';
+
+import { AuthenticationService } from 'src/app/Auth/Authentication.service';
+import { UserLoginInfo } from 'src/app/Shared/Models/UserLoginInfo';
+import { UserSettingsService } from 'src/app/Core/Services/Http/User/UserSettings.service';
 
 @Component({
   selector: 'app-GeneralSettings',

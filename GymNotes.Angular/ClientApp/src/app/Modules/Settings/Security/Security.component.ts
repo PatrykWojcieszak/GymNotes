@@ -1,8 +1,9 @@
-import { MustMatch } from 'src/app/Validators/MustMatch';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { UserSettingsService } from 'src/app/Services/User/UserSettings.service';
-import { AuthenticationService } from 'src/app/Services/Authentication/Authentication.service';
+
+import { AuthenticationService } from 'src/app/Auth/Authentication.service';
+import { UserSettingsService } from 'src/app/Core/Services/Http/User/UserSettings.service';
+import { MustMatch } from 'src/app/Shared/Validators/MustMatch';
 
 @Component({
   selector: 'app-Security',

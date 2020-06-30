@@ -1,12 +1,13 @@
-import { PasswordResetedComponent } from './../PasswordReseted/PasswordReseted.component';
-import { UserService } from './../../../../Services/User/User.service';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MustMatch } from 'src/app/Validators/MustMatch';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
+import { PasswordResetedComponent } from './../PasswordReseted/PasswordReseted.component';
 import { ResetPasswordEmailSentComponent } from '../ResetPasswordEmailSent/ResetPasswordEmailSent.component';
+import { UserService } from 'src/app/Core/Services/Http/User/User.service';
+import { MustMatch } from 'src/app/Shared/Validators/MustMatch';
 
 @Component({
   selector: 'app-ResetPassword',

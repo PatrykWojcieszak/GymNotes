@@ -1,6 +1,7 @@
-import { UserService } from './../../../../Services/User/User.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+
+import { UserService } from 'src/app/Core/Services/Http/User/User.service';
 
 @Component({
 	selector: 'app-EmailConfirmation',

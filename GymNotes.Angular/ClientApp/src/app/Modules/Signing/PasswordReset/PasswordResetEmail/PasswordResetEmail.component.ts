@@ -1,9 +1,10 @@
-import { ResetPasswordEmailSentComponent } from './../ResetPasswordEmailSent/ResetPasswordEmailSent.component';
-import { UserService } from './../../../../Services/User/User.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
+import { ResetPasswordEmailSentComponent } from './../ResetPasswordEmailSent/ResetPasswordEmailSent.component';
+import { UserService } from 'src/app/Core/Services/Http/User/User.service';
 
 @Component({
   selector: 'app-PasswordResetEmail',
