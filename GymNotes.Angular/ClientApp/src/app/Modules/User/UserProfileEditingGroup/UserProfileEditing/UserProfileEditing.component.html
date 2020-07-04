@@ -254,17 +254,20 @@
             <div *ngIf="showElement === 'gender'">
               <div class="basic-info-input">
                 <div class="years-if-expierience-select-box">
-                  <div class="dropdown" appDropdown #r="appDropdown">
+                  <!-- <div class="dropdown" appDropdown #r="appDropdown">
                     <div class="select">
                       <span>{{UserInfo.gender != null ? UserInfo.gender : 'Gender'}}</span>
                       <i class="fa fa-chevron-left"></i>
                     </div>
                     <ul class="dropdown-menu2" [ngClass]="{'showList':r.isOpen}">
-                      <li id="male" (click)="genderChanged('Male')">Male</li>
-                      <li id="female" (click)="genderChanged('Female')">Female</li>
-                      <li id="other" (click)="genderChanged('Other')">Other</li>
+                      <li id="male" class="dropdown-element" (click)="genderChanged('Male')">Male</li>
+                      <li id="female" class="dropdown-element" (click)="genderChanged('Female')">Female</li>
+                      <li id="other" class="dropdown-element" (click)="genderChanged('Other')">Other</li>
                     </ul>
-                  </div>
+                  </div> -->
+                  <app-Dropdown (selectedItem)="genderSelected($event)" name='Gender' [listElements]="genderList"
+                    [selectedElement]="UserInfo.gender">
+                  </app-Dropdown>
                 </div>
               </div>
               <div class="btn-wrapper">

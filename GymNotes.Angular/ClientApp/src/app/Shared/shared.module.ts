@@ -1,3 +1,4 @@
+import { DropdownComponent } from './Components/Dropdown/Dropdown.component';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -7,21 +8,9 @@ import { ConfirmationDialogComponent } from './Components/ConfirmationDialog/Con
 import { DropdownDirective } from './Directives/dropdown.directive';
 
 @NgModule({
-  declarations: [
-    ConfirmationDialogComponent,
-    DropdownDirective,
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-  ],
-  exports: [
-    ConfirmationDialogComponent,
-    DropdownDirective,
-  ],
-  entryComponents: [
-    ConfirmationDialogComponent,
-  ]
+	declarations: [ ConfirmationDialogComponent, DropdownDirective, DropdownComponent ],
+	imports: [ CommonModule, RouterModule, FormsModule ],
+	exports: [ ConfirmationDialogComponent, DropdownDirective, DropdownComponent ],
+	entryComponents: [ ConfirmationDialogComponent ]
 })
-export class SharedModule { }
+export class SharedModule {}

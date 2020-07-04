@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { formatDate  } from '@angular/common';
+import { formatDate } from '@angular/common';
 
 import { SelectBoxService } from '../../../../Core/Services/Utility/SelectBox.service';
 import { User } from '../../../../Shared/Models/User';
@@ -11,373 +11,342 @@ import { UserService } from 'src/app/Core/Services/Http/User/User.service';
 import { UserInfoService } from 'src/app/Core/Services/Http/User/UserInfo.service';
 
 @Component({
-  selector: 'app-UserProfileEditing',
-  templateUrl: './UserProfileEditing.component.html',
-  styleUrls: ['./UserProfileEditing.component.scss']
+	selector: 'app-UserProfileEditing',
+	templateUrl: './UserProfileEditing.component.html',
+	styleUrls: [ './UserProfileEditing.component.scss' ]
 })
 export class UserProfileEditingComponent implements OnInit {
+	showDescriptionEdit: boolean = false;
+	showDisciplineEdit: boolean = false;
+	showYearsOfExperienceEdit: boolean = false;
+	showBirthdayEdit: boolean = false;
+	showGenderEdit: boolean = false;
+	showIsCoachEdit: boolean = false;
+	showHeightEdit: boolean = false;
 
-  showDescriptionEdit: boolean = false;
-  showDisciplineEdit: boolean = false;
-  showYearsOfExperienceEdit: boolean = false;
-  showBirthdayEdit: boolean = false;
-  showGenderEdit: boolean = false;
-  showIsCoachEdit: boolean = false;
-  showHeightEdit: boolean = false;
+	years: number[] = [];
+	months: string[] = [];
+	days: number[] = [];
 
-  years: number[] = [];
-  months: string[] = [];
-  days: number[] = [];
+	showElement: string = '';
 
-  showElement: string = '';
+	birthdayYear: string = 'Year';
+	birthdayMonth: string = 'Month';
+	birthdayDay: string = 'Day';
 
-  birthdayYear: string = 'Year';
-  birthdayMonth: string = 'Month';
-  birthdayDay: string = 'Day';
+	isSelectBoxInitialized: boolean = false;
+	basicInfo: boolean = false;
+	currentYear: number;
+	UserInfo: User = {
+		facebook: '',
+		instagram: '',
+		twitter: '',
+		youTube: '',
+		isCoach: false,
+		height: 0,
+		birthday: '',
+		gender: '',
+		firstName: '',
+		fullName: '',
+		lastName: '',
+		description: '',
+		discipline: '',
+		yearsOfExperience: 0,
+		id: ''
+	};
 
-  isSelectBoxInitialized: boolean = false;
-  basicInfo: boolean = false;
-  currentYear: number;
-  UserInfo: User = {
-    facebook: '',
-    instagram: '',
-    twitter: '',
-    youTube: '',
-    isCoach: false,
-    height: 0,
-    birthday:'',
-    gender: '',
-    firstName: '',
-    fullName: '',
-    lastName: '',
-    description: '',
-    discipline: '',
-    yearsOfExperience: 0,
-    id: '',
-  };
+	AchievementsList: any[];
 
-  AchievementsList: any[];
+	genderList = [ 'Male', 'Female', 'Other' ];
 
-  constructor(
-    private dialogRef: MatDialogRef<UserProfileEditingComponent>, @Inject(MAT_DIALOG_DATA) Data,
-    private matDialog: MatDialog,
-    private userService: UserService,
-    private userAuthentication: AuthenticationService,
-    private selectBox: SelectBoxService,
-    private userInfo: UserInfoService) { }
+	constructor(
+		private dialogRef: MatDialogRef<UserProfileEditingComponent>,
+		@Inject(MAT_DIALOG_DATA) Data,
+		private matDialog: MatDialog,
+		private userService: UserService,
+		private userAuthentication: AuthenticationService,
+		private selectBox: SelectBoxService,
+		private userInfo: UserInfoService
+	) {}
 
-  ngOnInit() {
-    this.currentYear = new Date().getFullYear()
+	ngOnInit() {
+		this.currentYear = new Date().getFullYear();
 
-    let parameters: string[] = [this.userAuthentication.UserId];
-    this.userService.GetUserUpdateInfo(parameters).subscribe((res: User) => {
-      this.UserInfo = res;
-      this.initBirthday(res.birthday);
-      this.UserInfo.birthday = formatDate(res.birthday, 'yyyy-MM-dd', 'en-US');
-    });
+		let parameters: string[] = [ this.userAuthentication.UserId ];
+		this.userService.GetUserUpdateInfo(parameters).subscribe((res: User) => {
+			this.UserInfo = res;
+			this.initBirthday(res.birthday);
+			this.UserInfo.birthday = formatDate(res.birthday, 'yyyy-MM-dd', 'en-US');
+		});
 
-    this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
-      this.AchievementsList = res;
-    });
-  }
+		this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
+			this.AchievementsList = res;
+		});
+	}
 
-  initBirthday(birthday: string){
-    const birthdayDate = new Date(birthday);
+	initBirthday(birthday: string) {
+		const birthdayDate = new Date(birthday);
 
-    this.birthdayYear = birthdayDate.getFullYear().toString();
-    this.birthdayMonth = birthdayDate.toLocaleString('en-US', { month: 'long' });
-    this.birthdayDay = birthdayDate.getDate().toString();
+		this.birthdayYear = birthdayDate.getFullYear().toString();
+		this.birthdayMonth = birthdayDate.toLocaleString('en-US', { month: 'long' });
+		this.birthdayDay = birthdayDate.getDate().toString();
 
-    this.initYears();
-    this.initMonths();
-    this.initDays(birthdayDate.getFullYear(), this.getNumberOfMonth( birthdayDate.toLocaleString('en-US', { month: 'long' })));
-  }
-
-  getNumberOfMonth(month: string){
-    return  this.months.indexOf(month);
-  }
-
-  OpenAcievementsEditor(id)
-  {
-    const dialogRef = this.matDialog.open(UserProfileEditAchievementsComponent,{
-      maxHeight: "100%",
-      data: {
-        Data: id
-      }
-    });
-
-    let parameters: string[] = [this.userAuthentication.UserId];
-
-    dialogRef.afterClosed().subscribe((x) => {
-        this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
-        this.AchievementsList = res;
-      });
-    });
-  }
-
-  showBasicInfo(){
-    this.basicInfo = !this.basicInfo;
-  }
-
-  close() {
-    this.dialogRef.close();
-  }
-
-  updateInstagramURL(e: any){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      uRL: this.UserInfo.instagram,
-    }
-    console.warn(model);
-    this.userInfo.UpdateInstagramUrl(model).subscribe(
-			(res: any) => {
-
-			},
-			(err) => {
-
-			}
+		this.initYears();
+		this.initMonths();
+		this.initDays(
+			birthdayDate.getFullYear(),
+			this.getNumberOfMonth(birthdayDate.toLocaleString('en-US', { month: 'long' }))
 		);
-  }
+	}
 
-  updateFacebookURL(e: any){
-    const model = {
-      userId: "this.userAuthentication.UserId",
-      uRL: this.UserInfo.facebook,
-    }
+	getNumberOfMonth(month: string) {
+		return this.months.indexOf(month);
+	}
 
-    this.userInfo.UpdateFacebookUrl(model).subscribe(
-			(res: any) => {
-
-			},
-			(err) => {
-
+	OpenAcievementsEditor(id) {
+		const dialogRef = this.matDialog.open(UserProfileEditAchievementsComponent, {
+			maxHeight: '100%',
+			data: {
+				Data: id
 			}
+		});
+
+		let parameters: string[] = [ this.userAuthentication.UserId ];
+
+		dialogRef.afterClosed().subscribe((x) => {
+			this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
+				this.AchievementsList = res;
+			});
+		});
+	}
+
+	showBasicInfo() {
+		this.basicInfo = !this.basicInfo;
+	}
+
+	close() {
+		this.dialogRef.close();
+	}
+
+	updateInstagramURL(e: any) {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			uRL: this.UserInfo.instagram
+		};
+		console.warn(model);
+		this.userInfo.UpdateInstagramUrl(model).subscribe((res: any) => {}, (err) => {});
+	}
+
+	updateFacebookURL(e: any) {
+		const model = {
+			userId: 'this.userAuthentication.UserId',
+			uRL: this.UserInfo.facebook
+		};
+
+		this.userInfo.UpdateFacebookUrl(model).subscribe((res: any) => {}, (err) => {});
+	}
+
+	updateTwitterURL(e: any) {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			uRL: this.UserInfo.twitter
+		};
+
+		this.userInfo.UpdateTwitterUrl(model).subscribe((res: any) => {}, (err) => {});
+	}
+
+	updateYoutubeURL(e: any) {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			uRL: this.UserInfo.youTube
+		};
+
+		this.userInfo.UpdateYoutubeUrl(model).subscribe((res: any) => {}, (err) => {});
+	}
+
+	updateIsCoach() {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			content: this.UserInfo.isCoach
+		};
+
+		this.userInfo.UpdateIsCoach(model).subscribe(
+			(res: any) => {
+				this.showElement = '';
+			},
+			(err) => {}
 		);
-  }
+	}
 
-  updateTwitterURL(e: any){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      uRL: this.UserInfo.twitter,
-    }
+	isCoachChanged(e: boolean) {
+		this.UserInfo.isCoach = e;
+	}
 
-    this.userInfo.UpdateTwitterUrl(model).subscribe(
+	updateGender() {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			content: this.UserInfo.gender
+		};
+
+		this.userInfo.UpdateGender(model).subscribe(
 			(res: any) => {
-
+				this.showElement = '';
 			},
-			(err) => {
-
-			}
+			(err) => {}
 		);
-  }
+	}
 
-  updateYoutubeURL(e: any){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      uRL: this.UserInfo.youTube,
-    }
+	genderChanged(e: string) {
+		this.UserInfo.gender = e;
+	}
 
-    this.userInfo.UpdateYoutubeUrl(model).subscribe(
+	updateDescription() {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			content: this.UserInfo.description
+		};
+
+		this.userInfo.UpdateDescription(model).subscribe(
 			(res: any) => {
-
+				this.showElement = '';
 			},
-			(err) => {
-
-			}
+			(err) => {}
 		);
-  }
+	}
 
-  updateIsCoach(){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      content: this.UserInfo.isCoach,
-    }
+	updateDiscipline() {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			content: this.UserInfo.discipline
+		};
 
-    this.userInfo.UpdateIsCoach(model).subscribe(
+		this.userInfo.UpdateDiscipline(model).subscribe(
 			(res: any) => {
-        this.showElement = '';
+				this.showElement = '';
 			},
-			(err) => {
-
-			}
+			(err) => {}
 		);
-  }
+	}
 
-  isCoachChanged(e: boolean){
-    this.UserInfo.isCoach = e;
-  }
+	updateYearsOfExperience() {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			value: this.UserInfo.yearsOfExperience
+		};
 
-  updateGender(){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      content: this.UserInfo.gender,
-    }
-
-    this.userInfo.UpdateGender(model).subscribe(
+		this.userInfo.UpdateYearsOfExperience(model).subscribe(
 			(res: any) => {
-        this.showElement = '';
+				this.showElement = '';
 			},
-			(err) => {
-
-			}
+			(err) => {}
 		);
-  }
+	}
 
-  genderChanged(e: string){
-    this.UserInfo.gender = e;
-  }
+	yearsOfExperienceChanged(e: any) {
+		this.UserInfo.yearsOfExperience = e;
+	}
 
-  updateDescription(){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      content: this.UserInfo.description,
-    }
+	updateheight() {
+		const model = {
+			userId: this.userAuthentication.UserId,
+			value: this.UserInfo.height
+		};
 
-    this.userInfo.UpdateDescription(model).subscribe(
+		this.userInfo.UpdateHeight(model).subscribe(
 			(res: any) => {
-        this.showElement = '';
+				this.showElement = '';
 			},
-			(err) => {
-
-			}
+			(err) => {}
 		);
-  }
+	}
 
-  updateDiscipline(){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      content: this.UserInfo.discipline,
-    }
-
-    this.userInfo.UpdateDiscipline(model).subscribe(
-			(res: any) => {
-        this.showElement = '';
-			},
-			(err) => {
-
-			}
+	updateBirthday() {
+		const date = new Date(
+			Number(this.birthdayYear),
+			this.getNumberOfMonth(this.birthdayMonth),
+			Number(this.birthdayDay),
+			1
 		);
-  }
 
-  updateYearsOfExperience(){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      value: this.UserInfo.yearsOfExperience,
-    }
+		if (date == null) return;
 
-    this.userInfo.UpdateYearsOfExperience(model).subscribe(
+		this.UserInfo.birthday = formatDate(date, 'yyyy-MM-dd', 'en-US');
+
+		const model = {
+			userId: this.userAuthentication.UserId,
+			date: date
+		};
+
+		this.userInfo.UpdateBirthday(model).subscribe(
 			(res: any) => {
-        this.showElement = '';
+				this.showElement = '';
 			},
-			(err) => {
-
-			}
+			(err) => {}
 		);
-  }
+	}
 
-  yearsOfExperienceChanged(e: any){
-    this.UserInfo.yearsOfExperience = e;
-  }
+	DeleteAchievement(id) {
+		let parameters: string[] = [ this.userAuthentication.UserId, id ];
+		this.userService.DeleteUserAchievementsList(parameters).subscribe((res) => console.warn(res));
+	}
 
-  updateheight(){
-    const model = {
-      userId: this.userAuthentication.UserId,
-      value: this.UserInfo.height,
-    }
+	ngAfterViewChecked() {
+		if (!this.isSelectBoxInitialized && this.showElement != '') {
+			this.selectBox.RunScript();
+			this.isSelectBoxInitialized = true;
+		}
+	}
 
-    this.userInfo.UpdateHeight(model).subscribe(
-			(res: any) => {
-        this.showElement = '';
-			},
-			(err) => {
+	toggle(componentName: string) {
+		if (componentName == '') this.isSelectBoxInitialized = false;
 
-			}
-		);;
-  }
+		this.showElement = componentName;
+	}
 
-  updateBirthday(){
-    const date = new Date(Number(this.birthdayYear), this.getNumberOfMonth(this.birthdayMonth), Number(this.birthdayDay), 1);
+	initYears() {
+		for (let i = 1930; i <= new Date().getFullYear(); i++) {
+			this.years.push(i);
+		}
+	}
 
-    if(date == null)
-      return;
+	initMonths() {
+		for (let i = 0; i < 12; i++) {
+			const date = new Date(new Date().getFullYear(), i);
 
-    this.UserInfo.birthday = formatDate(date, 'yyyy-MM-dd', 'en-US');
+			const month = date.toLocaleString('en-US', { month: 'long' });
 
-    const model = {
-      userId: this.userAuthentication.UserId,
-      date: date,
-    }
+			this.months.push(month);
+		}
+	}
 
-    this.userInfo.UpdateBirthday(model).subscribe(
-			(res: any) => {
-        this.showElement = '';
-			},
-			(err) => {
+	initDays(year: number, month: number) {
+		this.days = [];
 
-			}
-		);;
-  }
+		var d = new Date(year, month + 1, 0);
+		const numberOfDays = d.getDate();
 
-  DeleteAchievement(id){
-    let parameters: string[] = [this.userAuthentication.UserId,id];
-    this.userService.DeleteUserAchievementsList(parameters).subscribe(res => console.warn(res));
-  }
+		for (let i = 1; i <= numberOfDays; i++) {
+			this.days.push(i);
+		}
+	}
 
-  ngAfterViewChecked(){
-    if(!this.isSelectBoxInitialized && this.showElement != '')
-    {
-      this.selectBox.RunScript();
-      this.isSelectBoxInitialized = true;
-    }
-  }
+	yearChanged(e: any) {
+		this.birthdayYear = e;
 
-  toggle(componentName: string) {
-    if(componentName == '')
-      this.isSelectBoxInitialized = false;
+		this.initDays(Number(e), this.getNumberOfMonth(this.birthdayMonth));
+	}
 
-    this.showElement = componentName;
-  }
+	monthChanged(e: any) {
+		this.birthdayMonth = e;
 
-  initYears(){
-    for (let i = 1930; i <= new Date().getFullYear(); i++) {
-      this.years.push(i);
-    }
-  }
+		this.initDays(Number(this.birthdayYear), this.getNumberOfMonth(e));
+	}
 
-  initMonths(){
-    for (let i = 0; i < 12; i++) {
-      const date = new Date(new Date().getFullYear(), i);
+	dayChanged(e: any) {
+		this.birthdayDay = e;
+	}
 
-      const month = date.toLocaleString('en-US', { month: 'long' });
-
-      this.months.push(month);
-    }
-  }
-
-  initDays(year: number, month: number){
-    this.days = [];
-
-    var d = new Date(year, month + 1, 0);
-    const numberOfDays = d.getDate();
-
-    for (let i = 1; i <= numberOfDays; i++) {
-      this.days.push(i);
-    }
-  }
-
-  yearChanged(e:any){
-    this.birthdayYear = e;
-
-    this.initDays(Number(e), this.getNumberOfMonth(this.birthdayMonth));
-  }
-
-  monthChanged(e:any){
-    this.birthdayMonth = e;
-
-    this.initDays(Number(this.birthdayYear), this.getNumberOfMonth(e));
-  }
-
-  dayChanged(e:any){
-    this.birthdayDay = e;
-  }
+	genderSelected(gender) {
+		this.UserInfo.gender = gender;
+	}
 }
