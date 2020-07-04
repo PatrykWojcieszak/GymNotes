@@ -9,7 +9,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,6 +26,7 @@ import { ChatService } from './Core/Services/Http/Chat/Chat.service';
 import { APIService } from './Core/Services/Http/API/API.service';
 import { AuthInterceptor } from './Auth/auth.interceptor';
 import { SelectBoxService } from './Core/Services/Utility/SelectBox.service';
+import { GlobalErrorHandlerService } from './Core/Services/Error Handling/GlobalErrorHandler.service';
 
 import { MainNavComponent } from './Components/main-nav/main-nav.component';
 import { AppComponent } from './app.component';
@@ -35,54 +36,61 @@ import { LoginLayoutComponent } from './Layouts/Login-layout.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from './angular-material.module';
+import { ServerErrorInterceptorService } from './Core/Services/Error Handling/ServerErrorInterceptor.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainNavComponent,
-    NotificationListComponent,
-    HomeLayoutComponent,
-    LoginLayoutComponent,
+	declarations: [
+		AppComponent,
+		MainNavComponent,
+		NotificationListComponent,
+		HomeLayoutComponent,
+		LoginLayoutComponent
 	],
 	imports: [
-    BrowserModule,
-    AppRoutingModule,
+		BrowserModule,
+		AppRoutingModule,
 		A11yModule,
-    ClipboardModule,
-    CdkStepperModule,
-    CdkTableModule,
-    CdkTreeModule,
-    DragDropModule,
-    AngularMaterialModule,
-    PortalModule,
-    ScrollingModule,
-    HttpClientModule,
-    CommonModule,
-    FormsModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    RouterModule,
-    NgbModule,
-  ],
-  exports: [RouterModule],
-  providers: [
-    AuthenticationService,
-    UserService,
-    UserOpinionService,
-    UserInfoService,
-    SelectBoxService,
-    UserSettingsService,
-    ChatService,
-    APIService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
-  bootstrap: [AppComponent],
+		ClipboardModule,
+		CdkStepperModule,
+		CdkTableModule,
+		CdkTreeModule,
+		DragDropModule,
+		AngularMaterialModule,
+		PortalModule,
+		ScrollingModule,
+		HttpClientModule,
+		CommonModule,
+		FormsModule,
+		MatDialogModule,
+		ReactiveFormsModule,
+		NgbModule,
+		BrowserAnimationsModule,
+		LayoutModule,
+		RouterModule,
+		NgbModule
+	],
+	exports: [ RouterModule ],
+	providers: [
+		AuthenticationService,
+		UserService,
+		UserOpinionService,
+		UserInfoService,
+		SelectBoxService,
+		UserSettingsService,
+		ChatService,
+		APIService,
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthInterceptor,
+			multi: true
+		},
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: ServerErrorInterceptorService,
+			multi: true
+		},
+		{ provide: ErrorHandler, useClass: GlobalErrorHandlerService }
+	],
+	bootstrap: [ AppComponent ]
 })
 export class AppModule {}

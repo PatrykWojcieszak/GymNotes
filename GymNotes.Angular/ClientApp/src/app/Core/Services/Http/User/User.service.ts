@@ -60,8 +60,7 @@ export class UserService {
 		return this.API.Post(userInfoModel, this.API.BuildAddress(this.CONTROLLER, this.UPDATE_USER_INFO, parameters));
 	}
 
-	public GetUserUpdateInfo(parameters)
-	{
+	public GetUserUpdateInfo(parameters){
 		return this.API.Get(this.API.BuildAddress(this.CONTROLLER, this.GET_UPDATE_USER_INFO, parameters));
 	}
 
@@ -69,13 +68,11 @@ export class UserService {
 		return this.API.Post(achievementsModel, this.API.BuildAddress(this.CONTROLLER, this.ADD_OR_UPDATE_USER_ACHIEVEMENT, parameters));
 	}
 
-	public GetUserAchievementsList(parameters)
-	{
+	public GetUserAchievementsList(parameters){
 		return this.API.Get(this.API.BuildAddress(this.CONTROLLER, this.GET_USER_ACHIEVEMENTS_LIST, parameters));
 	}
 
-	public GetUserAchievements(parameters)
-	{
+	public GetUserAchievements(parameters){
 		return this.API.Get(this.API.BuildAddress(this.CONTROLLER, this.GET_USER_ACHIEVEMENTS, parameters));
 	}
 

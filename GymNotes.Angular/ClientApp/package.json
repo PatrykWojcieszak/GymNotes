@@ -34,6 +34,7 @@
     "query-string": "^6.13.1",
     "rxjs": "~6.5.5",
     "save": "^2.4.0",
+    "slack-notify": "^0.1.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
