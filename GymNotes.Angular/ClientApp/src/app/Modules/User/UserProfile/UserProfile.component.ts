@@ -1,3 +1,4 @@
+import { ConfirmationDialogService } from './../../../Core/Services/Utility/ConfirmationDialog.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
@@ -9,6 +10,7 @@ import { AddOpinionComponent } from './../AddOpinion/AddOpinion.component';
 import { AuthenticationService } from '../../../Auth/Authentication.service';
 import { UserProfileEditAchievementsComponent } from './../UserProfileEditingGroup/UserProfileEditAchievements/UserProfileEditAchievements.component';
 import { UserProfileEditingComponent } from '../UserProfileEditingGroup/UserProfileEditing/UserProfileEditing.component';
+import { ConfirmationDialogComponent } from 'src/app/Shared/Components/ConfirmationDialog/ConfirmationDialog.component';
 
 @Component({
   selector: 'app-UserProfile',
@@ -41,7 +43,8 @@ export class UserProfileComponent implements OnInit {
     private matDialog: MatDialog,
     private userService: UserService,
     private authentication: AuthenticationService,
-    private userOpinionService: UserOpinionService) { }
+    private userOpinionService: UserOpinionService,
+    private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit() {
     let parameters: string[] = [this.authentication.UserId];
@@ -67,6 +70,22 @@ export class UserProfileComponent implements OnInit {
   {
     const dialogConfig = new MatDialogConfig();
     this.matDialog.open(UserProfileEditAchievementsComponent, dialogConfig);
+  }
+
+  sendCoachingRequest(){
+    this.confirmationDialogService
+			.confirm(
+				'Please confirm..',
+				'Do you really want to send coaching request to ' + '?'
+			)
+			.then((confirmed) => {
+				console.log('User confirmed:', confirmed);
+			})
+			.catch(() =>
+				console.log(
+					'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
+				)
+			);
   }
 
   AddOpinion(){
