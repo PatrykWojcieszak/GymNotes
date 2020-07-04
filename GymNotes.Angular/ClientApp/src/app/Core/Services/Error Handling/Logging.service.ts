@@ -12,7 +12,7 @@ export class LoggingService {
 	}
 
 	logError(message: string, stack: string) {
-		const webHook = 'https://hooks.slack.com/services/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';
+		//const webHook = 'https://hooks.slack.com/services/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';
 
 		const slackMessage = {
 			channel: '#angular',
@@ -21,7 +21,7 @@ export class LoggingService {
 
 		const headers = { 'Content-type': 'application/x-www-form-urlencoded' };
 
-		this.httpClient.post(webHook, JSON.stringify(slackMessage), { headers }).subscribe();
+		//this.httpClient.post(webHook, JSON.stringify(slackMessage), { headers }).subscribe();
 
 		console.log('LoggingService: ' + message);
 	}
