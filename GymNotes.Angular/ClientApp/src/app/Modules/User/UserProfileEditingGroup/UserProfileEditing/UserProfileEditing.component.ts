@@ -57,7 +57,8 @@ export class UserProfileEditingComponent implements OnInit {
 
 	AchievementsList: any[];
 
-	genderList = [ 'Male', 'Female', 'Other' ];
+	genderDropdownList = [ 'Male', 'Female', 'Other' ];
+	coachDropdownList = [ 'Yes', 'No' ];
 
 	constructor(
 		private dialogRef: MatDialogRef<UserProfileEditingComponent>,
@@ -178,8 +179,9 @@ export class UserProfileEditingComponent implements OnInit {
 		);
 	}
 
-	isCoachChanged(e: boolean) {
-		this.UserInfo.isCoach = e;
+	isCoachChanged(isCoach) {
+		if (isCoach === 'Yes') this.UserInfo.isCoach = true;
+		else this.UserInfo.isCoach = false;
 	}
 
 	updateGender() {

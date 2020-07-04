@@ -1,6 +1,6 @@
 <div class="dropdown" appDropdown #r="appDropdown">
   <div class="select">
-    <span>{{selectedElement != null ? selectedElement : name}}</span>
+    <span>{{selectedElement != null ? selectedElement : defaultValue}}</span>
     <i class="fa fa-chevron-left"></i>
   </div>
   <ul class="dropdown-menu2" [ngClass]="{'showList':r.isOpen}">
