@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { formatDate } from '@angular/common';
 
-import { SelectBoxService } from '../../../../Core/Services/Utility/SelectBox.service';
 import { User } from '../../../../Shared/Models/User';
 import { UserProfileEditAchievementsComponent } from '../UserProfileEditAchievements/UserProfileEditAchievements.component';
 import { AuthenticationService } from 'src/app/Auth/Authentication.service';
@@ -66,7 +65,6 @@ export class UserProfileEditingComponent implements OnInit {
 		private matDialog: MatDialog,
 		private userService: UserService,
 		private userAuthentication: AuthenticationService,
-		private selectBox: SelectBoxService,
 		private userInfo: UserInfoService
 	) {}
 
@@ -294,7 +292,6 @@ export class UserProfileEditingComponent implements OnInit {
 
 	ngAfterViewChecked() {
 		if (!this.isSelectBoxInitialized && this.showElement != '') {
-			this.selectBox.RunScript();
 			this.isSelectBoxInitialized = true;
 		}
 	}

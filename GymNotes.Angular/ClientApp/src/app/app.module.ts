@@ -25,7 +25,6 @@ import { UserSettingsService } from './Core/Services/Http/User/UserSettings.serv
 import { ChatService } from './Core/Services/Http/Chat/Chat.service';
 import { APIService } from './Core/Services/Http/API/API.service';
 import { AuthInterceptor } from './Auth/auth.interceptor';
-import { SelectBoxService } from './Core/Services/Utility/SelectBox.service';
 import { GlobalErrorHandlerService } from './Core/Services/Error Handling/GlobalErrorHandler.service';
 
 import { MainNavComponent } from './Components/main-nav/main-nav.component';
@@ -75,7 +74,6 @@ import { ServerErrorInterceptorService } from './Core/Services/Error Handling/Se
 		UserService,
 		UserOpinionService,
 		UserInfoService,
-		SelectBoxService,
 		UserSettingsService,
 		ChatService,
 		APIService,

@@ -1,18 +1,28 @@
 <div class="navbar">
   <div class="select-list-container">
     <div class="data-container">
-      <select id="filter-option" class="form-control input" name="filter-option">
+      <app-Dropdown [defaultValue]='firstFilterDropdownList[0]' [listElements]="firstFilterDropdownList">
+      </app-Dropdown>
+
+
+      <!-- <select id="filter-option" class="form-control input" name="filter-option">
         <option value="Male">Coaches</option>
         <option value="Female">Everyone</option>
-      </select>
+      </select> -->
+
     </div>
+
     <div class="data-container">
-      <select id="filter-option" class="form-control input" name="filter-option">
+      <app-Dropdown [defaultValue]='secondFilterDropdownList[0]' [listElements]="secondFilterDropdownList">
+      </app-Dropdown>
+      <!-- <select id="filter-option" class="form-control input" name="filter-option">
         <option value="Male">Featured</option>
         <option value="Female">Newest</option>
         <option value="Female">Highest rating</option>
-      </select>
+      </select> -->
+
     </div>
+
   </div>
   <div class="input-field">
     <form (ngSubmit)="search()">

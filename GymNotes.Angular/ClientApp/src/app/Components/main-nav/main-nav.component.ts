@@ -1,10 +1,11 @@
-import { UserStorageService } from './../../Core/Services/Storage Services/User-Storage.service';
-import { UserLoginInfo } from '../../Shared/Models/UserLoginInfo';
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+
 import { AuthenticationService } from 'src/app/Auth/Authentication.service';
+import { UserStorageService } from 'src/app/Core/Services/Storage/User-Storage.service';
+import { UserLoginInfo } from '../../Shared/Models/UserLoginInfo';
 
 @Component({
 	selector: 'app-main-nav',

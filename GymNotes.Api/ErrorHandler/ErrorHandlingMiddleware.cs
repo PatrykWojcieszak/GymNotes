@@ -16,12 +16,9 @@ namespace GymNotes.ErrorHandler
   public class ErrorHandlingMiddleware
   {
     private readonly RequestDelegate _next;
-    //private readonly ILoggerManager _logger;
 
-    //public ErrorHandlingMiddleware(RequestDelegate next, ILoggerManager logger)
     public ErrorHandlingMiddleware(RequestDelegate next)
     {
-      // _logger = logger;
       _next = next;
     }
 
@@ -33,7 +30,7 @@ namespace GymNotes.ErrorHandler
       }
       catch (Exception ex)
       {
-        //_logger.LogError($"Something went wrong: {ex}");
+        //TODO: Add logger
         await HandleExceptionAsync(httpContext, ex);
       }
     }

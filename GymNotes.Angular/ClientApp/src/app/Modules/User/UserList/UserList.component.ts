@@ -10,150 +10,155 @@ import { IQueryAPI } from '../../../../Common';
 import { ChatService } from 'src/app/Core/Services/Http/Chat/Chat.service';
 
 @Component({
-  selector: 'app-UserList',
-  templateUrl: './UserList.component.html',
-  styleUrls: ['./UserList.component.scss']
+	selector: 'app-UserList',
+	templateUrl: './UserList.component.html',
+	styleUrls: [ './UserList.component.scss' ]
 })
-
 export class UserListComponent implements OnInit {
+	firstFilterDropdownList = [ 'Coaches', 'Everyone' ];
 
-  public userList: PaginatedList<User> = {
-    hasNextPage: false,
-    hasPreviousPage: false,
-    items: [],
-    pageIndex: 1,
-    totalPages: 0,
-  };
-  public isLoading: boolean = false;
-  public error: Error = null;
-  private isLoaded: boolean = false;
-  private isFoundAny: boolean = false;
+	secondFilterDropdownList = [ 'Featured', 'Newest', 'Highest rating' ];
 
-  public searchText: string = '';
-  public queryAPI: IQueryAPI = {
-    page: '1',
-    orderby: 'lastname',
-    pagesize: '5',
-    search: '',
-  };
+	public userList: PaginatedList<User> = {
+		hasNextPage: false,
+		hasPreviousPage: false,
+		items: [],
+		pageIndex: 1,
+		totalPages: 0
+	};
+	public isLoading: boolean = false;
+	public error: Error = null;
+	private isLoaded: boolean = false;
+	private isFoundAny: boolean = false;
 
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private chatService: ChatService,
-    private authentication: AuthenticationService
-  ) { }
+	public searchText: string = '';
+	public queryAPI: IQueryAPI = {
+		page: '1',
+		orderby: 'lastname',
+		pagesize: '5',
+		search: ''
+	};
 
-  ngOnInit() {
-    this.comboBoxScript();
-    this.getUserList(this.queryAPI);
-  }
+	constructor(
+		private userService: UserService,
+		private router: Router,
+		private chatService: ChatService,
+		private authentication: AuthenticationService
+	) {}
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   // reset page if items array has changed
-  //   if (changes.queryAPI.previousValue !== changes.queryAPI.currentValue) {
-  //     this.search();
-  //   }
-  // }
+	ngOnInit() {
+		this.comboBoxScript();
+		this.getUserList(this.queryAPI);
+	}
 
-  public search = () => {
-    this.getUserList(this.queryAPI);
-  }
+	// ngOnChanges(changes: SimpleChanges) {
+	//   // reset page if items array has changed
+	//   if (changes.queryAPI.previousValue !== changes.queryAPI.currentValue) {
+	//     this.search();
+	//   }
+	// }
 
-  public updateSearch = () => {
-    const validatedText = this.searchText.trim();
-    this.queryAPI = { ...this.queryAPI, search: validatedText };
-  }
+	public search = () => {
+		this.getUserList(this.queryAPI);
+	};
 
-  public clearSearch() {
-    this.searchText = '';
-    this.queryAPI = { ...this.queryAPI, search: '' };
-  }
+	public updateSearch = () => {
+		const validatedText = this.searchText.trim();
+		this.queryAPI = { ...this.queryAPI, search: validatedText };
+	};
 
-  public nextPage(): void {
-    if (this.userList.totalPages <= this.userList.pageIndex) {
-      return;
-    }
-    this.queryAPI = { ...this.queryAPI, page: (this.userList.pageIndex + 1).toString()};
-    this.search();
-  }
+	public clearSearch() {
+		this.searchText = '';
+		this.queryAPI = { ...this.queryAPI, search: '' };
+	}
 
-  public prevPage(): void {
-    if (this.userList.pageIndex <= 1) {
-      return;
-    }
-    this.queryAPI = { ...this.queryAPI, page: (this.userList.pageIndex - 1).toString()};
-    this.search();
-  }
+	public nextPage(): void {
+		if (this.userList.totalPages <= this.userList.pageIndex) {
+			return;
+		}
+		this.queryAPI = { ...this.queryAPI, page: (this.userList.pageIndex + 1).toString() };
+		this.search();
+	}
 
-  public get showList(): boolean {
-    return this.isLoaded && this.isFoundAny;
-  }
+	public prevPage(): void {
+		if (this.userList.pageIndex <= 1) {
+			return;
+		}
+		this.queryAPI = { ...this.queryAPI, page: (this.userList.pageIndex - 1).toString() };
+		this.search();
+	}
 
-  public get showNoResults(): boolean {
-    return this.isLoaded && !this.isFoundAny;
-  }
+	public get showList(): boolean {
+		return this.isLoaded && this.isFoundAny;
+	}
 
-  private getUserList(query?: IQueryAPI) {
-    this.setLoading();
-    this.userService.GetUsers(new HttpParams({ fromObject: query })).subscribe((users: PaginatedList<User>) => {
-      this.userList = users;
-      console.warn(users);
-      this.setSuccess();
-      console.dir(this.userList); // TODO delete it
-    }, (error: Error) => {
-      this.setError(error);
-      console.error(error.message);
-    });
-  }
+	public get showNoResults(): boolean {
+		return this.isLoaded && !this.isFoundAny;
+	}
 
-  private setLoading() {
-    this.isLoading = true;
-    this.isLoaded = false;
-    this.error = null;
-    this.isFoundAny = false;
-  }
+	private getUserList(query?: IQueryAPI) {
+		this.setLoading();
+		this.userService.GetUsers(new HttpParams({ fromObject: query })).subscribe(
+			(users: PaginatedList<User>) => {
+				this.userList = users;
+				console.warn(users);
+				this.setSuccess();
+				console.dir(this.userList); // TODO delete it
+			},
+			(error: Error) => {
+				this.setError(error);
+				console.error(error.message);
+			}
+		);
+	}
 
-  private setSuccess() {
-    this.isLoaded = true;
-    this.isLoading = false;
-    this.isFoundAny = this.userList.items.length !== 0;
-  }
+	private setLoading() {
+		this.isLoading = true;
+		this.isLoaded = false;
+		this.error = null;
+		this.isFoundAny = false;
+	}
 
-  private setError(error: Error) {
-    this.error = error;
-    this.isLoading = false;
-  }
+	private setSuccess() {
+		this.isLoaded = true;
+		this.isLoading = false;
+		this.isFoundAny = this.userList.items.length !== 0;
+	}
 
-  public getAge(dateString: string): number {
-    if (!dateString) {
-      return null;
-    }
-    const today = new Date();
-    const birthDate = new Date(dateString);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
-  }
+	private setError(error: Error) {
+		this.error = error;
+		this.isLoading = false;
+	}
 
-  public printProp(val: any): string {
-    if (!val) {
-      return '-';
-    }
-    return '' + val;
-  }
+	public getAge(dateString: string): number {
+		if (!dateString) {
+			return null;
+		}
+		const today = new Date();
+		const birthDate = new Date(dateString);
+		let age = today.getFullYear() - birthDate.getFullYear();
+		const m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	}
 
-  sendMessage(val: string){
-    this.router.navigate([ 'main/chat/', val ]);
-  }
+	public printProp(val: any): string {
+		if (!val) {
+			return '-';
+		}
+		return '' + val;
+	}
 
-  comboBoxScript() {
-    // $('.pagination-inner a').on('click', function() {
-    // $(this).siblings().removeClass('pagination-active');
-    // $(this).addClass('pagination-active');
-    // });
-  }
+	sendMessage(val: string) {
+		this.router.navigate([ 'main/chat/', val ]);
+	}
+
+	comboBoxScript() {
+		// $('.pagination-inner a').on('click', function() {
+		// $(this).siblings().removeClass('pagination-active');
+		// $(this).addClass('pagination-active');
+		// });
+	}
 }
