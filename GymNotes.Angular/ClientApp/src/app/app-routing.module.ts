@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeLayoutComponent } from './Layouts/Home-layout.component';
 import { AuthGuard } from './Auth/auth.guard';
 import { LoginLayoutComponent } from './Layouts/Login-layout.component';
-import { NotificationListComponent } from './Components/NotificationsGroup/NotificationList/NotificationList.component';
+import { NotificationListComponent } from './Modules/Notifications/NotificationList/NotificationList.component';
 
 const routes: Routes = [
   {

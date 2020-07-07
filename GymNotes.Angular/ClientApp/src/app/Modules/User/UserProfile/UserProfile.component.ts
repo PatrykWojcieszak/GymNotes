@@ -1,3 +1,4 @@
+import { UserStorageService } from 'src/app/Core/Services/Storage/User-Storage.service';
 import { ConfirmationDialogService } from './../../../Core/Services/Utility/ConfirmationDialog.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -19,40 +20,13 @@ import { ConfirmationDialogComponent } from 'src/app/Shared/Components/Confirmat
 })
 export class UserProfileComponent implements OnInit {
 
-  AchievementsList: any[];
-  CommentsList: UserOpinion[];
-  UserInfo: User = {
-    facebook: '',
-    instagram: '',
-    twitter: '',
-    youTube: '',
-    isCoach: false,
-    height: 0,
-    birthday:'',
-    gender: '',
-    firstName: '',
-    lastName: '',
-    fullName: '',
-    description: '',
-    discipline: '',
-    yearsOfExperience: 0,
-    id: '',
-  };
-
   constructor(
     private matDialog: MatDialog,
-    private userService: UserService,
     private authentication: AuthenticationService,
-    private userOpinionService: UserOpinionService,
-    private confirmationDialogService: ConfirmationDialogService) { }
+    private confirmationDialogService: ConfirmationDialogService,
+    public userStorage: UserStorageService) { }
 
   ngOnInit() {
-    let parameters: string[] = [this.authentication.UserId];
-
-    // this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
-    //   console.warn(res);
-    //   this.AchievementsList = res;
-    // });;
   }
 
   profileEditing(){
@@ -60,12 +34,6 @@ export class UserProfileComponent implements OnInit {
       height: 'calc(100% - 30px)',
       maxHeight: '100%'
     });
-  }
-
-  OpenAcievementsEditor()
-  {
-    const dialogConfig = new MatDialogConfig();
-    this.matDialog.open(UserProfileEditAchievementsComponent, dialogConfig);
   }
 
   sendCoachingRequest(){

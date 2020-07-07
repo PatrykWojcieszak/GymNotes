@@ -27,15 +27,15 @@ import { APIService } from './Core/Services/Http/API/API.service';
 import { AuthInterceptor } from './Auth/auth.interceptor';
 import { GlobalErrorHandlerService } from './Core/Services/Error Handling/GlobalErrorHandler.service';
 
-import { MainNavComponent } from './Components/main-nav/main-nav.component';
 import { AppComponent } from './app.component';
-import { NotificationListComponent } from './Components/NotificationsGroup/NotificationList/NotificationList.component';
 import { HomeLayoutComponent } from './Layouts/Home-layout.component';
 import { LoginLayoutComponent } from './Layouts/Login-layout.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { ServerErrorInterceptorService } from './Core/Services/Error Handling/ServerErrorInterceptor.service';
+import { MainNavComponent } from './Modules/Navigation/main-nav/main-nav.component';
+import { NotificationListComponent } from './Modules/Notifications/NotificationList/NotificationList.component';
 
 @NgModule({
 	declarations: [
@@ -75,7 +75,7 @@ import { ServerErrorInterceptorService } from './Core/Services/Error Handling/Se
 		UserOpinionService,
 		UserInfoService,
 		UserSettingsService,
-		ChatService,
+    ChatService,
 		APIService,
 		{
 			provide: HTTP_INTERCEPTORS,

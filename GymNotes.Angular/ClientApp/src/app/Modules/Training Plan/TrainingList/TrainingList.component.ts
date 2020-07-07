@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserStorageService } from 'src/app/Core/Services/Storage/User-Storage.service';
 
 @Component({
   selector: 'app-TrainingList',
@@ -10,6 +11,7 @@ export class TrainingListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

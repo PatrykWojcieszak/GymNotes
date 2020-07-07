@@ -36,28 +36,23 @@
         </div>
       </div>
       <div class="name-wrapper">
-        <span class="first">Russel</span>
-        <span class="alias">Russwole</span>
-        <span class="last">Orhii</span>
+        <span class="first">{{userStorage.UserInfo.firstName}}</span>
+        <span class="alias" *ngIf="userStorage.UserInfo?.alias != null">{{userStorage.UserInfo.alias}}</span>
+        <span class="last">{{userStorage.UserInfo.lastName}}</span>
       </div>
       <div class="info">
-        <span class="secondary-text">Age: 24 | Gender: Male | Height: 185cm | Weight: 85kg</span>
-        <span class="secondary-text">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-          lorem lorem lorem lorem lorem</span>
+        <span class="secondary-text">
+          Age: 24 |
+          Gender: {{userStorage.printProp(userStorage.UserInfo.gender)}} |
+          Height: {{userStorage.printProp(userStorage.UserInfo.height)}} |
+          Weight: 85kg</span>
+        <span class="secondary-text" *ngIf="userStorage.UserInfo?.description != null">{{userStorage.UserInfo.description}}</span>
         <span class="secondary-text">Coach: <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
             class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i></span>
-        <span class="secondary-text">Discipline: Powerlifting</span>
-        <span class="secondary-text">Years of experience: 6</span>
+        <span class="secondary-text">Discipline: {{userStorage.printProp(userStorage.UserInfo.discipline)}}</span>
+        <span class="secondary-text">Years of experience: {{userStorage.printProp(userStorage.UserInfo.yearsOfExperience)}}</span>
       </div>
       <app-AchievementsSection></app-AchievementsSection>
-      <!-- <div class="achievements">
-        <span class="section-title">Achievements</span>
-        <div class="achievement-wrapper">
-          <div class="achievement-wrapper-title">Discipline: Powerlifting</div>
-          <div class="achievement"><i class="fas fa-trophy gold"></i>2020-02-01 - IPF Championship</div>
-          <div class="achievement"><i class="fas fa-trophy bronze"></i>2020-02-01 - IPF Championship</div>
-        </div>
-      </div> -->
       <app-CommentSection></app-CommentSection>
     </div>
   </div>

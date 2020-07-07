@@ -5,7 +5,6 @@ import { map, shareReplay } from 'rxjs/operators';
 
 import { AuthenticationService } from 'src/app/Auth/Authentication.service';
 import { UserStorageService } from 'src/app/Core/Services/Storage/User-Storage.service';
-import { UserLoginInfo } from '../../Shared/Models/UserLoginInfo';
 
 @Component({
 	selector: 'app-main-nav',
@@ -20,11 +19,12 @@ export class MainNavComponent implements OnInit {
 	constructor(
 		private breakpointObserver: BreakpointObserver,
 		private Authentication: AuthenticationService,
-		private userStorage: UserStorageService
+    public userStorage: UserStorageService,
 	) {}
 
 	ngOnInit() {
-		this.userStorage.getUserData();
+    this.userStorage.getUserData();
+
 	}
 
 	logout() {
