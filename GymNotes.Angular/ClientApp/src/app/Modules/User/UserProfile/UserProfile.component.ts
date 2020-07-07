@@ -49,10 +49,6 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     let parameters: string[] = [this.authentication.UserId];
 
-    this.userOpinionService.GetUserOpinion(parameters).subscribe((res: UserOpinion[]) => {
-      this.CommentsList = res;
-      console.warn(res);
-    });
     // this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
     //   console.warn(res);
     //   this.AchievementsList = res;
@@ -86,23 +82,5 @@ export class UserProfileComponent implements OnInit {
 					'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
 				)
 			);
-  }
-
-  AddOpinion(){
-    const dialogRef = this.matDialog.open(AddOpinionComponent,{
-      maxHeight: '100%',
-    });
-
-    // let parameters: string[] = [this.authentication.UserId];
-
-    // dialogRef.afterClosed().subscribe((x) => {
-    //     this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
-    //     this.AchievementsList = res;
-    //   });
-    // });
-  }
-
-  LikeClick(){
-
   }
 }

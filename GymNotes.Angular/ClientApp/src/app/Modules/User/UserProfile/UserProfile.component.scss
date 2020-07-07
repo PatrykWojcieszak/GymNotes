@@ -7,7 +7,7 @@
 	flex-direction: row;
 	justify-content: center;
   padding: 15px;
-  
+
 }
 
 .main-wrapper{
@@ -39,10 +39,10 @@
   height: 200px;
   border-radius: 50%;
   border: 1px solid #ed2a54;
-  position: absolute;  
-        top: 250px;  
-        left: 0;  
-        right: 0;  
+  position: absolute;
+        top: 250px;
+        left: 0;
+        right: 0;
         margin: auto;
 }
 
@@ -76,7 +76,7 @@
   margin: 0 20px;
 }
 
-.social-icon-left, 
+.social-icon-left,
 .social-icon-right{
   display: flex;
   flex-direction: row;
@@ -149,50 +149,6 @@
   text-align: center;
 }
 
-.achievement{
-  margin: 10px;
-  font-size: 18px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #1b1a1f;
-}
-
-.achievement > i{
-  margin-right: 10px;
-}
-
-.achievement-wrapper{
-  background: #2f2e36;
-  border-radius: 20px;
-}
-
-.achievement-wrapper-title {
-  font-size: 22px;
-  padding-top: 10px;
-}
-
-.comment-section{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-top: 15px;
-  max-width: 800px;
-  width: 100%;
-}
-
-.comment-container
-{
-  margin-top: 10px;
-  background: #2f2e36;
-  border-radius: 20px;
-}
-
-.comment-wrapper{
-  display: flex;
-  flex-direction: row;
-  margin: 15px;
-  border-bottom: 1px solid #1b1a1f;
-}
-
 .avatar-small{
   vertical-align: middle;
   text-align: center;
@@ -200,19 +156,6 @@
   height: 70px;
   border-radius: 50%;
   border: 1px solid #ed2a54;
-}
-
-.comment-info{
-  margin-left: 10px;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-}
-
-.comment-upper{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 .person{
@@ -232,29 +175,6 @@
 .comment-person-info-container{
   display: flex;
   flex-direction: column;
-}
-
-.likes-section{
-  display: flex;
-  flex-direction: column;
-  margin-right: 20px;
-  text-align: center;
-}
-
-.likes-section > i{
-  font-size: 24px;
-}
-
-.likes-section > i:hover{
-  color: #ed2a54;
-}
-
-.likes-section > span{
-  font-size: 12px;
-}
-
-.fa-thumbs-up{
-  font-size: 20px;
 }
 
 .edit-btn{

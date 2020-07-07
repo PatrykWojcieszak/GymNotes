@@ -130,7 +130,7 @@ export class UserProfileEditingComponent implements OnInit {
 	updateInstagramURL(e: any) {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			uRL: this.UserInfo.instagram
+			content: this.UserInfo.instagram
 		};
 		console.warn(model);
 		this.userInfo.UpdateInstagramUrl(model).subscribe((res: any) => {}, (err) => {});
@@ -139,7 +139,7 @@ export class UserProfileEditingComponent implements OnInit {
 	updateFacebookURL(e: any) {
 		const model = {
 			userId: 'this.userAuthentication.UserId',
-			uRL: this.UserInfo.facebook
+			content: this.UserInfo.facebook
 		};
 
 		this.userInfo.UpdateFacebookUrl(model).subscribe((res: any) => {}, (err) => {});
@@ -148,7 +148,7 @@ export class UserProfileEditingComponent implements OnInit {
 	updateTwitterURL(e: any) {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			uRL: this.UserInfo.twitter
+			content: this.UserInfo.twitter
 		};
 
 		this.userInfo.UpdateTwitterUrl(model).subscribe((res: any) => {}, (err) => {});
@@ -157,7 +157,7 @@ export class UserProfileEditingComponent implements OnInit {
 	updateYoutubeURL(e: any) {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			uRL: this.UserInfo.youTube
+			content: this.UserInfo.youTube
 		};
 
 		this.userInfo.UpdateYoutubeUrl(model).subscribe((res: any) => {}, (err) => {});

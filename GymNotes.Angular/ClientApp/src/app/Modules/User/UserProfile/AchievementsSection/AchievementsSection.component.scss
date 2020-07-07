@@ -1,0 +1,31 @@
+.section-title{
+  font-size: 28px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.achievement{
+  margin: 10px;
+  font-size: 18px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #1b1a1f;
+}
+
+.achievements-container{
+  text-align: center;
+}
+
+.achievement > i{
+  margin-right: 10px;
+}
+
+.achievement-wrapper{
+  background: #2f2e36;
+  border-radius: 20px;
+}
+
+.achievement-wrapper-title {
+  font-size: 22px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}

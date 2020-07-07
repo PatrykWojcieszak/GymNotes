@@ -49,61 +49,15 @@
         <span class="secondary-text">Discipline: Powerlifting</span>
         <span class="secondary-text">Years of experience: 6</span>
       </div>
-      <div class="achievements">
+      <app-AchievementsSection></app-AchievementsSection>
+      <!-- <div class="achievements">
         <span class="section-title">Achievements</span>
         <div class="achievement-wrapper">
           <div class="achievement-wrapper-title">Discipline: Powerlifting</div>
           <div class="achievement"><i class="fas fa-trophy gold"></i>2020-02-01 - IPF Championship</div>
           <div class="achievement"><i class="fas fa-trophy bronze"></i>2020-02-01 - IPF Championship</div>
         </div>
-      </div>
-
-      <div class="comment-section" *ngIf="CommentsList != null">
-        <span class="section-title">Comments</span>
-        <button class="edit-btn" (click)="AddOpinion()">Add opinion</button>
-        <div class="comment-container">
-          <div class="comment-wrapper" *ngFor="let item of CommentsList">
-            <div>
-              <img src="/images/bryce.jpg" class="avatar-small">
-            </div>
-            <div class="comment-info">
-              <div class="comment-upper">
-                <div class="comment-person-info-container">
-                  <span class="person">{{item.profileUser.firstName}} {{item.profileUser.lastName}}</span>
-                  <span class="date-rating">
-                    <ngb-rating [max]='5' [(rate)]="item.rating" [readonly]="true"></ngb-rating>
-                    {{item.dateAdded  | date:'longDate'}}
-                  </span>
-                </div>
-                <div class="likes-section">
-                  <div class="icon" (click)="LikeClick()">
-                    <i class="far fa-thumbs-up"></i>
-                    <div class="icon-tooltip">
-                      <p>Helpful</p>
-                    </div>
-                  </div>
-                  <span>16</span>
-                </div>
-              </div>
-              <div class="message-wrapper">
-                <span class="comment">{{item.opinionMessage}}</span>
-              </div>
-            </div>
-          </div>
-          <div class="pagination-wrapper">
-            <nav class="pagination-container">
-              <div class="pagination">
-                <a class="pagination-newer">PREV</a>
-                <span class="pagination-inner">
-                  <a>1</a>
-                  <a class="pagination-active">2</a>
-                  <a>3</a>
-                </span>
-                <a class="pagination-older">NEXT</a>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
+      </div> -->
+      <app-CommentSection></app-CommentSection>
     </div>
   </div>

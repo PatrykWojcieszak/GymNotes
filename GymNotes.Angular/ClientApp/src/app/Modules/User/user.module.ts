@@ -1,3 +1,5 @@
+import { AchievementsSectionComponent } from './UserProfile/AchievementsSection/AchievementsSection.component';
+import { CommentSectionComponent } from './UserProfile/CommentSection/CommentSection.component';
 import { AngularMaterialModule } from './../../angular-material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
@@ -21,6 +23,8 @@ import { SharedModule } from 'src/app/Shared/shared.module';
     UserProfileComponent,
     UserListComponent,
     AddOpinionComponent,
+    CommentSectionComponent,
+    AchievementsSectionComponent,
   ],
   imports: [
     CommonModule,

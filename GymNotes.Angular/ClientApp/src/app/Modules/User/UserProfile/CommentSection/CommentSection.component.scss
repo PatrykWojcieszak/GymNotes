@@ -1,0 +1,91 @@
+.comment-section{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.comment-container
+{
+  margin-top: 30px;
+  background: #2f2e36;
+  border-radius: 20px;
+}
+
+.comment-wrapper{
+  display: flex;
+  flex-direction: row;
+  margin: 15px;
+  border-bottom: 1px solid #1b1a1f;
+}
+
+.comment-info{
+  margin-left: 10px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.comment-upper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.likes-section{
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.likes-section > i{
+  font-size: 24px;
+}
+
+.likes-section > i:hover{
+  color: #ed2a54;
+}
+
+.likes-section > span{
+  font-size: 12px;
+}
+
+.fa-thumbs-up{
+  font-size: 20px;
+}
+
+.edit-btn{
+  float: right;
+  background: transparent;
+  color: #ed2a54;
+  border: none;
+  outline: none;
+  padding: 15px;
+  border-radius: 10px;
+  position: absolute;
+  right: 20px;
+  font-size: 18px;
+  -webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+}
+
+.edit-btn:hover{
+  background: #2f2e36;
+}
+
+.section-title{
+  font-size: 28px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.opinion-info{
+  font-size: 14px;
+  text-align: center;
+  margin: 8px 0;
+}
