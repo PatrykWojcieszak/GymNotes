@@ -1,4 +1,4 @@
-import { MatDialogModule } from '@angular/material/dialog';
+import { AngularMaterialModule } from './../../angular-material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -30,7 +30,7 @@ import { SharedModule } from 'src/app/Shared/shared.module';
     ReactiveFormsModule,
     UserRoutingModule,
     SharedModule,
-    MatDialogModule,
+    AngularMaterialModule,
   ],
   entryComponents: [
     UserProfileEditingComponent,

@@ -167,7 +167,7 @@
 }
 
 .mat-dialog-content {
-  max-height: 100%; 
+  max-height: 100%;
 }
 
 .basicInfo-btn-wrapper{
@@ -252,7 +252,7 @@ span.choose {
   margin: 15px;
   border-radius: 10px;
   width: 500px;
-  
+
   -webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-ms-transition: all 0.3s ease-in-out;
@@ -351,3 +351,21 @@ span.choose {
     padding: 15px 5px;
   }
 }
+
+.achievements-info{
+  text-align: center;
+  font-size: 14px;
+}
+
+.dropdown-wrapper-short{
+  width: 120px;
+}
+
+.dropdown-wrapper-long{
+  width: 200px;
+}
+
+.dropdown-wrapper-short, .dropdown-wrapper-long{
+  margin: 0 10px;
+}
+

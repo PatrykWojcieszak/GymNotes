@@ -33,6 +33,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CdkScrollableModule, ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
 	imports: [
@@ -71,10 +73,15 @@ import { NgModule } from '@angular/core';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    MatDialogModule,
+    CdkScrollableModule,
+    ScrollingModule,
   ],
   exports: [
     MatAutocompleteModule,
     MatBadgeModule,
+    ScrollingModule,
+    MatDialogModule,
     MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -91,6 +98,7 @@ import { NgModule } from '@angular/core';
     MatListModule,
     MatMenuModule,
     MatNativeDateModule,
+    CdkScrollableModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,

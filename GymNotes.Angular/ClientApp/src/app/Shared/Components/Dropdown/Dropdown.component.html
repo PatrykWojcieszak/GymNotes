@@ -3,8 +3,12 @@
     <span>{{selectedElement != null ? selectedElement : defaultValue}}</span>
     <i class="fa fa-chevron-left"></i>
   </div>
-  <ul class="dropdown-menu2" [ngClass]="{'showList':r.isOpen}">
-    <li *ngFor="let item of listElements" id="item" class="dropdown-element" (click)="itemSelected(item)">{{item}}
-    </li>
-  </ul>
+  <div class="dropdown-menu2" [ngClass]="{'showList':r.isOpen}">
+    <div
+      *ngFor="let item of listElements"
+      id="item"
+      class="dropdown-element"
+      (click)="itemSelected(item)">{{item}}
+    </div>
+  </div>
 </div>

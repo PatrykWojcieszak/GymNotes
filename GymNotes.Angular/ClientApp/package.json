@@ -31,9 +31,11 @@
     "bootstrap-select": "^1.13.17",
     "date-fns": "^2.14.0",
     "jquery": "^3.5.1",
+    "ngx-perfect-scrollbar": "^9.0.0",
     "query-string": "^6.13.1",
     "rxjs": "~6.5.5",
     "save": "^2.4.0",
+    "simplebar-angular": "^2.2.1",
     "slack-notify": "^0.1.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

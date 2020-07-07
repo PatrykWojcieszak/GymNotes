@@ -66,7 +66,7 @@ import { ServerErrorInterceptorService } from './Core/Services/Error Handling/Se
 		BrowserAnimationsModule,
 		LayoutModule,
 		RouterModule,
-		NgbModule
+    NgbModule,
 	],
 	exports: [ RouterModule ],
 	providers: [
@@ -86,7 +86,7 @@ import { ServerErrorInterceptorService } from './Core/Services/Error Handling/Se
 			provide: HTTP_INTERCEPTORS,
 			useClass: ServerErrorInterceptorService,
 			multi: true
-		},
+    },
 		{ provide: ErrorHandler, useClass: GlobalErrorHandlerService }
 	],
 	bootstrap: [ AppComponent ]

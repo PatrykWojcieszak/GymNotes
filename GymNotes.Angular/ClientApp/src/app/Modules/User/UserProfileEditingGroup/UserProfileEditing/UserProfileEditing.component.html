@@ -33,6 +33,7 @@
         <span>Achievements</span>
         <button class="edit-btn" (click)="OpenAcievementsEditor(null)">Add</button>
       </div>
+      <span *ngIf="AchievementsList?.length === 0" class="achievements-info">It's empty</span>
       <div class="section-content" *ngFor="let item of AchievementsList">
         <div class="achievement-wrapper">
           <div class="navbar">
@@ -159,7 +160,14 @@
             <div *ngIf="showElement === 'yearsOfExperience'">
               <div class="basic-info-input">
                 <div class="years-if-expierience-select-box">
-                  <div class="dropdown">
+
+                  <div class="dropdown-wrapper-long">
+                    <app-Dropdown (selectedItem)="genderSelected($event)" defaultValue="{{UserInfo.yearsOfExperience != null ? UserInfo.yearsOfExperience : 'I train from'}}"
+                      [listElements]="years" [selectedElement]="UserInfo.yearsOfExperience">
+                    </app-Dropdown>
+                  </div>
+
+                  <!-- <div class="dropdown">
                     <div class="select">
                       <span>{{UserInfo.yearsOfExperience != null ? UserInfo.yearsOfExperience : 'I train from'}}</span>
                       <i class="fa fa-chevron-left"></i>
@@ -169,7 +177,8 @@
                       <li *ngFor="let item of years" (click)="yearsOfExperienceChanged(item)" id="{{item}}">
                         {{item}}</li>
                     </ul>
-                  </div>
+                  </div> -->
+
                 </div>
               </div>
               <div class="btn-wrapper">
@@ -196,50 +205,23 @@
               <div class="basic-info-input">
                 <div class="years-if-expierience-select-box">
 
-                  <app-Dropdown (selectedItem)="dayChanged($event)" [defaultValue]='birthdayDay' [listElements]="days"
+                  <div class="dropdown-wrapper-short">
+                    <app-Dropdown (selectedItem)="dayChanged($event)" [defaultValue]='birthdayDay' [listElements]="days"
                     [selectedElement]="birthdayDay">
-                  </app-Dropdown>
+                    </app-Dropdown>
+                  </div>
 
-                  <!-- <div class="dropdown margin-side-5">
-                    <div class="select">
-                      <span>{{birthdayDay}}</span>
-                      <i class="fa fa-chevron-left"></i>
-                    </div>
-                    <input type="hidden" name="dayOfBirth">
-                    <ul class="dropdown-menu">
-                      <li *ngFor="let item of days" (click)="dayChanged(item)" id="{{item}}">{{item}}</li>
-                    </ul>
-                  </div> -->
+                  <div class="dropdown-wrapper-short">
+                    <app-Dropdown (selectedItem)="monthChanged($event)" [defaultValue]='birthdayMonth'
+                      [listElements]="months" [selectedElement]="birthdayMonth">
+                    </app-Dropdown>
+                  </div>
 
-                  <app-Dropdown (selectedItem)="monthChanged($event)" [defaultValue]='birthdayMonth'
-                    [listElements]="months" [selectedElement]="birthdayMonth">
-                  </app-Dropdown>
-
-                  <!-- <div class="dropdown margin-side-5">
-                    <div class="select">
-                      <span>{{birthdayMonth}}</span>
-                      <i class="fa fa-chevron-left"></i>
-                    </div>
-                    <input type="hidden" name="monthOfBirth">
-                    <ul class="dropdown-menu">
-                      <li *ngFor="let item of months" (click)="monthChanged(item)" id="{{item}}">{{item}}</li>
-                    </ul>
-                  </div> -->
-
-                  <app-Dropdown (selectedItem)="yearChanged($event)" [defaultValue]='birthdayYear'
-                    [listElements]="years" [selectedElement]="birthdayYear">
-                  </app-Dropdown>
-
-                  <!-- <div class="dropdown margin-side-5">
-                    <div class="select">
-                      <span id="year">{{birthdayYear}}</span>
-                      <i class="fa fa-chevron-left"></i>
-                    </div>
-                    <input type="hidden" name="yearOfBirth">
-                    <ul class="dropdown-menu">
-                      <li *ngFor="let item of years" (click)="yearChanged(item)" id="{{item}}">{{item}}</li>
-                    </ul>
-                  </div> -->
+                  <div class="dropdown-wrapper-short">
+                    <app-Dropdown (selectedItem)="yearChanged($event)" [defaultValue]='birthdayYear'
+                      [listElements]="years" [selectedElement]="birthdayYear">
+                    </app-Dropdown>
+                  </div>
 
                 </div>
               </div>
@@ -266,9 +248,11 @@
             <div *ngIf="showElement === 'gender'">
               <div class="basic-info-input">
                 <div class="years-if-expierience-select-box">
-                  <app-Dropdown (selectedItem)="genderSelected($event)" defaultValue='Gender'
-                    [listElements]="genderDropdownList" [selectedElement]="UserInfo.gender">
-                  </app-Dropdown>
+                  <div class="dropdown-wrapper-long">
+                    <app-Dropdown (selectedItem)="genderSelected($event)" defaultValue='Gender'
+                      [listElements]="genderDropdownList" [selectedElement]="UserInfo.gender">
+                    </app-Dropdown>
+                  </div>
                 </div>
               </div>
               <div class="btn-wrapper">
@@ -294,9 +278,11 @@
             <div *ngIf="showElement === 'isCoach'">
               <div class="basic-info-input">
                 <div class="years-if-expierience-select-box">
-                  <app-Dropdown (selectedItem)="isCoachChanged($event)" defaultValue='No'
-                    [listElements]="coachDropdownList" selectedElement="{{UserInfo.isCoach == true ? 'Yes' : 'No'}}">
-                  </app-Dropdown>
+                  <div class="dropdown-wrapper-long">
+                    <app-Dropdown (selectedItem)="isCoachChanged($event)" defaultValue='No'
+                      [listElements]="coachDropdownList" selectedElement="{{UserInfo.isCoach == true ? 'Yes' : 'No'}}">
+                    </app-Dropdown>
+                  </div>
                 </div>
               </div>
               <div class="btn-wrapper">
