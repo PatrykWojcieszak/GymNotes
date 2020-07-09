@@ -13,6 +13,7 @@ export class User {
   description: string;
   discipline: string;
   yearsOfExperience: number;
+  trainingSince: Date;
   id: string;
   alias: string;
 }

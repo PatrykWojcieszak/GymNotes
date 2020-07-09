@@ -23,7 +23,7 @@ namespace GymNotes.Service.IService
 
     Task<ApiResponse> UpdateHeight(NumberVm numberUpdateVm);
 
-    Task<ApiResponse> UpdateYearsOfExperience(NumberVm numberUpdateVm);
+    Task<ApiResponse> UpdateTrainingSince(DateVm dateVm);
 
     Task<ApiResponse> UpdateGender(StringVm stringUpdateVm);
 

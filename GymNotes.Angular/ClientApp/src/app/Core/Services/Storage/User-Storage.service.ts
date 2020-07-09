@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { formatDate } from '@angular/common';
 
 import { UserService } from 'src/app/Core/Services/Http/User/User.service';
 import { AuthenticationService } from 'src/app/Auth/Authentication.service';
@@ -33,6 +34,7 @@ export class UserStorageService {
       description: '',
       discipline: '',
       yearsOfExperience: 0,
+      trainingSince: null,
     };
 
     CommentsList: UserOpinion[];
@@ -42,7 +44,9 @@ export class UserStorageService {
 
       this.userService.GetUser(parameters)
       .subscribe((res: User) => {
-        this.UserInfo = res; console.warn(res);
+        this.UserInfo = res;
+        this.UserInfo.birthday = formatDate(res.birthday, 'yyyy-MM-dd', 'en-US');
+        this.UserInfo.trainingSince = new Date(res.trainingSince);
       });
 
       this.userOpinionService.GetUserOpinion(parameters)

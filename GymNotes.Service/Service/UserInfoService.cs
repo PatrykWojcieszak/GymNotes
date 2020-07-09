@@ -136,14 +136,14 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public async Task<ApiResponse> UpdateYearsOfExperience(NumberVm numberUpdateVm)
+    public async Task<ApiResponse> UpdateTrainingSince(DateVm dateVm)
     {
-      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == numberUpdateVm.UserId).FirstOrDefault();
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == dateVm.UserId).FirstOrDefault();
 
       if (user == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      user.YearsOfExperience = numberUpdateVm.Value;
+      user.TrainingSince = dateVm.Date;
 
       _unitOfWork.userRepository.Update(user);
       await _unitOfWork.CompleteAsync();

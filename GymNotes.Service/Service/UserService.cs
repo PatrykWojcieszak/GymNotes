@@ -186,18 +186,6 @@ namespace GymNotes.Service.Service
       return new ApiResponse(true);
     }
 
-    public UserInfoVm GetUserUpdateInfo(string id)
-    {
-      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
-
-      if (user == null)
-        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
-
-      var result = _mapper.Map<ApplicationUser, UserInfoVm>(user);
-
-      return result;
-    }
-
     public UserVm GetUser(string id)
     {
       var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();

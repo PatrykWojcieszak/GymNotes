@@ -28,7 +28,7 @@ namespace GymNotes.Models
 
     public string Youtube { get; set; }
 
-    public int? YearsOfExperience { get; set; }
+    public DateTime? TrainingSince { get; set; }
 
     public DateTime? Birthday { get; set; }
 

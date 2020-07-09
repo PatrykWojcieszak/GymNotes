@@ -30,7 +30,17 @@ namespace GymNotes.Service.ViewModels
 
     public string Youtube { get; set; }
 
-    public int? YearsOfExperience { get; set; }
+    public DateTime? TrainingSince { get; set; }
+
+    public int? YearsOfExperience {
+            get
+            {
+                if (TrainingSince != null)
+                    return DateTime.Now.Year - TrainingSince.Value.Year;
+                else
+                    return 0;
+            }
+        }
 
     public DateTime? Birthday { get; set; }
 

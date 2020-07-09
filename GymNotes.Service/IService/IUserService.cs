@@ -31,8 +31,6 @@ namespace GymNotes.Service.IService
 
     UserVm GetUser(string id);
 
-    UserInfoVm GetUserUpdateInfo(string id);
-
     Task<ApiResponse> AddOrUpdateUserAchievement(string id, AchievementDyscyplineVm achievementDyscyplineVm);
 
     AchievementDyscyplineVm GetUserAchievements(string userId, int id);

@@ -1,3 +1,4 @@
+import { UserStorageService } from 'src/app/Core/Services/Storage/User-Storage.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { formatDate } from '@angular/common';
@@ -36,24 +37,25 @@ export class UserProfileEditingComponent implements OnInit {
 	isSelectBoxInitialized: boolean = false;
 	basicInfo: boolean = false;
 	currentYear: number;
-	UserInfo: User = {
-		facebook: '',
-		instagram: '',
-		twitter: '',
-		youTube: '',
-		isCoach: false,
-		height: 0,
-		birthday: '',
-		gender: '',
-    firstName: '',
-    alias: '',
-		fullName: '',
-		lastName: '',
-		description: '',
-		discipline: '',
-		yearsOfExperience: 0,
-		id: ''
-	};
+	// UserInfo: User = {
+	// 	facebook: '',
+	// 	instagram: '',
+	// 	twitter: '',
+	// 	youTube: '',
+	// 	isCoach: false,
+	// 	height: 0,
+	// 	birthday: '',
+	// 	gender: '',
+  //   firstName: '',
+  //   alias: '',
+	// 	fullName: '',
+	// 	lastName: '',
+	// 	description: '',
+	// 	discipline: '',
+  //   yearsOfExperience: 0,
+  //   trainingSince: null,
+	// 	id: ''
+	// };
 
 	AchievementsList: any[];
 
@@ -66,18 +68,20 @@ export class UserProfileEditingComponent implements OnInit {
 		private matDialog: MatDialog,
 		private userService: UserService,
 		private userAuthentication: AuthenticationService,
-		private userInfo: UserInfoService
+    private userInfo: UserInfoService,
+    public userStorage: UserStorageService
 	) {}
 
 	ngOnInit() {
 		this.currentYear = new Date().getFullYear();
+    this.initBirthday(this.userStorage.UserInfo.birthday);
 
-		let parameters: string[] = [ this.userAuthentication.UserId ];
-		this.userService.GetUserUpdateInfo(parameters).subscribe((res: User) => {
-			this.UserInfo = res;
-			this.initBirthday(res.birthday);
-			this.UserInfo.birthday = formatDate(res.birthday, 'yyyy-MM-dd', 'en-US');
-		});
+		const parameters: string[] = [ this.userAuthentication.UserId ];
+		// this.userService.GetUserUpdateInfo(parameters).subscribe((res: User) => {
+		// 	this.UserInfo = res;
+		// 	this.initBirthday(res.birthday);
+		// 	this.UserInfo.birthday = formatDate(res.birthday, 'yyyy-MM-dd', 'en-US');
+		// });
 
 		this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
 			this.AchievementsList = res;
@@ -121,7 +125,7 @@ export class UserProfileEditingComponent implements OnInit {
 	}
 
 	showBasicInfo() {
-		this.basicInfo = !this.basicInfo;
+    this.basicInfo = !this.basicInfo;
 	}
 
 	close() {
@@ -131,16 +135,16 @@ export class UserProfileEditingComponent implements OnInit {
 	updateInstagramURL(e: any) {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			content: this.UserInfo.instagram
+			content: this.userStorage.UserInfo.instagram
 		};
-		console.warn(model);
+
 		this.userInfo.UpdateInstagramUrl(model).subscribe((res: any) => {}, (err) => {});
 	}
 
 	updateFacebookURL(e: any) {
 		const model = {
 			userId: 'this.userAuthentication.UserId',
-			content: this.UserInfo.facebook
+			content: this.userStorage.UserInfo.facebook
 		};
 
 		this.userInfo.UpdateFacebookUrl(model).subscribe((res: any) => {}, (err) => {});
@@ -149,7 +153,7 @@ export class UserProfileEditingComponent implements OnInit {
 	updateTwitterURL(e: any) {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			content: this.UserInfo.twitter
+			content: this.userStorage.UserInfo.twitter
 		};
 
 		this.userInfo.UpdateTwitterUrl(model).subscribe((res: any) => {}, (err) => {});
@@ -158,7 +162,7 @@ export class UserProfileEditingComponent implements OnInit {
 	updateYoutubeURL(e: any) {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			content: this.UserInfo.youTube
+			content: this.userStorage.UserInfo.youTube
 		};
 
 		this.userInfo.UpdateYoutubeUrl(model).subscribe((res: any) => {}, (err) => {});
@@ -167,7 +171,7 @@ export class UserProfileEditingComponent implements OnInit {
 	updateIsCoach() {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			content: this.UserInfo.isCoach
+			content: this.userStorage.UserInfo.isCoach
 		};
 
 		this.userInfo.UpdateIsCoach(model).subscribe(
@@ -179,14 +183,14 @@ export class UserProfileEditingComponent implements OnInit {
 	}
 
 	isCoachChanged(isCoach) {
-		if (isCoach === 'Yes') this.UserInfo.isCoach = true;
-		else this.UserInfo.isCoach = false;
+		if (isCoach === 'Yes') this.userStorage.UserInfo.isCoach = true;
+		else this.userStorage.UserInfo.isCoach = false;
 	}
 
 	updateGender() {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			content: this.UserInfo.gender
+			content: this.userStorage.UserInfo.gender
 		};
 
 		this.userInfo.UpdateGender(model).subscribe(
@@ -198,13 +202,13 @@ export class UserProfileEditingComponent implements OnInit {
 	}
 
 	genderChanged(e: string) {
-		this.UserInfo.gender = e;
+		this.userStorage.UserInfo.gender = e;
 	}
 
 	updateDescription() {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			content: this.UserInfo.description
+			content: this.userStorage.UserInfo.description
 		};
 
 		this.userInfo.UpdateDescription(model).subscribe(
@@ -218,7 +222,7 @@ export class UserProfileEditingComponent implements OnInit {
 	updateDiscipline() {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			content: this.UserInfo.discipline
+			content: this.userStorage.UserInfo.discipline
 		};
 
 		this.userInfo.UpdateDiscipline(model).subscribe(
@@ -229,13 +233,13 @@ export class UserProfileEditingComponent implements OnInit {
 		);
 	}
 
-	updateYearsOfExperience() {
+	updateTrainingSince() {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			value: this.UserInfo.yearsOfExperience
+			date: this.userStorage.UserInfo.trainingSince,
 		};
 
-		this.userInfo.UpdateYearsOfExperience(model).subscribe(
+		this.userInfo.UpdateTrainingSince(model).subscribe(
 			(res: any) => {
 				this.showElement = '';
 			},
@@ -243,14 +247,14 @@ export class UserProfileEditingComponent implements OnInit {
 		);
 	}
 
-	yearsOfExperienceChanged(e: any) {
-		this.UserInfo.yearsOfExperience = e;
+  trainingSinceChanged(e: any) {
+		this.userStorage.UserInfo.trainingSince = new Date(e.toString());
 	}
 
 	updateheight() {
 		const model = {
 			userId: this.userAuthentication.UserId,
-			value: this.UserInfo.height
+			value: this.userStorage.UserInfo.height
 		};
 
 		this.userInfo.UpdateHeight(model).subscribe(
@@ -271,7 +275,7 @@ export class UserProfileEditingComponent implements OnInit {
 
 		if (date == null) return;
 
-		this.UserInfo.birthday = formatDate(date, 'yyyy-MM-dd', 'en-US');
+		this.userStorage.UserInfo.birthday = formatDate(date, 'yyyy-MM-dd', 'en-US');
 
 		const model = {
 			userId: this.userAuthentication.UserId,
@@ -347,6 +351,6 @@ export class UserProfileEditingComponent implements OnInit {
 	}
 
 	genderSelected(gender) {
-		this.UserInfo.gender = gender;
+		this.userStorage.UserInfo.gender = gender;
 	}
 }

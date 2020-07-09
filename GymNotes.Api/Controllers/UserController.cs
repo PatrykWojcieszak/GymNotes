@@ -121,11 +121,6 @@ namespace GymNotes.Controllers
         Ok(await _userService.GetUsers(pageQuery, search));
 
     [Authorize]
-    [HttpGet("getUserUpdateInfo/{id}")]
-    public IActionResult GetUserUpdateInfo(string id) =>
-      Ok(_userService.GetUserUpdateInfo(id));
-
-    [Authorize]
     [HttpGet("getUser/{id}")]
     public IActionResult GetUser(string id) =>
       Ok(_userService.GetUser(id));

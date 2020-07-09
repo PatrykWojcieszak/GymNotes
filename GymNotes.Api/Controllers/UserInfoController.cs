@@ -70,8 +70,8 @@ namespace GymNotes.Controllers
     [Authorize]
     [ApiValidationFilter]
     [HttpPost("updateYearsOfExperience/")]
-    public async Task<IActionResult> UpdateYearsOfExperience([FromBody] NumberVm numberVm) =>
-      Ok(await _userInfoService.UpdateYearsOfExperience(numberVm));
+    public async Task<IActionResult> UpdateYearsOfExperience([FromBody] DateVm dateVm) =>
+      Ok(await _userInfoService.UpdateTrainingSince(dateVm));
 
     [Authorize]
     [ApiValidationFilter]

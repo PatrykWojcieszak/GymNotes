@@ -18,13 +18,13 @@ export class UserInfoService {
   private UPDATE_HEIGHT: string = 'updateHeight';
   private UPDATE_IS_COACH: string = 'updateIsCoach';
   private UPDATE_BIRTHDAY: string = 'updateBirthday';
-  
+
 constructor(private API: APIService) { }
 
   public UpdateInstagramUrl(model) {
 		return this.API.Post(model, this.API.BuildAddress(this.CONTROLLER, this.UPDATE_INSTAGRAM_URL, null));
   }
-  
+
   public UpdateFacebookUrl(model) {
 		return this.API.Post(model, this.API.BuildAddress(this.CONTROLLER, this.UPDATE_FACEBOOK_URL, null));
   }
@@ -49,7 +49,7 @@ constructor(private API: APIService) { }
 		return this.API.Post(model, this.API.BuildAddress(this.CONTROLLER, this.UPDATE_GENDER, null));
   }
 
-  public UpdateYearsOfExperience(model) {
+  public UpdateTrainingSince(model) {
 		return this.API.Post(model, this.API.BuildAddress(this.CONTROLLER, this.UPDATE_YEARS_OF_EXPERIENCE, null));
   }
 
