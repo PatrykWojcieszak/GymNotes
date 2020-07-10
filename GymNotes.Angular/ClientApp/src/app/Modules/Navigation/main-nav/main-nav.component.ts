@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -18,8 +19,9 @@ export class MainNavComponent implements OnInit {
 
 	constructor(
 		private breakpointObserver: BreakpointObserver,
-		private Authentication: AuthenticationService,
+		public Authentication: AuthenticationService,
     public userStorage: UserStorageService,
+    private router: Router,
 	) {}
 
 	ngOnInit() {
@@ -29,5 +31,5 @@ export class MainNavComponent implements OnInit {
 
 	logout() {
 		this.Authentication.logout();
-	}
+  }
 }

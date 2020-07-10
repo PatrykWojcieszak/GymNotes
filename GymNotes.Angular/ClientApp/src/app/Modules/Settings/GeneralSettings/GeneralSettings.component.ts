@@ -1,3 +1,4 @@
+import { UserStorageService } from 'src/app/Core/Services/Storage/User-Storage.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -34,25 +35,24 @@ export class GeneralSettingsComponent implements OnInit {
 
   userEmail: string = '';
 
-  constructor(private userSettings: UserSettingsService, private authentication: AuthenticationService, private formBuilder: FormBuilder) { }
+  constructor(
+    private userSettings: UserSettingsService,
+    private authentication: AuthenticationService,
+    private formBuilder: FormBuilder,
+    public userStorage: UserStorageService) { }
 
   ngOnInit() {
     let parameters: string[] = [this.authentication.UserId];
 
-    this.userSettings.GetUserFullName(parameters).subscribe((res: UserLoginInfo) => {
-      this.userFullName = res;
-
-      this.nameForm = this.formBuilder.group({
-        userId: [this.authentication.UserId],
-        firstname: [ res.firstName, Validators.required ],
-        lastname: [ res.lastName, Validators.required ],
-        alias: [ res.alias ],
-      });
+    this.nameForm = this.formBuilder.group({
+      userId: [this.authentication.UserId],
+      firstname: [ this.userStorage.UserInfo.firstName, Validators.required ],
+      lastname: [ this.userStorage.UserInfo.lastName, Validators.required ],
+      alias: [ this.userStorage.UserInfo.alias ],
     });
 
     this.userSettings.GetUserEmail(parameters).subscribe((res: any) =>{
       this.userEmail = res.email;
-      console.warn(res);
     });
 
     this.emailForm = this.formBuilder.group({

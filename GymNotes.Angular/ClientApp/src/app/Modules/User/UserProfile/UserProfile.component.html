@@ -3,19 +3,19 @@
     <div class="photo-background">
       <img class="img" src="/images/bryce.jpg">
       <div class="navbar">
-        <div class="icon">
+        <div class="icon" *ngIf="selectedUserId != authentication.UserId">
           <i class="fas fa-envelope fa-lg"></i>
           <div class="icon-tooltip">
             <p>Send Message</p>
           </div>
         </div>
-        <div class="icon" (click)="profileEditing()">
+        <div class="icon" (click)="profileEditing()" *ngIf="selectedUserId === authentication.UserId">
           <i class="fas fa-user-edit"></i>
           <div class="icon-tooltip">
             <p>Profile editing</p>
           </div>
         </div>
-        <div class="icon" (click)="sendCoachingRequest()">
+        <div class="icon" (click)="sendCoachingRequest()" *ngIf="selectedUserId != authentication.UserId">
           <i class="fas fa-user-plus"></i>
           <div class="icon-tooltip">
             <p>Send coaching request</p>
@@ -27,32 +27,36 @@
     <div class="main-content">
       <div class="social-icon-wrapper">
         <div class="social-icon-left">
-          <a href="" class="btn-icon facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="" class="btn-icon instagram"><i class="fab fa-instagram"></i></a>
+          <a target="_blank" href="{{UserInfo.facebook}}" class="btn-icon facebook"><i class="fab fa-facebook-f"></i></a>
+          <a target="_blank" href="{{UserInfo.instagram}}" class="btn-icon instagram"><i class="fab fa-instagram"></i></a>
         </div>
         <div class="social-icon-right">
-          <a href="" class="btn-icon twitter"><i class="fab fa-twitter"></i></a>
-          <a href="" class="btn-icon youtube"><i class="fab fa-youtube"></i></a>
+          <a target="_blank" href="{{UserInfo.twitter}}" class="btn-icon twitter"><i class="fab fa-twitter"></i></a>
+          <a target="_blank" href="{{UserInfo.youTube}}" class="btn-icon youtube"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
       <div class="name-wrapper">
-        <span class="first">{{userStorage.UserInfo.firstName}}</span>
-        <span class="alias" *ngIf="userStorage.UserInfo?.alias != null">{{userStorage.UserInfo.alias}}</span>
-        <span class="last">{{userStorage.UserInfo.lastName}}</span>
+        <span class="first">{{UserInfo.firstName}}</span>
+        <span class="alias" *ngIf="UserInfo?.alias != null">{{UserInfo.alias}}</span>
+        <span class="last">{{UserInfo.lastName}}</span>
       </div>
       <div class="info">
         <span class="secondary-text">
           Age: 24 |
-          Gender: {{userStorage.printProp(userStorage.UserInfo.gender)}} |
-          Height: {{userStorage.printProp(userStorage.UserInfo.height)}} |
+          Gender: {{printProp(UserInfo.gender)}} |
+          Height: {{printProp(UserInfo.height)}} |
           Weight: 85kg</span>
-        <span class="secondary-text" *ngIf="userStorage.UserInfo?.description != null">{{userStorage.UserInfo.description}}</span>
-        <span class="secondary-text">Coach: <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+        <span class="secondary-text" *ngIf="UserInfo?.description != null">{{UserInfo.description}}</span>
+        <span class="secondary-text" *ngIf="UserInfo.isCoach">Coach: <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
             class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i></span>
-        <span class="secondary-text">Discipline: {{userStorage.printProp(userStorage.UserInfo.discipline)}}</span>
-        <span class="secondary-text">Years of experience: {{userStorage.printProp(userStorage.UserInfo.yearsOfExperience)}}</span>
+        <span class="secondary-text">Discipline: {{printProp(UserInfo.discipline)}}</span>
+        <span class="secondary-text">Years of experience: {{printProp(UserInfo.yearsOfExperience)}}</span>
       </div>
-      <app-AchievementsSection></app-AchievementsSection>
-      <app-CommentSection></app-CommentSection>
+      <div class="achievements-container" *ngIf="achievementsStorage.AchievementsList?.length > 0">
+        <span class="section-title">Achievements</span>
+        <app-AchievementsList [editMode]="false" [userId]="authentication.UserId"></app-AchievementsList>
+      </div>
+      <!-- <app-AchievementsSection></app-AchievementsSection> -->
+      <app-CommentSection [selectedUserId]="selectedUserId"></app-CommentSection>
     </div>
   </div>

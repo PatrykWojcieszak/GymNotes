@@ -1,14 +1,13 @@
-import { UserStorageService } from 'src/app/Core/Services/Storage/User-Storage.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { formatDate } from '@angular/common';
 
-import { User } from '../../../../Shared/Models/User';
+import { UserStorageService } from 'src/app/Core/Services/Storage/User-Storage.service';
 import { UserProfileEditAchievementsComponent } from '../UserProfileEditAchievements/UserProfileEditAchievements.component';
 import { AuthenticationService } from 'src/app/Auth/Authentication.service';
-import * as $ from 'jquery';
 import { UserService } from 'src/app/Core/Services/Http/User/User.service';
 import { UserInfoService } from 'src/app/Core/Services/Http/User/UserInfo.service';
+import { ConfirmationDialogService } from 'src/app/Core/Services/Utility/ConfirmationDialog.service';
 
 @Component({
 	selector: 'app-UserProfileEditing',
@@ -37,25 +36,6 @@ export class UserProfileEditingComponent implements OnInit {
 	isSelectBoxInitialized: boolean = false;
 	basicInfo: boolean = false;
 	currentYear: number;
-	// UserInfo: User = {
-	// 	facebook: '',
-	// 	instagram: '',
-	// 	twitter: '',
-	// 	youTube: '',
-	// 	isCoach: false,
-	// 	height: 0,
-	// 	birthday: '',
-	// 	gender: '',
-  //   firstName: '',
-  //   alias: '',
-	// 	fullName: '',
-	// 	lastName: '',
-	// 	description: '',
-	// 	discipline: '',
-  //   yearsOfExperience: 0,
-  //   trainingSince: null,
-	// 	id: ''
-	// };
 
 	AchievementsList: any[];
 
@@ -67,9 +47,10 @@ export class UserProfileEditingComponent implements OnInit {
 		@Inject(MAT_DIALOG_DATA) Data,
 		private matDialog: MatDialog,
 		private userService: UserService,
-		private userAuthentication: AuthenticationService,
+		public userAuthentication: AuthenticationService,
     private userInfo: UserInfoService,
-    public userStorage: UserStorageService
+    public userStorage: UserStorageService,
+    private confirmationDialogService: ConfirmationDialogService,
 	) {}
 
 	ngOnInit() {
@@ -77,11 +58,6 @@ export class UserProfileEditingComponent implements OnInit {
     this.initBirthday(this.userStorage.UserInfo.birthday);
 
 		const parameters: string[] = [ this.userAuthentication.UserId ];
-		// this.userService.GetUserUpdateInfo(parameters).subscribe((res: User) => {
-		// 	this.UserInfo = res;
-		// 	this.initBirthday(res.birthday);
-		// 	this.UserInfo.birthday = formatDate(res.birthday, 'yyyy-MM-dd', 'en-US');
-		// });
 
 		this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
 			this.AchievementsList = res;
@@ -119,7 +95,8 @@ export class UserProfileEditingComponent implements OnInit {
 
 		dialogRef.afterClosed().subscribe((x) => {
 			this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
-				this.AchievementsList = res;
+        this.AchievementsList = res;
+        console.warn(res);
 			});
 		});
 	}
@@ -291,8 +268,22 @@ export class UserProfileEditingComponent implements OnInit {
 	}
 
 	DeleteAchievement(id) {
-		let parameters: string[] = [ this.userAuthentication.UserId, id ];
-		this.userService.DeleteUserAchievementsList(parameters).subscribe((res) => console.warn(res));
+
+    // this.confirmationDialogService
+		// 	.confirm(
+		// 		'Please confirm..',
+		// 		'Do you really want to delete these achievements ' + '?'
+		// 	)
+		// 	.then((confirmed) => {
+		// 		const parameters: string[] = [ this.userAuthentication.UserId, id ];
+    //     this.userService.DeleteUserAchievementsList(parameters).subscribe((res) => console.warn(res));
+    //     this.AchievementsList = this.AchievementsList.filter(x => x.id !== id);
+		// 	})
+		// 	.catch(() =>
+		// 		console.log(
+		// 			'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
+		// 		)
+    //   );
 	}
 
 	ngAfterViewChecked() {

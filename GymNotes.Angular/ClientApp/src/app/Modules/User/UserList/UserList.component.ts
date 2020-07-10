@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 
 import { AuthenticationService } from '../../../Auth/Authentication.service';
@@ -8,6 +8,7 @@ import { PaginatedList } from '../../../Shared/Models/PaginatedList';
 import { HttpParams } from '@angular/common/http';
 import { IQueryAPI } from '../../../../Common';
 import { ChatService } from 'src/app/Core/Services/Http/Chat/Chat.service';
+import { relative } from 'path';
 
 @Component({
 	selector: 'app-UserList',
@@ -43,20 +44,13 @@ export class UserListComponent implements OnInit {
 		private userService: UserService,
 		private router: Router,
 		private chatService: ChatService,
-		private authentication: AuthenticationService
+    private authentication: AuthenticationService,
+    private route: ActivatedRoute
 	) {}
 
 	ngOnInit() {
-		this.comboBoxScript();
 		this.getUserList(this.queryAPI);
 	}
-
-	// ngOnChanges(changes: SimpleChanges) {
-	//   // reset page if items array has changed
-	//   if (changes.queryAPI.previousValue !== changes.queryAPI.currentValue) {
-	//     this.search();
-	//   }
-	// }
 
 	public search = () => {
 		this.getUserList(this.queryAPI);
@@ -155,10 +149,7 @@ export class UserListComponent implements OnInit {
 		this.router.navigate([ 'main/chat/', val ]);
 	}
 
-	comboBoxScript() {
-		// $('.pagination-inner a').on('click', function() {
-		// $(this).siblings().removeClass('pagination-active');
-		// $(this).addClass('pagination-active');
-		// });
-	}
+  onUserSelected(id){
+    this.router.navigate(['userprofile/', id], {relativeTo: this.route});
+  }
 }

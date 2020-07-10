@@ -7,9 +7,9 @@
         <div class="drawer-wrapper">
           <div class="user-container">
             <div class="avatar-container"><img src="/images/russ.jpg" class="avatar"
-                routerLink='/userList/userprofile'>
+              [routerLink]="['/userList/userprofile', Authentication.UserId]">
             </div>
-            <div class="name-wrapper" routerLink='/userList/userprofile' >
+            <div class="name-wrapper" [routerLink]="['/userList/userprofile', Authentication.UserId]" >
               <span class="first">{{userStorage.UserInfo.firstName}}</span>
               <span class="alias" *ngIf="userStorage.UserInfo?.alias != null">{{userStorage.UserInfo.alias}}</span>
               <span class="last">{{userStorage.UserInfo.lastName}}</span>

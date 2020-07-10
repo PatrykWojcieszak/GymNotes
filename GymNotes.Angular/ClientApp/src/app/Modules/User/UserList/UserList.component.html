@@ -66,7 +66,7 @@
   <div class="row">
     <div *ngIf="showList" class="user-list-container">
 
-      <div *ngFor="let user of userList.items" class="card" routerLink='/userList/userprofile'>
+      <div *ngFor="let user of userList.items" class="card" routerLink='/userList/userprofile' (click)="onUserSelected(user.id)">
         <div class="front">
           <div class="content">
             <span class="mainText">{{user.fullName}}</span>
@@ -90,7 +90,7 @@
               <img src="/images/russ.jpg" class="avatar-background">
             </div>
             <div class="icon-button">
-              <a target="_blank" [href]="printProp(user.facebook)" class="btn-icon facebook"><i
+              <a target="_blank" [href]="printProp(user.facebook)" class="btn-icon facebook" ><i
                   class="fab fa-facebook-f"></i></a>
               <a target="_blank" [href]="printProp(user.instagram)" class="btn-icon instagram"><i
                   class="fab fa-instagram"></i></a>

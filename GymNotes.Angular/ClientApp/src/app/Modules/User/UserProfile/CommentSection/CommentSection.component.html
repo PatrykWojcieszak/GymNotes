@@ -1,6 +1,6 @@
 <div class="comment-section">
   <span class="section-title">Comments</span>
-  <button class="edit-btn" (click)="AddOpinion()">Add opinion</button>
+  <button class="edit-btn" *ngIf="selectedUserId != authentication.UserId" (click)="AddOpinion()">Add opinion</button>
   <div class="opinion-info" *ngIf="CommentsList?.length === 0">There is no comments. Be first!</div>
   <div class="comment-container"  *ngIf="CommentsList?.length > 0">
     <div class="comment-wrapper" *ngFor="let item of CommentsList">

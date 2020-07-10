@@ -1,9 +1,9 @@
+import { AchievementsStorageService } from './../../../../Core/Services/Storage/Achievements-Storage.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, Validators, FormArray, FormBuilder, FormControl } from '@angular/forms';
 
 import { AuthenticationService } from '../../../../Auth/Authentication.service';
-import { Achievement } from '../../../../Shared/Models/Achievement';
 import { UserService } from 'src/app/Core/Services/Http/User/User.service';
 
 @Component({
@@ -22,7 +22,8 @@ export class UserProfileEditAchievementsComponent implements OnInit {
     private dialogRef: MatDialogRef<UserProfileEditAchievementsComponent>, @Inject(MAT_DIALOG_DATA) public Data: any,
     private fb: FormBuilder,
     private userService: UserService,
-    private authentication: AuthenticationService) { }
+    private authentication: AuthenticationService,
+    private achievementsStorage: AchievementsStorageService) { }
 
   ngOnInit() {
 
@@ -42,7 +43,6 @@ export class UserProfileEditAchievementsComponent implements OnInit {
             id: new FormControl(0),
             achievements: new FormArray(
               [
-                //this.initWeek(),
               ]
             )
           });
@@ -92,7 +92,6 @@ export class UserProfileEditAchievementsComponent implements OnInit {
   }
 
   onSubmit(){
-
     this.RequiredFields();
 
     if (this.myForm.invalid) {
@@ -102,6 +101,7 @@ export class UserProfileEditAchievementsComponent implements OnInit {
     let parameters: string[] = [this.authentication.UserId];
 
     this.userService.AddOrUpdateUserAchievements(this.myForm.value, parameters).subscribe((res: any) => {
+        this.achievementsStorage.getAchievements(this.authentication.UserId);
         this.dialogRef.close();
 			},
 			(err) => {

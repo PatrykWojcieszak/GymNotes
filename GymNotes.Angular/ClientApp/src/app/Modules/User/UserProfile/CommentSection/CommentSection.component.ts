@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { AddOpinionComponent } from '../../AddOpinion/AddOpinion.component';
@@ -13,11 +13,13 @@ import { AuthenticationService } from 'src/app/Auth/Authentication.service';
 })
 export class CommentSectionComponent implements OnInit {
 
+  @Input() selectedUserId: string;
+
   CommentsList: UserOpinion[];
 
   constructor(
     private matDialog: MatDialog,
-    private authentication: AuthenticationService,
+    public authentication: AuthenticationService,
     private userOpinionService: UserOpinionService,) { }
 
   ngOnInit() {

@@ -8,8 +8,10 @@
       (click)="elementToggle('name')">
       <div class="settings-wrapper">
         <div class="setting-name">Name</div>
-        <span *ngIf="showElement != 'name'">{{userFullName.firstName}} <span class="alias">{{userFullName.alias}}</span>
-          {{userFullName.lastName}}</span>
+        <span *ngIf="showElement != 'name'">
+          {{userStorage.UserInfo.firstName}}
+          <span class="alias">{{userStorage.UserInfo.alias}}</span>
+          {{userStorage.UserInfo.lastName}}</span>
         <button class="edit-btn" *ngIf="showElement != 'name'">Edit</button>
       </div>
       <div *ngIf="showElement === 'name'">

@@ -34,7 +34,14 @@
         <button class="edit-btn" (click)="OpenAcievementsEditor(null)">Add</button>
       </div>
       <span *ngIf="AchievementsList?.length === 0" class="achievements-info">It's empty</span>
-      <div class="section-content" *ngFor="let item of AchievementsList">
+      <div class="section-content">
+        <div class="achievement-wrapper">
+          <app-AchievementsList [editMode]="true" [userId]="userAuthentication.UserId"></app-AchievementsList>
+        </div>
+      </div>
+
+
+      <!-- <div class="section-content" *ngFor="let item of AchievementsList">
         <div class="achievement-wrapper">
           <div class="navbar">
             <div class="center">
@@ -51,7 +58,8 @@
             <i class="fas fa-trophy bronze" *ngIf="achievement.place == 'third'"></i>
             {{achievement.date | date:'longDate'}} - {{achievement.name}}</div>
         </div>
-      </div>
+      </div> -->
+
     </div>
     <div class="section-container">
       <div class="section-navbar">
