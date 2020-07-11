@@ -1,12 +1,11 @@
-import { AchievementsSectionComponent } from './UserProfile/AchievementsSection/AchievementsSection.component';
-import { CommentSectionComponent } from './UserProfile/CommentSection/CommentSection.component';
-import { AngularMaterialModule } from './../../angular-material.module';
+import { UserCardComponent } from './UserList/UserCard/UserCard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { CommentSectionComponent } from './UserProfile/CommentSection/CommentSection.component';
 import { AddOpinionComponent } from './AddOpinion/AddOpinion.component';
 import { UserListComponent } from './UserList/UserList.component';
 import { UserProfileComponent } from './UserProfile/UserProfile.component';
@@ -14,6 +13,7 @@ import { UserProfileEditAchievementsComponent } from './UserProfileEditingGroup/
 import { UserProfileEditingComponent } from './UserProfileEditingGroup/UserProfileEditing/UserProfileEditing.component';
 
 import { UserRoutingModule } from './user-routing.module';
+import { AngularMaterialModule } from './../../angular-material.module';
 import { SharedModule } from 'src/app/Shared/shared.module';
 
 @NgModule({
@@ -24,7 +24,7 @@ import { SharedModule } from 'src/app/Shared/shared.module';
     UserListComponent,
     AddOpinionComponent,
     CommentSectionComponent,
-    AchievementsSectionComponent,
+    UserCardComponent,
   ],
   imports: [
     CommonModule,

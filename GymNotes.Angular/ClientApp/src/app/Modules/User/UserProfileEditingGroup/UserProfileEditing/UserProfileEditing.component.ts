@@ -267,25 +267,6 @@ export class UserProfileEditingComponent implements OnInit {
 		);
 	}
 
-	DeleteAchievement(id) {
-
-    // this.confirmationDialogService
-		// 	.confirm(
-		// 		'Please confirm..',
-		// 		'Do you really want to delete these achievements ' + '?'
-		// 	)
-		// 	.then((confirmed) => {
-		// 		const parameters: string[] = [ this.userAuthentication.UserId, id ];
-    //     this.userService.DeleteUserAchievementsList(parameters).subscribe((res) => console.warn(res));
-    //     this.AchievementsList = this.AchievementsList.filter(x => x.id !== id);
-		// 	})
-		// 	.catch(() =>
-		// 		console.log(
-		// 			'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
-		// 		)
-    //   );
-	}
-
 	ngAfterViewChecked() {
 		if (!this.isSelectBoxInitialized && this.showElement != '') {
 			this.isSelectBoxInitialized = true;

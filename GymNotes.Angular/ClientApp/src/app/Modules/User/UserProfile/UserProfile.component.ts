@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../Core/Services/Utility/Utility.service';
 import { AchievementsStorageService } from './../../../Core/Services/Storage/Achievements-Storage.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -46,7 +47,8 @@ export class UserProfileComponent implements OnInit {
     private confirmationDialogService: ConfirmationDialogService,
     private route: ActivatedRoute,
     private userService: UserService,
-    public achievementsStorage: AchievementsStorageService) { }
+    public achievementsStorage: AchievementsStorageService,
+    public utility: UtilityService) { }
 
 
   ngOnInit() {
@@ -87,12 +89,5 @@ export class UserProfileComponent implements OnInit {
 					'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
 				)
 			);
-  }
-
-  public printProp(val: any): string {
-    if (!val) {
-      return '-';
-    }
-    return '' + val;
   }
 }

@@ -23,7 +23,7 @@ export class CommentSectionComponent implements OnInit {
     private userOpinionService: UserOpinionService,) { }
 
   ngOnInit() {
-    let parameters: string[] = [this.authentication.UserId];
+    const parameters: string[] = [this.authentication.UserId];
 
     this.userOpinionService.GetUserOpinion(parameters).subscribe((res: UserOpinion[]) => {
       this.CommentsList = res;

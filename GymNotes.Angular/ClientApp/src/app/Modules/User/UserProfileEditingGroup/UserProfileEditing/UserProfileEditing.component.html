@@ -39,27 +39,6 @@
           <app-AchievementsList [editMode]="true" [userId]="userAuthentication.UserId"></app-AchievementsList>
         </div>
       </div>
-
-
-      <!-- <div class="section-content" *ngFor="let item of AchievementsList">
-        <div class="achievement-wrapper">
-          <div class="navbar">
-            <div class="center">
-              {{item.name}}
-            </div>
-            <div class="right">
-              <i class="fas fa-pen" (click)="OpenAcievementsEditor(item.id)"></i>
-              <i class="fas fa-trash" (click)="DeleteAchievement(item.id)"></i>
-            </div>
-          </div>
-          <div class="achievement" *ngFor="let achievement of item.achievements">
-            <i class="fas fa-trophy gold" *ngIf="achievement.place == 'first'"></i>
-            <i class="fas fa-trophy silver" *ngIf="achievement.place == 'second'"></i>
-            <i class="fas fa-trophy bronze" *ngIf="achievement.place == 'third'"></i>
-            {{achievement.date | date:'longDate'}} - {{achievement.name}}</div>
-        </div>
-      </div> -->
-
     </div>
     <div class="section-container">
       <div class="section-navbar">

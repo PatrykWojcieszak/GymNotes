@@ -1,0 +1,47 @@
+<div class="card" (click)="onUserSelected(user.id)">
+  <div class="front">
+    <div class="content">
+      <span class="mainText">{{user.fullName}}</span>
+      <span class="secondaryText">Age: {{utility.printProp(utility.getAge(user.birthday))}} | Gender: {{utility.printProp(user.gender)}} |
+        Height: {{utility.printProp((0+user.height).toFixed(1))+'cm'}} | Weight: {{utility.printProp(null)}}</span>
+      <span *ngIf="user.isCoach" class="secondaryText">Coach: <i class="fas fa-star"></i> <i
+          class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+          class="fas fa-star-half-alt"></i></span>
+      <div class="image">
+        <img class="img" src="/images/russ.jpg">
+      </div>
+    </div>
+  </div>
+  <div class="back">
+    <div class="content">
+      <div class="top-icons">
+        <span class="fas fa-envelope fa-lg" (click)="sendMessage(user.id)"></span>
+      </div>
+      <div class="avatar-container">
+        <img src="/images/russ.jpg" class="avatar">
+        <img src="/images/russ.jpg" class="avatar-background">
+      </div>
+      <div class="icon-button">
+        <a target="_blank" [href]="utility.printProp(user.facebook)" class="btn-icon facebook" ><i
+            class="fab fa-facebook-f"></i></a>
+        <a target="_blank" [href]="utility.printProp(user.instagram)" class="btn-icon instagram"><i
+            class="fab fa-instagram"></i></a>
+        <a target="_blank" [href]="utility.printProp(user.twitter)" class="btn-icon twitter"><i
+            class="fab fa-twitter"></i></a>
+        <a target="_blank" [href]="utility.printProp(user.youTube)" class="btn-icon youtube"><i
+            class="fab fa-youtube"></i></a>
+      </div>
+      <div class="content-container">
+        <span class="mainText">{{utility.printProp(user.fullName)}}</span>
+        <span class="secondaryText">Age: {{utility.printProp(utility.getAge(user.birthday))}} | Gender: {{utility.printProp(user.gender)}}
+          | Height: {{utility.printProp((0+user.height).toFixed(1))+'cm'}} | Weight: {{utility.printProp(null)}}</span>
+        <span class="secondaryTextBack">{{utility.printProp(user.description)}}</span>
+        <span *ngIf="user.isCoach" class="secondaryTextBack">Coach: <i class="fas fa-star"></i> <i
+            class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+            class="fas fa-star-half-alt"></i></span>
+        <span class="secondaryTextBack">Discipline: {{utility.printProp(user.discipline)}}</span>
+        <span class="secondaryTextBack">Years of experience: {{utility.printProp(user.yearsOfExperience)}}</span>
+      </div>
+    </div>
+  </div>
+</div>

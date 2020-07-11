@@ -92,7 +92,6 @@ mat-datepicker-toggle{
 
 .select-container {
   margin-right: 15px;
-  padding: 5px;
 }
 
 .input-select.form-control,
@@ -106,8 +105,8 @@ mat-datepicker-toggle{
 }
 
 .input-select {
-	outline: none;
-  background-color: $main-color;
+  outline: none;
+  background-color: #232228;
   border-radius: 8px;
 	border: solid 1px $secondary-color;
 	resize: none;
