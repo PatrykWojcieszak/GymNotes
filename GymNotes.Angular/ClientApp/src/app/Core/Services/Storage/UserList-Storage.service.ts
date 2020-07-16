@@ -55,7 +55,7 @@ export class UserListStorageService {
 		this.isLoading = false;
   }
 
-  private getUserList(query?: IQueryAPI) {
+  public getUserList(query?: IQueryAPI) {
 		this.setLoading();
 		this.userService.GetUsers(new HttpParams({ fromObject: query })).subscribe(
 			(users: PaginatedList<User>) => {

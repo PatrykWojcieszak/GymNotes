@@ -13,7 +13,6 @@ namespace GymNotes.Service.Mapping
 
       //Domain to API resource
       CreateMap<ApplicationUser, UserVm>();
-      CreateMap<ApplicationUser, UserInfoVm>();
       CreateMap<AchievementDyscypline, AchievementDyscyplineVm>();
       CreateMap<Achievement, AchievementVm>();
       CreateMap<UserOpinion, UserOpinionVm>();

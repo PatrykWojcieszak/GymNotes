@@ -50,12 +50,14 @@ export class UserListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-    this.userListStorage.getUsers();
+    this.userListStorage.getUserList(this.queryAPI);
 
 		//this.getUserList(this.queryAPI);
 	}
 
 	public search = () => {
+    this.userListStorage.getUserList(this.queryAPI);
+
 		//this.getUserList(this.queryAPI);
 	};
 
@@ -70,17 +72,17 @@ export class UserListComponent implements OnInit {
 	}
 
 	public nextPage(): void {
-		if (this.userListStorage.userList.totalPages <= this.userListStorage.userList.pageIndex) {
-			return;
-		}
+		// if (this.userListStorage.userList.totalPages <= this.userListStorage.userList.pageIndex) {
+		// 	return;
+		// }
 		this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.userList.pageIndex + 1).toString() };
 		this.search();
 	}
 
 	public prevPage(): void {
-		if (this.userListStorage.userList.pageIndex <= 1) {
-			return;
-		}
+		// if (this.userListStorage.userList.pageIndex <= 1) {
+		// 	return;
+		// }
 		this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.userList.pageIndex - 1).toString() };
 		this.search();
 	}
