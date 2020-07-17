@@ -21,22 +21,8 @@
   </div>
 </div>
 
-<app-Pagination (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()"></app-Pagination>
+<app-Pagination [paginatedList]="userListStorage.userList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()"></app-Pagination>
 
-<!-- <div class="pagination-wrapper">
-  <nav class="pagination-container">
-    <div class="pagination">
-      <a [routerLink]="" [attr.disabled]="!userListStorage.userList.hasPreviousPage" (click)="prevPage()"
-        class="pagination-newer">PREV</a>
-      <span class="pagination-inner">
-        <a [routerLink]="" *ngIf="userListStorage.userList.hasPreviousPage">{{userListStorage.userList.pageIndex-1}}</a>
-        <a [routerLink]="" class="pagination-active">{{userListStorage.userList.pageIndex}}</a>
-        <a [routerLink]="" *ngIf="userListStorage.userList.hasNextPage">{{userListStorage.userList.pageIndex+1}}</a>
-      </span>
-      <a [routerLink]="" [attr.disabled]="!userListStorage.userList.hasNextPage" (click)="nextPage()" class="pagination-older">NEXT</a>
-    </div>
-  </nav>
-</div> -->
 
 <main class="main-container container d-flex flex-column">
 
@@ -73,16 +59,4 @@
   </div>
 </main>
 
-<div class="pagination-wrapper">
-  <nav class="pagination-container">
-    <div class="pagination">
-      <a class="pagination-newer">PREV</a>
-      <span class="pagination-inner">
-        <a>1</a>
-        <a class="pagination-active">2</a>
-        <a>3</a>
-      </span>
-      <a class="pagination-older">NEXT</a>
-    </div>
-  </nav>
-</div>
+<app-Pagination [paginatedList]="userListStorage.userList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()"></app-Pagination>

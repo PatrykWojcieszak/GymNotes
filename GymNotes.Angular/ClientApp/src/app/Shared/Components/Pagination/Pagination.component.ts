@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
-import { UserListStorageService } from 'src/app/Core/Services/Storage/UserList-Storage.service';
 import { PaginatedList } from '../../Models/PaginatedList';
 
 @Component({
@@ -10,7 +9,7 @@ import { PaginatedList } from '../../Models/PaginatedList';
 })
 export class PaginationComponent implements OnInit {
 
-  public dataList: PaginatedList<any> = {
+  @Input() paginatedList: PaginatedList<any> = {
 		hasNextPage: false,
 		hasPreviousPage: false,
 		items: [],
@@ -27,24 +26,18 @@ export class PaginationComponent implements OnInit {
   }
 
   public nextPage(): void {
-		if (this.dataList.totalPages <= this.dataList.pageIndex) {
+		if (this.paginatedList.totalPages <= this.paginatedList.pageIndex) {
 			return;
     }
 
     this.nextPageEvent.emit(true);
-
-		// this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.userList.pageIndex + 1).toString() };
-		// this.search();
 	}
 
 	public prevPage(): void {
-		if (this.dataList.pageIndex <= 1) {
+		if (this.paginatedList.pageIndex <= 1) {
 			return;
     }
 
     this.prevPageEvent.emit(true);
-
-		// this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.userList.pageIndex - 1).toString() };
-		// this.search();
 	}
 }

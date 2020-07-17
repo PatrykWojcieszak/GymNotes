@@ -54,11 +54,13 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.selectedUserId = params.id;
+      this.getUser(params.id);
+      this.getAchievements(params.id);
     });
+  }
 
-    this.achievementsStorage.getAchievements(this.selectedUserId);
-
-    const parameters = [ this.selectedUserId ];
+  getUser(userId: string){
+    const parameters = [ userId ];
 
     this.userService.GetUser(parameters)
       .subscribe((res: User) => {
@@ -66,6 +68,10 @@ export class UserProfileComponent implements OnInit {
         this.UserInfo.birthday = formatDate(res.birthday, 'yyyy-MM-dd', 'en-US');
         this.UserInfo.trainingSince = new Date(res.trainingSince);
       });
+  }
+
+  getAchievements(userId: string){
+    this.achievementsStorage.getAchievements(userId);
   }
 
   profileEditing(){

@@ -15,7 +15,7 @@
             <p>Profile editing</p>
           </div>
         </div>
-        <div class="icon" (click)="sendCoachingRequest()" *ngIf="selectedUserId != authentication.UserId">
+        <div class="icon" (click)="sendCoachingRequest()" *ngIf="selectedUserId != authentication.UserId && UserInfo.isCoach">
           <i class="fas fa-user-plus"></i>
           <div class="icon-tooltip">
             <p>Send coaching request</p>

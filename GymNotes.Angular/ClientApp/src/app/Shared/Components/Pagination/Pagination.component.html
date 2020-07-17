@@ -1,14 +1,14 @@
 <div class="pagination-wrapper">
   <nav class="pagination-container">
     <div class="pagination">
-      <a [routerLink]="" [attr.disabled]="!dataList.hasPreviousPage" (click)="prevPage()"
+      <a [routerLink]="" [attr.disabled]="!paginatedList.hasPreviousPage" (click)="prevPage()"
         class="pagination-newer">PREV</a>
       <span class="pagination-inner">
-        <a [routerLink]="" *ngIf="dataList.hasPreviousPage">{{dataList.pageIndex-1}}</a>
-        <a [routerLink]="" class="pagination-active">{{dataList.pageIndex}}</a>
-        <a [routerLink]="" *ngIf="dataList.hasNextPage">{{dataList.pageIndex+1}}</a>
+        <a [routerLink]="" *ngIf="paginatedList.hasPreviousPage">{{paginatedList.pageIndex-1}}</a>
+        <a [routerLink]="" class="pagination-active">{{paginatedList.pageIndex}}</a>
+        <a [routerLink]="" *ngIf="paginatedList.hasNextPage">{{paginatedList.pageIndex+1}}</a>
       </span>
-      <a [routerLink]="" [attr.disabled]="!dataList.hasNextPage" (click)="nextPage()" class="pagination-older">NEXT</a>
+      <a [routerLink]="" [attr.disabled]="!paginatedList.hasNextPage" (click)="nextPage()" class="pagination-older">NEXT</a>
     </div>
   </nav>
 </div>
