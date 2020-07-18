@@ -1,3 +1,4 @@
+import { HeaderComponent } from './Components/Header/Header.component';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,28 +11,24 @@ import { ConfirmationDialogComponent } from './Components/ConfirmationDialog/Con
 import { DropdownDirective } from './Directives/dropdown.directive';
 import { AchievementsListComponent } from './Components/AchievementsList/AchievementsList.component';
 
-
 @NgModule({
 	declarations: [
-    ConfirmationDialogComponent,
-    DropdownDirective,
-    DropdownComponent,
-    AchievementsListComponent,
-    PaginationComponent
-  ],
-	imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    AngularMaterialModule,
-  ],
+		ConfirmationDialogComponent,
+		DropdownDirective,
+		DropdownComponent,
+		AchievementsListComponent,
+		PaginationComponent,
+		HeaderComponent
+	],
+	imports: [ CommonModule, RouterModule, FormsModule, AngularMaterialModule ],
 	exports: [
-    ConfirmationDialogComponent,
-    DropdownDirective,
-    DropdownComponent,
-    AchievementsListComponent,
-    PaginationComponent
-  ],
-  entryComponents: [ ConfirmationDialogComponent ],
+		ConfirmationDialogComponent,
+		DropdownDirective,
+		DropdownComponent,
+		AchievementsListComponent,
+		PaginationComponent,
+		HeaderComponent
+	],
+	entryComponents: [ ConfirmationDialogComponent ]
 })
 export class SharedModule {}

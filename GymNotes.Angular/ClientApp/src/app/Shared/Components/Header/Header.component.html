@@ -1,0 +1,19 @@
+<div class="navbar">
+  <div class="select-list-container">
+
+    <div class="data-container">
+      <ng-content select="[firstSelectBox]"></ng-content>
+    </div>
+
+    <div class="data-container">
+      <ng-content select="[secondSelectBox]"></ng-content>
+    </div>
+
+  </div>
+  <div class="input-field" *ngIf="isSearchBox">
+    <input [(ngModel)]="searchText" (input)="updateSearch()" class="input-text effect-2" type="text"
+      placeholder="Search" name="searchBar">
+    <span class="fas fa-search fa-search-input fa-lg"></span>
+    <span class="focus-border"></span>
+  </div>
+</div>

@@ -91,6 +91,9 @@ namespace GymNotes.Service.Service
       {
         var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.isPersistent, lockoutOnFailure: false);
 
+        if (result == SignInResult.NotAllowed)
+          throw new MyUnauthorizedException(ApiResponseDescription.EMAIL_ADDRESS_IS_NOT_CONFIRMED);
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
           Subject = new ClaimsIdentity(new Claim[] {

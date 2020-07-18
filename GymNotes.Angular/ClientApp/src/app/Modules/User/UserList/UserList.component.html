@@ -1,27 +1,15 @@
-<div class="navbar">
-  <div class="select-list-container">
-    <div class="data-container">
-      <app-Dropdown [defaultValue]='firstFilterDropdownList[0]' [listElements]="firstFilterDropdownList">
-      </app-Dropdown>
-    </div>
+<app-Header [isSearchBox]="true" (searchBox)="updateSearch($event)">
 
-    <div class="data-container">
-      <app-Dropdown [defaultValue]='secondFilterDropdownList[0]' [listElements]="secondFilterDropdownList">
-      </app-Dropdown>
-    </div>
+  <app-Dropdown firstSelectBox [defaultValue]='firstFilterDropdownList[0]' [listElements]="firstFilterDropdownList">
+  </app-Dropdown>
 
-  </div>
-  <div class="input-field">
-    <form (ngSubmit)="search()">
-      <input [(ngModel)]="searchText" (input)="updateSearch()" class="input-text effect-2" type="text"
-        placeholder="Search" name="searchBar">
-      <span class="fas fa-search fa-search-input fa-lg"></span>
-      <span class="focus-border"></span>
-    </form>
-  </div>
-</div>
+  <app-Dropdown secondSelectBox [defaultValue]='secondFilterDropdownList[0]' [listElements]="secondFilterDropdownList">
+  </app-Dropdown>
 
-<app-Pagination [paginatedList]="userListStorage.userList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()"></app-Pagination>
+</app-Header>
+
+<app-Pagination [paginatedList]="userListStorage.userList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+</app-Pagination>
 
 
 <main class="main-container container d-flex flex-column">
@@ -59,4 +47,5 @@
   </div>
 </main>
 
-<app-Pagination [paginatedList]="userListStorage.userList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()"></app-Pagination>
+<app-Pagination [paginatedList]="userListStorage.userList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+</app-Pagination>

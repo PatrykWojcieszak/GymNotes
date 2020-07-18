@@ -12,9 +12,11 @@ export class ServerErrorInterceptorService implements HttpInterceptor {
 			retry(1),
 			catchError((error: HttpErrorResponse) => {
 				if (error.status === 401) {
+					console.warn(error);
 					// refresh token
 				} else {
 					return throwError(error);
+					console.warn(error);
 				}
 			})
 		);

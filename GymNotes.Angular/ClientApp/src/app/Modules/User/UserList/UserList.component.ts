@@ -24,26 +24,19 @@ export class UserListComponent implements OnInit {
 		search: ''
 	};
 
-	constructor(
-    public userListStorage: UserListStorageService
-	) {}
+	constructor(public userListStorage: UserListStorageService) {}
 
 	ngOnInit() {
-    this.userListStorage.getUserList(this.queryAPI);
+		this.userListStorage.getUserList(this.queryAPI);
 	}
 
 	public search = () => {
-    this.userListStorage.getUserList(this.queryAPI);
+		this.userListStorage.getUserList(this.queryAPI);
 	};
 
-	public updateSearch = () => {
-		const validatedText = this.searchText.trim();
-		this.queryAPI = { ...this.queryAPI, search: validatedText };
-	};
-
-	public clearSearch() {
-		this.searchText = '';
-		this.queryAPI = { ...this.queryAPI, search: '' };
+	public updateSearch(searchText: string) {
+		this.queryAPI = { ...this.queryAPI, search: searchText };
+		this.search();
 	}
 
 	public nextPage(): void {
