@@ -21,7 +21,7 @@ export class UserListComponent implements OnInit {
 		page: '1',
 		orderby: 'lastname',
 		pagesize: '8',
-		search: ''
+    search: '',
 	};
 
 	constructor(public userListStorage: UserListStorageService) {}
@@ -47,5 +47,17 @@ export class UserListComponent implements OnInit {
 	public prevPage(): void {
 		this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.userList.pageIndex - 1).toString() };
 		this.search();
-	}
+  }
+
+  public userTypeDropdown(type: string){
+    console.warn(this.queryAPI);
+    this.queryAPI = {...this.queryAPI, key: type};
+    console.warn(this.queryAPI);
+  }
+
+  public filterByDropdown(type: string){
+    console.warn(this.queryAPI);
+    this.queryAPI = {...this.queryAPI, key: type};
+    console.warn(this.queryAPI);
+  }
 }

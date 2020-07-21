@@ -17,6 +17,7 @@ export class DropdownComponent implements OnInit {
 	ngOnInit() {}
 
 	itemSelected(name) {
+    this.selectedElement = name;
 		this.selectedItem.emit(name);
 	}
 }

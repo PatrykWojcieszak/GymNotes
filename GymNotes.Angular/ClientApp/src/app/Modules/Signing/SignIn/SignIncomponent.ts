@@ -68,8 +68,10 @@ export class SignInComponent implements OnInit {
 				this.router.navigateByUrl('/userList');
 			},
 			(err) => {
+        console.warn(err);
+        console.warn(err.error.Message);
 				this.loginError = true;
-				this.loginErrorMessage = err.error.message;
+				this.loginErrorMessage = err.error.Message;
 			}
 		);
 	}

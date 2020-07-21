@@ -117,7 +117,7 @@ namespace GymNotes.Controllers
 
     [Authorize]
     [HttpGet("search")]
-    public async Task<ActionResult<PaginatedList<UserVm>>> GetUsers([FromQuery] PageQuery pageQuery, [FromQuery] string search) =>
+    public async Task<ActionResult<PaginatedList<UserVm>>> GetUsers([FromQuery] PageQuery pageQuery, [FromQuery] string search, [FromQuery] string key) =>
         Ok(await _userService.GetUsers(pageQuery, search));
 
     [Authorize]

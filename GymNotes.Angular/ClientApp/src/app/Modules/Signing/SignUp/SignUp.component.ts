@@ -62,7 +62,7 @@ export class SignUpComponent implements OnInit {
 			return;
 		}
 
-		var registerModel = {
+		const registerModel = {
 			Email: this.registerForm.value.email,
 			Password: this.registerForm.value.password,
 			FirstName: this.registerForm.value.firstName,
@@ -82,7 +82,7 @@ export class SignUpComponent implements OnInit {
 			},
 			(err) => {
 				this.registrationError = true;
-				this.registrationErrorMessage = err.error.message;
+				this.registrationErrorMessage = err.error.Message;
 			}
 		);
 	}
