@@ -1,6 +1,7 @@
-import { IPageQuery } from './IPageQuery';
 
-export interface IQueryAPI extends IPageQuery {
+export interface IQueryAPI {
     readonly search?: string;
-    readonly [key: string]: string;
+    readonly orderby?: number[];
+    readonly page?: string;
+    readonly pagesize?: string;
 }

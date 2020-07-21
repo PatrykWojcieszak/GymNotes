@@ -97,6 +97,12 @@ namespace GymNotes.Controllers
     public async Task<IActionResult> CoachCancelManagment([FromBody] CoachCancelManagmentVm coachCancelManagmentVm) =>
       Ok(await _coachService.CoachCancelManagment(coachCancelManagmentVm));
 
+    [Authorize]
+    [ApiValidationFilter]
+    [HttpPost("search")]
+    public async Task<ActionResult<PaginatedList<UserVm>>> GetUsers([FromBody] PageQuery pageQuery) =>
+        Ok(await _userService.GetUsers(pageQuery));
+
     #endregion POST
 
     #region DELETE
@@ -114,12 +120,7 @@ namespace GymNotes.Controllers
     #endregion DELETE
 
     #region GET
-
-    [Authorize]
-    [HttpGet("search")]
-    public async Task<ActionResult<PaginatedList<UserVm>>> GetUsers([FromQuery] PageQuery pageQuery, [FromQuery] string search, [FromQuery] string key) =>
-        Ok(await _userService.GetUsers(pageQuery, search));
-
+    
     [Authorize]
     [HttpGet("getUser/{id}")]
     public IActionResult GetUser(string id) =>

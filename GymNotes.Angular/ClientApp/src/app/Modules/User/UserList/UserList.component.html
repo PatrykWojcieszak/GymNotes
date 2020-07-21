@@ -1,9 +1,9 @@
 <app-Header [isSearchBox]="true" (searchBox)="updateSearch($event)">
 
-  <app-Dropdown firstSelectBox [defaultValue]='firstFilterDropdownList[0]' [listElements]="firstFilterDropdownList" (selectedItem)="userTypeDropdown($event)">
+  <app-Dropdown firstSelectBox [defaultValue]="utilityService.getKeyByValue(firstFilterDropdownList, 1)" [listElements]="firstFilterDropdownList" (selectedItem)="userTypeDropdown($event)">
   </app-Dropdown>
 
-  <app-Dropdown secondSelectBox [defaultValue]='secondFilterDropdownList[0]' [listElements]="secondFilterDropdownList" (selectedItem)="filterByDropdown($event)">
+  <app-Dropdown secondSelectBox [defaultValue]="utilityService.getKeyByValue(firstFilterDropdownList, 1)" [listElements]="secondFilterDropdownList" (selectedItem)="filterByDropdown($event)">
   </app-Dropdown>
 
 </app-Header>

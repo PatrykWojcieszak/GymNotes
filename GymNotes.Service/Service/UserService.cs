@@ -337,17 +337,20 @@ namespace GymNotes.Service.Service
           .Where(
                   user => user.LastName.ToUpper().Contains(searchString.ToUpper())
                   || user.FirstName.ToUpper().Contains(searchString.ToUpper())
-                  || user.Email.ToUpper().Contains(searchString.ToUpper())
+                  //|| user.Email.ToUpper().Contains(searchString.ToUpper())
               );
     }
 
-    public async Task<PaginatedList<UserVm>> GetUsers(PageQuery pageQuery, string searchString = null)
+    public async Task<PaginatedList<UserVm>> GetUsers(PageQuery pageQuery)
     {
       var query = _unitOfWork.userRepository.FindAll();
-      query = GetSearchQuery(query, searchString); // filtered when will be on DB
 
-      IQueryable<UserVm> orderedQuery = _unitOfWork.userRepository.OrderBy(query, pageQuery.Orderby).Select(x => _mapper.Map<UserVm>(x));
-      return await PaginatedList<UserVm>.CreateAsync(orderedQuery, pageQuery.Page, pageQuery.Pagesize);
+      query = _unitOfWork.userRepository.CoachFilterBy(query, pageQuery.Orderby[0]);
+      //query = _unitOfWork.userRepository.FilterBy(query, pageQuery.Orderby[1]);
+
+      IQueryable<UserVm> FilteredQuery = GetSearchQuery(query, pageQuery.Search).Select(x => _mapper.Map<UserVm>(x)); // filtered when will be on DB
+
+      return await PaginatedList<UserVm>.CreateAsync(FilteredQuery, pageQuery.Page, pageQuery.Pagesize);
     }
 
     //TODO: Sprawdziæ

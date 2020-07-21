@@ -23,7 +23,7 @@ namespace GymNotes.Service.IService
 
     Task<ApiResponse> Register(UserRegisterVm userModel);
 
-    Task<PaginatedList<UserVm>> GetUsers(PageQuery pageQuery, string searchString = null);
+    Task<PaginatedList<UserVm>> GetUsers(PageQuery pageQuery);
 
     IQueryable<ApplicationUser> OrderBy(IQueryable<ApplicationUser> query, string orderBy);
 

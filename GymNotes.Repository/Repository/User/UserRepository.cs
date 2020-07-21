@@ -16,24 +16,36 @@ namespace GymNotes.Repository.Repository.User
     {
     }
 
-    public IQueryable<ApplicationUser> OrderBy(IQueryable<ApplicationUser> query, string orderBy)
+    public IQueryable<ApplicationUser> CoachFilterBy(IQueryable<ApplicationUser> query, int filterBy)
     {
-      switch (orderBy)
+      switch (filterBy)
       {
-        case "username":
-          return query.OrderBy(i => i.UserName);
+        case (int)CoachFilterbyEnum.Coaches:
+          return query.Where(i => i.IsCoach);
 
-        case "-username":
-          return query.OrderByDescending(i => i.UserName);
-
-        case "email":
-          return query.OrderBy(i => i.Email);
-
-        case "-email":
-          return query.OrderByDescending(i => i.Email);
+        case (int)CoachFilterbyEnum.Everyone:
+          return query;
 
         default:
-          return query.OrderBy(i => i.UserName);
+          return query.Where(i => i.IsCoach);
+      }
+    }
+
+    public IQueryable<ApplicationUser> FilterBy(IQueryable<ApplicationUser> query, int filterBy)
+    {
+      switch (filterBy)
+      {
+        case (int)FilterByEnum.Featured:
+          return query.Where(i => i.IsCoach);
+
+        case (int)FilterByEnum.Newest:
+          return query;
+
+        case (int)FilterByEnum.HighestRating:
+          return query;
+
+        default:
+          return query.Where(i => i.IsCoach);
       }
     }
   }

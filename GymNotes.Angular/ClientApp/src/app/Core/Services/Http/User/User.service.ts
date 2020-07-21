@@ -32,8 +32,8 @@ export class UserService {
 		return this.API.Get(this.API.BuildAddress(this.CONTROLLER, this.GET_USER, parameters));
 	}
 
-	public GetUsers(query?: HttpParams) {
-		return this.API.Get(this.API.BuildAddress(this.CONTROLLER, this.GET_USERS, this.Parameters), query);
+	public GetUsers(model) {
+		return this.API.Post(model, this.API.BuildAddress(this.CONTROLLER, this.GET_USERS, this.Parameters));
 	}
 
 	public Login(loginModel) {

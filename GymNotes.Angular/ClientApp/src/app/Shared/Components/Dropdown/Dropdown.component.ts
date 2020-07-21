@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../Core/Services/Utility/Utility.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -11,13 +12,19 @@ export class DropdownComponent implements OnInit {
 	@Input() listElements: [];
 	@Input() selectedElement: string;
 
-	@Output() selectedItem = new EventEmitter<string>();
-	constructor() {}
+	@Output() selectedItem = new EventEmitter<number>();
+	constructor(private utilityService: UtilityService) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+    console.warn(this.getValues());
+  }
 
 	itemSelected(name) {
     this.selectedElement = name;
-		this.selectedItem.emit(name);
-	}
+    this.selectedItem.emit(this.listElements[name]);
+  }
+
+  getValues(){
+    return Object.keys(this.listElements);
+  }
 }

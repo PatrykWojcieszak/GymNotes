@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../Core/Services/Utility/Utility.service';
 import { Component, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 
 import { UserListStorageService } from './../../../Core/Services/Storage/UserList-Storage.service';
@@ -9,22 +10,27 @@ import { IQueryAPI } from '../../../../Common';
 	styleUrls: [ './UserList.component.scss' ]
 })
 export class UserListComponent implements OnInit {
-	firstFilterDropdownList = [ 'Coaches', 'Everyone' ];
-
-	secondFilterDropdownList = [ 'Featured', 'Newest', 'Highest rating' ];
-
-	private isLoaded: boolean = false;
-	private isFoundAny: boolean = false;
+  firstFilterDropdownList = {
+    Coaches: 1,
+    Everyone: 2
+  };
+	// firstFilterDropdownList = [ 'Coaches', 'Everyone' ];
+	// secondFilterDropdownList = [ 'Featured', 'Newest', 'Highest rating' ];
+	secondFilterDropdownList = {
+    Featured: 1,
+    Newest: 2,
+    HighestRating: 3,
+  };
 
 	public searchText: string = '';
 	public queryAPI: IQueryAPI = {
 		page: '1',
-		orderby: 'lastname',
+		orderby: [1, 1],
 		pagesize: '8',
     search: '',
 	};
 
-	constructor(public userListStorage: UserListStorageService) {}
+	constructor(public userListStorage: UserListStorageService, public utilityService: UtilityService) {}
 
 	ngOnInit() {
 		this.userListStorage.getUserList(this.queryAPI);
@@ -49,15 +55,15 @@ export class UserListComponent implements OnInit {
 		this.search();
   }
 
-  public userTypeDropdown(type: string){
-    console.warn(this.queryAPI);
-    this.queryAPI = {...this.queryAPI, key: type};
-    console.warn(this.queryAPI);
+  public userTypeDropdown(type: number){
+    const tempVal = this.queryAPI.orderby[1];
+    this.queryAPI = {...this.queryAPI, orderby: [type, tempVal]};
+    this.search();
   }
 
-  public filterByDropdown(type: string){
-    console.warn(this.queryAPI);
-    this.queryAPI = {...this.queryAPI, key: type};
-    console.warn(this.queryAPI);
+  public filterByDropdown(type: number){
+    const tempVal = this.queryAPI.orderby[0];
+    this.queryAPI = {...this.queryAPI, orderby: [tempVal, type]};
+    this.search();
   }
 }

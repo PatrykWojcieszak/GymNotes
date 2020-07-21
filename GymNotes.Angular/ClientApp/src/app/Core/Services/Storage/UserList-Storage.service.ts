@@ -26,7 +26,7 @@ export class UserListStorageService {
 	public searchText: string = '';
 	public queryAPI: IQueryAPI = {
 		page: '1',
-		orderby: 'lastname',
+		orderby: [1, 1],
 		pagesize: '5',
 		search: ''
   };
@@ -57,7 +57,7 @@ export class UserListStorageService {
 
   public getUserList(query?: IQueryAPI) {
 		this.setLoading();
-		this.userService.GetUsers(new HttpParams({ fromObject: query })).subscribe(
+		this.userService.GetUsers(query).subscribe(
 			(users: PaginatedList<User>) => {
 				this.userList = users;
 				console.warn(users);

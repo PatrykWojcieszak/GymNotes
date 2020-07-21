@@ -5,7 +5,7 @@
   </div>
   <div class="dropdown-menu2" [ngClass]="{'showList':r.isOpen}">
     <div
-      *ngFor="let item of listElements"
+      *ngFor="let item of getValues()"
       id="item"
       class="dropdown-element"
       (click)="itemSelected(item)">{{item}}

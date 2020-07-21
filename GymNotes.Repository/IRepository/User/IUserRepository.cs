@@ -9,6 +9,7 @@ namespace GymNotes.Repository.IRepository.User
 {
   public interface IUserRepository : IBaseRepository<ApplicationUser>
   {
-    IQueryable<ApplicationUser> OrderBy(IQueryable<ApplicationUser> query, string orderBy);
+    IQueryable<ApplicationUser> CoachFilterBy(IQueryable<ApplicationUser> query, int orderBy);
+    IQueryable<ApplicationUser> FilterBy(IQueryable<ApplicationUser> query, int orderBy);
   }
 }
