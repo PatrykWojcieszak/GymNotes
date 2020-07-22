@@ -39,8 +39,16 @@ export class UserProfileEditingComponent implements OnInit {
 
 	AchievementsList: any[];
 
-	genderDropdownList = [ 'Male', 'Female', 'Other' ];
-	coachDropdownList = [ 'Yes', 'No' ];
+  genderDropdownList = {
+    Male: 1,
+    Female: 2,
+    Other: 3,
+  };
+
+	coachDropdownList = {
+    Yes: 1,
+    No: 2,
+  } ;
 
 	constructor(
 		private dialogRef: MatDialogRef<UserProfileEditingComponent>,
@@ -160,7 +168,7 @@ export class UserProfileEditingComponent implements OnInit {
 	}
 
 	isCoachChanged(isCoach) {
-		if (isCoach === 'Yes') this.userStorage.UserInfo.isCoach = true;
+		if (isCoach === 1) this.userStorage.UserInfo.isCoach = true;
 		else this.userStorage.UserInfo.isCoach = false;
 	}
 
@@ -178,8 +186,14 @@ export class UserProfileEditingComponent implements OnInit {
 		);
 	}
 
-	genderChanged(e: string) {
-		this.userStorage.UserInfo.gender = e;
+	genderChanged(e) {
+    console.warn(e);
+    if(e === 1)
+      this.userStorage.UserInfo.gender = 'Male';
+    else if(e === 2)
+      this.userStorage.UserInfo.gender = 'Female';
+    else
+      this.userStorage.UserInfo.gender = 'Other';
 	}
 
 	updateDescription() {
@@ -320,9 +334,5 @@ export class UserProfileEditingComponent implements OnInit {
 
 	dayChanged(e: any) {
 		this.birthdayDay = e;
-	}
-
-	genderSelected(gender) {
-		this.userStorage.UserInfo.gender = gender;
 	}
 }

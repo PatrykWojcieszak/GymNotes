@@ -16,7 +16,6 @@ export class DropdownComponent implements OnInit {
 	constructor(private utilityService: UtilityService) {}
 
 	ngOnInit() {
-    console.warn(this.getValues());
   }
 
 	itemSelected(name) {
