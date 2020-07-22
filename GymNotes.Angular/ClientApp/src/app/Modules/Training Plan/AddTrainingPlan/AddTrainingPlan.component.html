@@ -1,20 +1,30 @@
 <div class="main-container">
+
   <div class="title-container">
     <div class="input-wrapper width500">
-      <div class="input-field">
-        <input class="input-text effect-2" type="text" placeholder="Training plan name" maxlength="50">
-        <span class="focus-border"></span>
-      </div>
-      <div class="input-field">
-        <textarea class="input-text effect-2" type="text" placeholder="Description" maxlength="250"></textarea>
-        <span class="focus-border"></span>
-      </div>
-      <div class="btn-container">
-        <div class="sim-button button13">Next</div>
-      </div>
+      <form [formGroup]="TrainingPlanForm" (submit)="onNextStep()">
+        <div class="input-field">
+          <input class="input-text effect-2" type="text" placeholder="Training plan name" maxlength="50" formControlName="Name">
+          <span class="focus-border"></span>
+        </div>
+        <div class="errorContainer" *ngIf="form.Name.touched || SubmittedNextStep">
+          <span class="errorInfo" *ngIf="form.Name.errors?.required">Name is required</span>
+        </div>
+        <div class="input-field">
+          <textarea class="input-text effect-2" type="text" placeholder="Description" maxlength="250" formControlName="Description"></textarea>
+          <span class="focus-border"></span>
+        </div>
+        <div class="errorContainer" *ngIf="form.Description.touched || SubmittedNextStep">
+          <span class="errorInfo" *ngIf="form.Description.errors?.required">Description is required</span>
+        </div>
+        <div class="btn-container">
+          <div class="sim-button button13" (click)="onNextStep()">Next</div>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="content-container">
+
+  <div class="content-container" *ngIf="ValidForNextStep">
     <div class="training-plan-container">
       <div class="training-week">
         <div class="input-wrapper width500">

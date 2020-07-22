@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GymNotes.Entity.Models;
+using GymNotes.Entity.Models.NewFolder;
 using GymNotes.Models;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -29,5 +30,9 @@ namespace GymNotes.Data
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<UserOpinion> UserOpinions { get; set; }
     public DbSet<UserOpinionLikes> UserOpinionLikes { get; set; }
+    public DbSet<TrainingPlan> TrainingPlans{ get; set; }
+    public DbSet<TrainingWeek> TrainingWeeks { get; set; }
+    public DbSet<TrainingDay> TrainingDays { get; set; }
+    public DbSet<TrainingExercise> TrainingExercises { get; set; }
   }
 }

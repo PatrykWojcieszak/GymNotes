@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddTrainingPlanComponent implements OnInit {
 
-  constructor() { }
+  TrainingPlanForm: FormGroup;
+  ValidForNextStep = false;
+  SubmittedNextStep = false;
+
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.TrainingPlanForm = this.fb.group({
+      Name: ['', Validators.required],
+      Description: ['', Validators.required]
+    });
   }
 
+  get form(){
+    return this.TrainingPlanForm.controls;
+  }
+
+  onNextStep(){
+    this.SubmittedNextStep = true;
+
+    if(this.TrainingPlanForm.invalid){
+      return;
+    }
+
+    this.ValidForNextStep = true;
+  }
 }

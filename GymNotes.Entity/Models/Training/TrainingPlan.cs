@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GymNotes.Entity.Models.NewFolder
@@ -11,16 +12,15 @@ namespace GymNotes.Entity.Models.NewFolder
     [Key]
     public int Id { get; set; }
 
-    [Required]
     public string CreatorId { get; set; }
 
     [Required]
+    [ForeignKey("CreatorId")]
     public virtual ApplicationUser Creator { get; set; }
 
-    [Required]
     public string OwnerId { get; set; }
 
-    [Required]
+    [ForeignKey("OwnerId")]
     public virtual ApplicationUser Owner { get; set; }
 
     [Required]
