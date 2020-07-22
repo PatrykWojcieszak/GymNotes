@@ -187,7 +187,6 @@ export class UserProfileEditingComponent implements OnInit {
 	}
 
 	genderChanged(e) {
-    console.warn(e);
     if(e === 1)
       this.userStorage.UserInfo.gender = 'Male';
     else if(e === 2)
