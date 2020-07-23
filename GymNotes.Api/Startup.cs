@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using GymNotes.Data;
 using GymNotes.Entity.Models;
@@ -31,6 +34,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
@@ -64,8 +68,6 @@ namespace GymNotes
         .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
       services.AddAutoMapper(typeof(MappingProfile));
-      //services.AddAuthentication()
-      //  .AddIdentityServerJwt();
 
       services.AddControllers().AddNewtonsoftJson(options =>
           options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -77,25 +79,71 @@ namespace GymNotes
         options.EnableDetailedErrors = true;
       });
 
+      services.AddCors(options =>
+      {
+        options.AddPolicy("AllowMyOrigins",
+            builder =>
+            {
+              builder
+                  .AllowCredentials()
+                  .AllowAnyHeader()
+                  .SetIsOriginAllowedToAllowWildcardSubdomains()
+                  .AllowAnyMethod()
+                  .WithOrigins("https://localhost:44311", "https://localhost:44390", "https://localhost:44395", "https://localhost:44318");
+            });
+      });
+
       var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
 
-      //services.AddAuthentication(x =>
-      //{
-      //  x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-      //  x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      //})
-      // .AddJwtBearer(x =>
-      // {
-      //   x.RequireHttpsMetadata = false;
-      //   x.SaveToken = true;
-      //   x.TokenValidationParameters = new TokenValidationParameters
-      //   {
-      //     ValidateIssuerSigningKey = true,
-      //     IssuerSigningKey = new SymmetricSecurityKey(key),
-      //     ValidateIssuer = false,
-      //     ValidateAudience = false,
-      //   };
-      // });
+      var tokenValidationParameters = new TokenValidationParameters()
+      {
+        ValidIssuer = "https://localhost:44318/",
+        ValidAudience = "dataEventRecords",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("dataEventRecordsSecret")),
+        NameClaimType = "email",
+        RoleClaimType = "role",
+      };
+
+      var jwtSecurityTokenHandler = new JwtSecurityTokenHandler
+      {
+        InboundClaimTypeMap = new Dictionary<string, string>()
+      };
+
+      services.AddAuthentication(options =>
+      {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      }).AddJwtBearer(options => {
+          options.Authority = "https://localhost:44318/";
+          options.Audience = "dataEventRecords";
+          options.IncludeErrorDetails = true;
+          options.SaveToken = true;
+          options.SecurityTokenValidators.Clear();
+          options.SecurityTokenValidators.Add(jwtSecurityTokenHandler);
+          options.TokenValidationParameters = tokenValidationParameters;
+          options.Events = new JwtBearerEvents
+          {
+            OnMessageReceived = context =>
+            {
+              if ((context.Request.Path.Value.StartsWith("/signalrhome")
+                  || context.Request.Path.Value.StartsWith("/looney")
+                  || context.Request.Path.Value.StartsWith("/usersdm")
+                 )
+                  && context.Request.Query.TryGetValue("token", out StringValues token)
+              )
+              {
+                context.Token = token;
+              }
+
+              return Task.CompletedTask;
+            },
+            OnAuthenticationFailed = context =>
+            {
+              var te = context.Exception;
+              return Task.CompletedTask;
+            }
+          };
+      });
 
       // In production, the Angular files will be served from this directory
       services.AddSpaStaticFiles(configuration =>
@@ -188,7 +236,9 @@ namespace GymNotes
         app.UseHsts();
       }
 
+      app.UseCors("AllowMyOrigins");
       app.UseAuthentication();
+      app.UseAuthorization();
       app.UseMiddleware(typeof(ErrorHandlingMiddleware));
       app.UseMvc();
       app.UseHttpsRedirection();

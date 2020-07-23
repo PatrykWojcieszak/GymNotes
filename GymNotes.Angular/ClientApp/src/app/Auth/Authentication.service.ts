@@ -1,6 +1,9 @@
+import { TokenDecoded } from './../Shared/Models/TokenDecoded';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, config } from 'rxjs';
+import * as JWT from 'jwt-decode';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { UserLoginInfo } from '../Shared/Models/UserLoginInfo';
 import { UserService } from '../Core/Services/Http/User/User.service';
@@ -79,6 +82,33 @@ export class AuthenticationService {
 			return null;
 		}
 	}
+
+  getTokenExpirationDate(): Date {
+    const helper = new JwtHelperService();
+
+    const decodedToken = helper.decodeToken(localStorage.getItem('token'));
+    const expirationDate = helper.getTokenExpirationDate(localStorage.getItem('token'));
+    const isExpired = helper.isTokenExpired(localStorage.getItem('token'));
+
+    console.warn(decodedToken);
+    console.warn(expirationDate);
+    console.warn(isExpired);
+
+    // const decoded: string = JWT(localStorage.getItem('token'));
+
+    // console.log('decoded=' + JSON.stringify(decoded));
+
+    // const decodedToken2 = Object.assign(new TokenDecoded(), decoded);
+
+    // console.warn(decodedToken);
+
+    // if (decodedToken.exp === undefined) return null;
+
+    // const date = new Date(0);
+    // date.setUTCSeconds(+decodedToken.exp);
+    // console.warn(date);
+    return expirationDate;
+  }
 
 	login(loginModel) {
 				return this.UserService.Login(loginModel);

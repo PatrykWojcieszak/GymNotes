@@ -1,3 +1,4 @@
+import { TrainingPlanStorageService } from './../../../Core/Services/Storage/TrainingPlan-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,7 +13,7 @@ export class AddTrainingPlanComponent implements OnInit {
   ValidForNextStep = false;
   SubmittedNextStep = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, public trainingPlanStorage: TrainingPlanStorageService) { }
 
   ngOnInit() {
     this.TrainingPlanForm = this.fb.group({
