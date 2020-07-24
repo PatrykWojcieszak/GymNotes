@@ -1,3 +1,5 @@
+import { UtilityService } from './../Core/Services/Utility/Utility.service';
+import { AuthenticatedUser } from './../Shared/Models/User/AuthenticatedUser';
 import { TokenDecoded } from './../Shared/Models/TokenDecoded';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
@@ -7,36 +9,61 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { UserLoginInfo } from '../Shared/Models/UserLoginInfo';
 import { UserService } from '../Core/Services/Http/User/User.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthenticationService {
   public isPersistent: boolean;
+  private userSubject: BehaviorSubject<AuthenticatedUser>;
+  public user: Observable<AuthenticatedUser>;
 
-	constructor(private UserService: UserService, private router: Router) {
+	constructor(
+    private userService: UserService,
+    private router: Router,
+    private utilityService: UtilityService
+    ) {
+      if(JSON.parse(localStorage.getItem('currentUser')) != null)
+        this.userSubject = new BehaviorSubject<AuthenticatedUser>(JSON.parse(localStorage.getItem('currentUser')));
+      else
+        this.userSubject = new BehaviorSubject<AuthenticatedUser>(JSON.parse(sessionStorage.getItem('currentUser')));
+
+      this.user = this.userSubject.asObservable();
 	}
 
+  public get userValue(): AuthenticatedUser {
+    return this.userSubject.value;
+  }
+
 	public get UserId(){
-		if (localStorage.getItem('id') != null)
-      return localStorage.getItem('id');
-    else if(sessionStorage.getItem('id') != null){
-      return sessionStorage.getItem('id');
+    let userId;
+
+    if (localStorage.getItem('currentUser') != null){
+      const user: AuthenticatedUser = JSON.parse(localStorage.getItem('currentUser'));
+      userId = user.id;
     }
-    else {
-			return null;
-		}
+    else if(sessionStorage.getItem('currentUser') != null){
+      const user: AuthenticatedUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      userId = user.id;
+    }
+
+		return userId;
 	}
 
 	public get UserToken(){
-		if (localStorage.getItem('token') != null)
-      return localStorage.getItem('token');
-    else if(sessionStorage.getItem('token') != null){
-      return sessionStorage.getItem('token');
+    let token;
+
+    if (localStorage.getItem('currentUser') != null){
+      const user: AuthenticatedUser = JSON.parse(localStorage.getItem('currentUser'));
+      token = user.jwtToken;
     }
-    else {
-			return null;
-		}
+    else if(sessionStorage.getItem('currentUser') != null){
+      const user: AuthenticatedUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      token = user.jwtToken;
+    }
+
+    return token;
 	}
 
 	public get UserFullName(){
@@ -94,29 +121,51 @@ export class AuthenticationService {
     console.warn(expirationDate);
     console.warn(isExpired);
 
-    // const decoded: string = JWT(localStorage.getItem('token'));
-
-    // console.log('decoded=' + JSON.stringify(decoded));
-
-    // const decodedToken2 = Object.assign(new TokenDecoded(), decoded);
-
-    // console.warn(decodedToken);
-
-    // if (decodedToken.exp === undefined) return null;
-
-    // const date = new Date(0);
-    // date.setUTCSeconds(+decodedToken.exp);
-    // console.warn(date);
     return expirationDate;
   }
 
-	login(loginModel) {
-				return this.UserService.Login(loginModel);
-	}
+  login(loginModel) {
+    return this.userService.Login(loginModel).pipe(map((user: AuthenticatedUser) => {
+      this.userSubject.next(user);
+      this.startRefreshTokenTimer();
+      return user;
+    }));
+  }
 
 	logout() {
-		localStorage.removeItem('token');
-		sessionStorage.removeItem('token');
+    this.stopRefreshTokenTimer();
+    this.userSubject.next(null);
+		localStorage.removeItem('currentUser');
+		sessionStorage.removeItem('currentUser');
 		this.router.navigate([ '/user/login' ]);
-	}
+  }
+
+  refreshToken() {
+    return this.userService.RefreshToken().pipe(map((user: AuthenticatedUser) => {
+      this.userSubject.next(user);
+      console.warn(user);
+      if(this.isPersistent)
+        this.utilityService.putToLocalStorage('currentUser', user);
+      else
+        this.utilityService.putToSessionStorage('currentUser', user);
+      console.warn("refresh token");
+      this.startRefreshTokenTimer();
+      return user;
+    }));
+  }
+
+  private refreshTokenTimeout;
+
+  private startRefreshTokenTimer() {
+    const jwtToken = JSON.parse(atob(this.userValue.jwtToken.split('.')[1]));
+
+    const expires = new Date(jwtToken.exp * 1000);
+    const timeout = expires.getTime() - Date.now() - (60 * 1000);
+    console.warn('timeout start: ' + timeout)
+    this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
+  }
+
+  private stopRefreshTokenTimer() {
+    clearTimeout(this.refreshTokenTimeout);
+  }
 }

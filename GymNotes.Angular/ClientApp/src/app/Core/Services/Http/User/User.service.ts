@@ -10,8 +10,9 @@ export class UserService {
 	private GET_USER: string = 'getUser';
 	private GET_USERS: string = 'search';
 	private UPDATE_USER: string = 'updateUser';
-	private LOGIN_USER: string = 'login';
+	private LOGIN_USER: string = 'authenticate';
 	private REGISTER_USER: string = 'register';
+	private REFRESH_TOKEN: string = 'refresh-token';
 	private CONFIRM_EMAIL_ADDRESS: string = 'confirmEmailAddress';
 	private RESET_PASSWORD: string = 'resetPassword';
 	private FORGOT_PASSWORD: string = 'forgotPassword';
@@ -42,6 +43,10 @@ export class UserService {
 
 	public Register(registerModel) {
 		return this.API.Post(registerModel, this.API.BuildAddress(this.CONTROLLER, this.REGISTER_USER, null));
+  }
+
+	public RefreshToken() {
+		return this.API.Post(null, this.API.BuildAddress(this.CONTROLLER, this.REFRESH_TOKEN, null));
 	}
 
 	public ConfirmEmail(confirmEmailModel) {

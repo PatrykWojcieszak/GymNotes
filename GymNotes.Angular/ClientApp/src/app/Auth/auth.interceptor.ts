@@ -10,6 +10,8 @@ export class AuthInterceptor implements HttpInterceptor {
 	constructor(private router: Router, private authentication: AuthenticationService) {}
 
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.warn(this.authentication.userValue?.jwtToken);
+
 		if (this.authentication.UserToken != null) {
 			const clonedReq = req.clone({
 				headers: req.headers.set('Authorization', 'Bearer ' + this.authentication.UserToken)

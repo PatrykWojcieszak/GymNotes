@@ -35,6 +35,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Primitives;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
@@ -55,6 +56,8 @@ namespace GymNotes
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      IdentityModelEventSource.ShowPII = true;
+
       services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
       services.AddDbContext<ApplicationDbContext>(options =>
@@ -79,71 +82,34 @@ namespace GymNotes
         options.EnableDetailedErrors = true;
       });
 
-      services.AddCors(options =>
+      services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
       {
-        options.AddPolicy("AllowMyOrigins",
-            builder =>
-            {
-              builder
-                  .AllowCredentials()
-                  .AllowAnyHeader()
-                  .SetIsOriginAllowedToAllowWildcardSubdomains()
-                  .AllowAnyMethod()
-                  .WithOrigins("https://localhost:44311", "https://localhost:44390", "https://localhost:44395", "https://localhost:44318");
-            });
-      });
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+      }));
 
       var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
 
-      var tokenValidationParameters = new TokenValidationParameters()
+      services.AddAuthentication(x =>
       {
-        ValidIssuer = "https://localhost:44318/",
-        ValidAudience = "dataEventRecords",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("dataEventRecordsSecret")),
-        NameClaimType = "email",
-        RoleClaimType = "role",
-      };
-
-      var jwtSecurityTokenHandler = new JwtSecurityTokenHandler
-      {
-        InboundClaimTypeMap = new Dictionary<string, string>()
-      };
-
-      services.AddAuthentication(options =>
-      {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer(options => {
-          options.Authority = "https://localhost:44318/";
-          options.Audience = "dataEventRecords";
-          options.IncludeErrorDetails = true;
-          options.SaveToken = true;
-          options.SecurityTokenValidators.Clear();
-          options.SecurityTokenValidators.Add(jwtSecurityTokenHandler);
-          options.TokenValidationParameters = tokenValidationParameters;
-          options.Events = new JwtBearerEvents
-          {
-            OnMessageReceived = context =>
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      })
+            .AddJwtBearer(x =>
             {
-              if ((context.Request.Path.Value.StartsWith("/signalrhome")
-                  || context.Request.Path.Value.StartsWith("/looney")
-                  || context.Request.Path.Value.StartsWith("/usersdm")
-                 )
-                  && context.Request.Query.TryGetValue("token", out StringValues token)
-              )
+              x.RequireHttpsMetadata = false;
+              x.SaveToken = true;
+              x.TokenValidationParameters = new TokenValidationParameters
               {
-                context.Token = token;
-              }
-
-              return Task.CompletedTask;
-            },
-            OnAuthenticationFailed = context =>
-            {
-              var te = context.Exception;
-              return Task.CompletedTask;
-            }
-          };
-      });
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                ClockSkew = TimeSpan.Zero
+              };
+            });
 
       // In production, the Angular files will be served from this directory
       services.AddSpaStaticFiles(configuration =>
@@ -154,8 +120,8 @@ namespace GymNotes
       services.ConfigureApplicationCookie(options =>
       {
         options.Cookie.HttpOnly = true;
-        options.ExpireTimeSpan = TimeSpan.FromDays(5);
-        options.LoginPath = "/api/User/login";
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.LoginPath = "/api/User/authenticate";
       });
 
       services.Configure<IdentityOptions>(options =>
@@ -236,7 +202,8 @@ namespace GymNotes
         app.UseHsts();
       }
 
-      app.UseCors("AllowMyOrigins");
+      app.UseCors("MyPolicy");
+
       app.UseAuthentication();
       app.UseAuthorization();
       app.UseMiddleware(typeof(ErrorHandlingMiddleware));
@@ -245,6 +212,7 @@ namespace GymNotes
       app.UseStaticFiles();
       app.UseSpaStaticFiles();
       app.UseRouting();
+      app.UseCookiePolicy();
       app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {

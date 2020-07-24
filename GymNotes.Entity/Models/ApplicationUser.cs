@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using GymNotes.Entity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -64,5 +65,8 @@ namespace GymNotes.Models
 
       Messages = new List<Message>();
     }
+
+    [JsonIgnore]
+    public List<RefreshToken> RefreshTokens { get; set; }
   }
 }

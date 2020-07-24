@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using GymNotes.Service.Utils;
+using GymNotes.Service.ViewModels.Authentication;
 
 namespace GymNotes.Service.IService
 {
@@ -19,7 +20,11 @@ namespace GymNotes.Service.IService
 
     Task<ApiResponse> ConfirmEmailAddress(EmailConfirmationVm model);
 
-    Task<UserAuthenticatedVm> Login(UserLoginVm model);
+    Task<AuthenticateResponseVm> Authentication(AuthenticationVm model, string IpAddress);
+
+    Task<AuthenticateResponseVm> RefreshToken(string token, string ipAddress);
+
+    Task<bool> RevokeToken(string token, string ipAddress);
 
     Task<ApiResponse> Register(UserRegisterVm userModel);
 

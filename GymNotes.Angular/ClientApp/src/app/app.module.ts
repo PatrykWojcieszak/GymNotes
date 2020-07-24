@@ -9,7 +9,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,6 +36,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { ServerErrorInterceptorService } from './Core/Services/Error Handling/ServerErrorInterceptor.service';
 import { MainNavComponent } from './Modules/Navigation/main-nav/main-nav.component';
 import { NotificationListComponent } from './Modules/Notifications/NotificationList/NotificationList.component';
+import { appInitializer } from './Auth/appInitializer';
 
 @NgModule({
 	declarations: [
@@ -76,6 +77,12 @@ import { NotificationListComponent } from './Modules/Notifications/NotificationL
 		UserInfoService,
 		UserSettingsService,
     ChatService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [AuthenticationService]
+    },
 		APIService,
 		{
 			provide: HTTP_INTERCEPTORS,

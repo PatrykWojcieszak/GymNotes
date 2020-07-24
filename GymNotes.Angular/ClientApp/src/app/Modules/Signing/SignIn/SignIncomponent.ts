@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../Core/Services/Utility/Utility.service';
 import { Login } from '../../../Shared/Models/Login';
 import { UserLoginInfo } from '../../../Shared/Models/UserLoginInfo';
 import { Router } from '@angular/router';
@@ -18,7 +19,8 @@ export class SignInComponent implements OnInit {
 
 	constructor(private formBuilder: FormBuilder,
 		private authenticationService: AuthenticationService,
-		private router: Router) {}
+    private router: Router,
+    private utilityService: UtilityService) {}
 
 	ngOnInit() {
 		this.loginForm = this.formBuilder.group({
@@ -53,17 +55,11 @@ export class SignInComponent implements OnInit {
 		this.authenticationService.isPersistent = loginModel.isPersistent;
 
 		this.authenticationService.login(loginModel).subscribe(
-			(res: UserLoginInfo) => {
+			(res: any) => {
 				if (loginModel.isPersistent) {
-					console.warn(res);
-					localStorage.setItem('token', res.token),
-					localStorage.setItem('FirstName', res.firstName),
-					localStorage.setItem('LastName', res.lastName),
-					localStorage.setItem('Alias', res.alias),
-        	localStorage.setItem('id', res.id);
+          this.utilityService.putToLocalStorage('currentUser', res);
 				} else {
-					sessionStorage.setItem('token', res.token),
-					sessionStorage.setItem('id', res.id);
+          this.utilityService.putToSessionStorage('currentUser', res);
 				};
 				this.router.navigateByUrl('/userList');
 			},

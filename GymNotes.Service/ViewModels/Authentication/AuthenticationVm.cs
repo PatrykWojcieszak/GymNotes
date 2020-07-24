@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GymNotes.Service.ViewModels
 {
-  public class UserLoginVm
+  public class AuthenticationVm
   {
     [Required]
     public string Email { get; set; }

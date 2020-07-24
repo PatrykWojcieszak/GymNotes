@@ -7,6 +7,7 @@ namespace GymNotes.Service
   public static class ApiResponseDescription
   {
     public const string USER_NOT_FOUND = "User not found";
+    public const string TOKEN_IS_NO_LONGER_VALID = "User token is no longer valid";
     public const string OPINION_NOT_FOUND = "Opinions not found";
     public const string ACHIEVEMENT_DYSCYPLINE_NOT_FOUND = "Achievement dyscypline not found";
     public const string ACHIEVEMENT_NOT_FOUND = "Achievement not found";

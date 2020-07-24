@@ -20,6 +20,8 @@ using GymNotes.Service.Email;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using GymNotes.Service.ViewModels.Authentication;
 
 namespace GymNotes.Service.Service
 {
@@ -80,7 +82,7 @@ namespace GymNotes.Service.Service
       }
     }
 
-    public async Task<UserAuthenticatedVm> Login(UserLoginVm model)
+    public async Task<AuthenticateResponseVm> Authentication(AuthenticationVm model, string IpAddress)
     {
       var user = await _userManager.FindByNameAsync(model.Email);
 
@@ -94,23 +96,18 @@ namespace GymNotes.Service.Service
         if (result == SignInResult.NotAllowed)
           throw new MyUnauthorizedException(ApiResponseDescription.EMAIL_ADDRESS_IS_NOT_CONFIRMED);
 
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-          Subject = new ClaimsIdentity(new Claim[] {
-          new Claim ("UserID", user.Id.ToString ()),
-          }),
-          Expires = DateTime.UtcNow.AddDays(1),
-          SigningCredentials = new SigningCredentials(
-          new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),
-          SecurityAlgorithms.HmacSha256Signature)
-        };
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-        var token = tokenHandler.WriteToken((securityToken));
+        var jwtToken = generateJwtToken(user);
+        var refreshToken = generateRefreshToken(IpAddress);
 
-        return new UserAuthenticatedVm()
+        user.RefreshTokens.Add(refreshToken);
+
+        _unitOfWork.userRepository.Update(user);
+        await _unitOfWork.CompleteAsync();
+
+        return new AuthenticateResponseVm
         {
-          Token = token,
+          JwtToken = jwtToken,
+          RefreshToken = refreshToken.Token,
           Id = user.Id,
           FirstName = user.FirstName,
           LastName = user.LastName,
@@ -120,6 +117,60 @@ namespace GymNotes.Service.Service
       }
       else
         throw new MyException(ApiResponseDescription.INCORECT_PAASWORD);
+    }
+
+    public async Task<AuthenticateResponseVm> RefreshToken(string token, string ipAddress)
+    {
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.RefreshTokens.Any(t => t.Token == token)).FirstOrDefault();
+
+      if (user == null)
+        throw new MyException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+
+      if (!refreshToken.IsActive)
+        throw new MyException(ApiResponseDescription.TOKEN_IS_NO_LONGER_VALID);
+
+      var newRefreshToken = generateRefreshToken(ipAddress);
+      refreshToken.Revoked = DateTime.UtcNow;
+      refreshToken.RevokedByIp = ipAddress;
+      refreshToken.ReplacedByToken = newRefreshToken.Token;
+      user.RefreshTokens.Add(newRefreshToken);
+
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
+
+      var jwtToken = generateJwtToken(user);
+
+      return new AuthenticateResponseVm
+      {
+        JwtToken = jwtToken,
+        RefreshToken = newRefreshToken.Token,
+        Id = user.Id,
+        FirstName = user.FirstName,
+        LastName = user.LastName,
+        Email = user.Email,
+        Alias = user.Alias
+      };
+    }
+
+    public async Task<bool> RevokeToken(string token, string ipAddress)
+    {
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.RefreshTokens.Any(t => t.Token == token)).FirstOrDefault();
+
+      if (user == null) return false;
+
+      var refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+
+      if (!refreshToken.IsActive) return false;
+
+      refreshToken.Revoked = DateTime.UtcNow;
+      refreshToken.RevokedByIp = ipAddress;
+
+      _unitOfWork.userRepository.Update(user);
+      await _unitOfWork.CompleteAsync();
+
+      return true;
     }
 
     public async Task<ApiResponse> ConfirmEmailAddress(EmailConfirmationVm model)
@@ -371,6 +422,41 @@ namespace GymNotes.Service.Service
       await _unitOfWork.CompleteAsync();
 
       return new ApiResponse(true);
+    }
+
+    // helper methods
+
+    private string generateJwtToken(ApplicationUser user)
+    {
+      var tokenHandler = new JwtSecurityTokenHandler();
+      var key = Encoding.ASCII.GetBytes(_appSettings.JWT_Secret);
+      var tokenDescriptor = new SecurityTokenDescriptor
+      {
+        Subject = new ClaimsIdentity(new Claim[]
+          {
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+          }),
+        Expires = DateTime.UtcNow.AddMinutes(15),
+        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+      };
+      var token = tokenHandler.CreateToken(tokenDescriptor);
+      return tokenHandler.WriteToken(token);
+    }
+
+    private RefreshToken generateRefreshToken(string ipAddress)
+    {
+      using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
+      {
+        var randomBytes = new byte[64];
+        rngCryptoServiceProvider.GetBytes(randomBytes);
+        return new RefreshToken
+        {
+          Token = Convert.ToBase64String(randomBytes),
+          Expires = DateTime.UtcNow.AddDays(7),
+          Created = DateTime.UtcNow,
+          CreatedByIp = ipAddress
+        };
+      }
     }
   }
 }
