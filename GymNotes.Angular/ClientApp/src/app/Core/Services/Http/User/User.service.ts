@@ -6,23 +6,23 @@ import { HttpParams } from '@angular/common/http';
 	providedIn: 'root'
 })
 export class UserService {
-	private CONTROLLER: string = 'user/';
-	private GET_USER: string = 'getUser';
-	private GET_USERS: string = 'search';
-	private UPDATE_USER: string = 'updateUser';
-	private LOGIN_USER: string = 'authenticate';
-	private REGISTER_USER: string = 'register';
-	private REFRESH_TOKEN: string = 'refresh-token';
-	private CONFIRM_EMAIL_ADDRESS: string = 'confirmEmailAddress';
-	private RESET_PASSWORD: string = 'resetPassword';
-	private FORGOT_PASSWORD: string = 'forgotPassword';
-	private UPDATE_USER_INFO: string = 'updateUserInfo';
-	private GET_UPDATE_USER_INFO: string = 'getUserUpdateInfo';
-	private ADD_OR_UPDATE_USER_ACHIEVEMENT: string = 'addOrUpdateUserAchievements';
-	private GET_USER_ACHIEVEMENTS_LIST: string = 'getUserAchievementsList';
-	private GET_USER_ACHIEVEMENTS: string = 'getUserAchievements';
-	private DELETE_USER_ACHIEVEMENTS: string = 'deleteUserAchievement';
-	private DELETE_USER_ACHIEVEMENTS_LIST: string = 'deleteUserAchievementsList';
+	private CONTROLLER = 'user/';
+	private GET_USER = 'getUser';
+	private GET_USERS = 'search';
+	private UPDATE_USER = 'updateUser';
+	private LOGIN_USER = 'authenticate';
+	private REGISTER_USER = 'register';
+	private REFRESH_TOKEN = 'refresh-token';
+	private CONFIRM_EMAIL_ADDRESS = 'confirmEmailAddress';
+	private RESET_PASSWORD = 'resetPassword';
+	private FORGOT_PASSWORD = 'forgotPassword';
+	private UPDATE_USER_INFO = 'updateUserInfo';
+	private GET_UPDATE_USER_INFO = 'getUserUpdateInfo';
+	private ADD_OR_UPDATE_USER_ACHIEVEMENT = 'addOrUpdateUserAchievements';
+	private GET_USER_ACHIEVEMENTS_LIST = 'getUserAchievementsList';
+	private GET_USER_ACHIEVEMENTS = 'getUserAchievements';
+	private DELETE_USER_ACHIEVEMENTS = 'deleteUserAchievement';
+	private DELETE_USER_ACHIEVEMENTS_LIST = 'deleteUserAchievementsList';
 
 
 	Parameters: string[];

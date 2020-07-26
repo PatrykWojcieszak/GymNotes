@@ -181,6 +181,7 @@ namespace GymNotes
       services.AddScoped<ICoachService, CoachService>();
       services.AddScoped<IUserSettingsService, UserSettingsService>();
       services.AddScoped<IChatService, ChatService>();
+      services.AddScoped<ITrainingPlanService, TrainingPlanService>();
 
       #endregion Services
 

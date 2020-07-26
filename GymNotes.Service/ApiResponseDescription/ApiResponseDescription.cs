@@ -16,5 +16,7 @@ namespace GymNotes.Service
     public const string INCORECT_EMAIL = "Incorrect email address.";
     public const string INCORECT_PAASWORD = "Incorrect password. Please try again or click 'Forgot password' to reset it.";
     public const string EMAIL_ALREADY_IN_USE = "Email already in use.";
+
+    public const string TRAINING_PLAN_NOT_FOUND = "Training plan not found.";
   }
 }

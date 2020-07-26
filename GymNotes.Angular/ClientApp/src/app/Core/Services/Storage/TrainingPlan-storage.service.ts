@@ -1,3 +1,4 @@
+import { TrainingPlanService } from './../Http/TrainingPlan/TrainingPlan.service';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { AuthenticationService } from './../../../Auth/Authentication.service';
 import { TrainingDay } from './../../../Shared/Models/Training/TrainingDay';
@@ -16,32 +17,25 @@ export class TrainingPlanStorageService {
   validForNextStep = false;
   submittedNextStep = false;
 
-  TrainingPlan: TrainingPlan = {
-    Name: '',
-    Description: '',
-    TrainingWeek: [{
-      Name: '',
-      TrainingDay: [{
-        Name: '',
-        TrainingExercise: [{
-          ExerciseName: '',
-        }]
-      }]
-    }],
-  };
-
-  constructor(private authentication: AuthenticationService, private fb: FormBuilder) { }
+  constructor(private authentication: AuthenticationService, private fb: FormBuilder, private trainingPlanService: TrainingPlanService) { }
 
   createForm(){
     this.trainingPlanForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      trainingWeek: new FormArray([ this.initWeek()]),
+      creatorId: this.authentication.UserId,
+      ownerId: this.authentication.UserId,
+      trainingWeeks: new FormArray([ this.initWeek()]),
     });
   }
 
   onSubmit(){
     console.warn(this.trainingPlanForm.value);
+
+    if(this.trainingPlanForm.invalid)
+      return
+
+    this.trainingPlanService.Create(this.trainingPlanForm.value).subscribe(x => console.warn(x));
   }
 
   get form(){
@@ -49,28 +43,28 @@ export class TrainingPlanStorageService {
   }
 
   getWeek(form) {
-		return form.controls.trainingWeek.controls;
+		return form.controls.trainingWeeks.controls;
   }
 
 	getDay(form) {
-		return form.controls.trainingDay.controls;
+		return form.controls.trainingDays.controls;
   }
 
 	getExercise(form) {
-		return form.controls.trainingExercise.controls;
+		return form.controls.trainingExercises.controls;
   }
 
   initWeek(){
     return new FormGroup({
       name: new FormControl(''),
-      trainingDay: new FormArray([this.initDay() ])
+      trainingDays: new FormArray([this.initDay() ])
     });
   }
 
   initDay(){
     return new FormGroup({
       name: new FormControl(''),
-      trainingExercise: new FormArray([this.initExercise()])
+      trainingExercises: new FormArray([this.initExercise()])
     });
   }
 
@@ -88,51 +82,51 @@ export class TrainingPlanStorageService {
   }
 
   addWeek() {
-		const control = this.trainingPlanForm.get('trainingWeek') as FormArray;
+		const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
 		control.push(this.initWeek());
 	}
 
 	addDay(j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeek', j, 'trainingDay' ]) as FormArray;
+		const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
 		control.push(this.initDay());
 	}
 
 	addExercise(i, j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeek', i, 'trainingDay', j, 'trainingExercise' ]) as FormArray;
+		const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
 		control.push(this.initExercise());
 	}
 
   removeDay(j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeek', j, 'trainingDay' ]) as FormArray;
+		const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
 		control.removeAt(j);
 	}
 
 	removeWeek(i) {
-		const control = this.trainingPlanForm.get('trainingWeek') as FormArray;
+		const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
 		control.removeAt(i);
 	}
 
 	removeExercise(i, j, k) {
-		const control = this.trainingPlanForm.get([ 'trainingWeek', i, 'trainingDay', j, 'trainingExercise' ]) as FormArray;
+		const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
 		control.removeAt(k);
   }
 
   isMoreThanZeroExercise(index, i, j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeek', i, 'trainingDay', j, 'trainingExercise' ]) as FormArray;
+		const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
 
 		if (index + 1 === control.length) return true;
 		else return false;
 	}
 
 	isMoreThanZeroDay(index, j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeek', j, 'trainingDay' ]) as FormArray;
+		const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
 
 		if (index + 1 === control.length) return true;
 		else return false;
 	}
 
 	isMoreThanZeroWeek(index) {
-		const control = this.trainingPlanForm.get('trainingWeek') as FormArray;
+		const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
 
 		if (index + 1 === control.length) return true;
 		else return false;

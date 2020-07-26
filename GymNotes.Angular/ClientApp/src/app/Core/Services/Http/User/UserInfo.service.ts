@@ -6,18 +6,18 @@ import { Injectable } from '@angular/core';
 })
 export class UserInfoService {
 
-  private CONTROLLER: string = 'UserInfo/';
-  private UPDATE_INSTAGRAM_URL: string = 'updateInstagramUrl';
-  private UPDATE_FACEBOOK_URL: string = 'updateFacebookUrl';
-  private UPDATE_TWITTER_URL: string = 'updateTwitterUrl';
-  private UPDATE_YOUTUBE_URL: string = 'updateYoutubeUrl';
-  private UPDATE_DESCRIPTION: string = 'updateDescription';
-  private UPDATE_DISCIPLINE: string = 'updateDiscipline';
-  private UPDATE_GENDER: string = 'updateGender';
-  private UPDATE_YEARS_OF_EXPERIENCE: string = 'updateYearsOfExperience';
-  private UPDATE_HEIGHT: string = 'updateHeight';
-  private UPDATE_IS_COACH: string = 'updateIsCoach';
-  private UPDATE_BIRTHDAY: string = 'updateBirthday';
+  private CONTROLLER = 'UserInfo/';
+  private UPDATE_INSTAGRAM_URL = 'updateInstagramUrl';
+  private UPDATE_FACEBOOK_URL = 'updateFacebookUrl';
+  private UPDATE_TWITTER_URL = 'updateTwitterUrl';
+  private UPDATE_YOUTUBE_URL = 'updateYoutubeUrl';
+  private UPDATE_DESCRIPTION = 'updateDescription';
+  private UPDATE_DISCIPLINE = 'updateDiscipline';
+  private UPDATE_GENDER = 'updateGender';
+  private UPDATE_YEARS_OF_EXPERIENCE = 'updateYearsOfExperience';
+  private UPDATE_HEIGHT = 'updateHeight';
+  private UPDATE_IS_COACH = 'updateIsCoach';
+  private UPDATE_BIRTHDAY = 'updateBirthday';
 
 constructor(private API: APIService) { }
 

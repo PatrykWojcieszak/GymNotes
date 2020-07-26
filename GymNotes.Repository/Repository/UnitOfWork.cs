@@ -1,8 +1,10 @@
 ﻿using GymNotes.Data;
 using GymNotes.Repository.IRepository;
 using GymNotes.Repository.IRepository.Chat;
+using GymNotes.Repository.IRepository.Training;
 using GymNotes.Repository.IRepository.User;
 using GymNotes.Repository.Repository.Chat;
+using GymNotes.Repository.Repository.Training;
 using GymNotes.Repository.Repository.User;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,10 @@ namespace GymNotes.Repository.Repository
     private IMessageRepository _messageRepository;
     private IAchievementRepository _achievementsRepository;
     private IAchievementDyscyplineRepository _achievementDyscyplineRepository;
+    private ITrainingWeekRepository _trainingWeekRepository;
+    private ITrainingPlanRepository _trainingPlanRepository;
+    private ITrainingDayRepository _trainingDayRepository;
+    private ITrainingExerciseRepository _trainingExerciseRepository;
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -162,6 +168,49 @@ namespace GymNotes.Repository.Repository
           _achievementDyscyplineRepository = new AchievementDyscyplineRepository(_context);
 
         return _achievementDyscyplineRepository;
+      }
+    }
+
+    public ITrainingPlanRepository trainingPlanRepository
+    {
+      get
+      {
+        if (_trainingPlanRepository == null)
+          _trainingPlanRepository = new TrainingPlanRepository(_context);
+
+        return _trainingPlanRepository;
+      }
+    }
+
+    public ITrainingWeekRepository trainingWeekRepository
+    {
+      get
+      {
+        if (_trainingWeekRepository == null)
+          _trainingWeekRepository = new TrainingWeekRepository(_context);
+
+        return _trainingWeekRepository;
+      }
+    }
+
+    public ITrainingDayRepository trainingDayRepository
+    {
+      get
+      {
+        if (_trainingDayRepository == null)
+          _trainingDayRepository = new TrainingDayRepository(_context);
+
+        return _trainingDayRepository;
+      }
+    }
+    public ITrainingExerciseRepository trainingExerciseRepository
+    {
+      get
+      {
+        if (_trainingExerciseRepository == null)
+          _trainingExerciseRepository = new TrainingExerciseRepository(_context);
+
+        return _trainingExerciseRepository;
       }
     }
 

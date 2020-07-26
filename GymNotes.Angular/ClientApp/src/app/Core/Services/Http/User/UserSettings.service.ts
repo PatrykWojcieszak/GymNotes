@@ -6,13 +6,13 @@ import { APIService } from '../API/API.service';
 })
 export class UserSettingsService {
 
-  private CONTROLLER: string = 'UserSettings/';
-  private CHANGE_NAME: string = 'changeName';
-  private CHANGE_PASSWORD: string = 'changePassword';
-  private CHANGE_EMAIL: string = 'changeEmail';
-  private GET_USER_FULL_NAME: string = 'getUserFullName';
-  private GET_USER_EMAIL: string = 'getUserEmail';
-  
+  private CONTROLLER = 'UserSettings/';
+  private CHANGE_NAME = 'changeName';
+  private CHANGE_PASSWORD = 'changePassword';
+  private CHANGE_EMAIL = 'changeEmail';
+  private GET_USER_FULL_NAME = 'getUserFullName';
+  private GET_USER_EMAIL = 'getUserEmail';
+
 constructor(private API: APIService) { }
 
   public ChangeName(model) {

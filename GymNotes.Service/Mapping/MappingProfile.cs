@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using GymNotes.Entity.Models;
+using GymNotes.Entity.Models.NewFolder;
 using GymNotes.Models;
 using GymNotes.Service.ViewModels;
+using GymNotes.Service.ViewModels.Training;
 
 namespace GymNotes.Service.Mapping
 {
@@ -21,6 +23,10 @@ namespace GymNotes.Service.Mapping
       CreateMap<Pupil, CoachManagmentRequestVm>();
       CreateMap<ApplicationUser, UpdateUserNameVm>();
       CreateMap<Message, ChatMessageVm>();
+      CreateMap<TrainingPlan, TrainingPlanVm>();
+      CreateMap<TrainingWeek, TrainingWeekVm>();
+      CreateMap<TrainingDay, TrainingDayVm>();
+      CreateMap<TrainingExercise, TrainingExerciseVm>();
 
       #endregion DOMAIN_API
 
@@ -36,6 +42,10 @@ namespace GymNotes.Service.Mapping
       CreateMap<UserOpinionLikesVm, UserOpinionLikes>();
       CreateMap<ChatMessageVm, Message>();
       CreateMap<ChatMessageVm, Contact>();
+      CreateMap<TrainingPlanVm, TrainingPlan>();
+      CreateMap<TrainingWeekVm, TrainingWeek>();
+      CreateMap<TrainingDayVm, TrainingDay>();
+      CreateMap<TrainingExerciseVm, TrainingExercise>();
 
       #endregion API_DOMAIN
     }

@@ -34,7 +34,7 @@
     </div>
 
     <div class="content-container" *ngIf="trainingPlanStorage.validForNextStep">
-      <div class="training-plan-container" formArrayName="trainingWeek">
+      <div class="training-plan-container" formArrayName="trainingWeeks">
 
         <div class="training-week" *ngFor="let weekSection of trainingPlanStorage.getWeek(trainingPlanStorage.trainingPlanForm); let i = index" [formGroupName]="i">
           <div class="input-wrapper width500">
@@ -43,7 +43,7 @@
               <span class="focus-border"></span>
             </div>
           </div>
-          <div formArrayName="trainingDay" class="training-day-wrapper">
+          <div formArrayName="trainingDays" class="training-day-wrapper">
             <div class="training-day" [formGroupName]="j" *ngFor="let daySection of trainingPlanStorage.getDay(weekSection); let j = index">
               <div class="input-wrapper width500">
                 <div class="input-field">
@@ -51,7 +51,7 @@
                   <span class="focus-border"></span>
                 </div>
               </div>
-              <div class="training-exercise" formArrayName="trainingExercise">
+              <div class="training-exercise" formArrayName="trainingExercises">
                 <div class="table-responsive">
                   <table class="table table-bordered">
                     <thead>

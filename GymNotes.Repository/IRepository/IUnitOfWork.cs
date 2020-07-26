@@ -1,4 +1,5 @@
 ﻿using GymNotes.Repository.IRepository.Chat;
+using GymNotes.Repository.IRepository.Training;
 using GymNotes.Repository.IRepository.User;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,11 @@ namespace GymNotes.Repository.IRepository
 
     IContactRepository contactRepository { get; }
     IMessageRepository messageRepository { get; }
+
+    ITrainingPlanRepository trainingPlanRepository{ get; }
+    ITrainingWeekRepository trainingWeekRepository{ get; }
+    ITrainingDayRepository trainingDayRepository{ get; }
+    ITrainingExerciseRepository trainingExerciseRepository{ get; }
 
     IAchievementRepository achievementsRepository { get; }
     IAchievementDyscyplineRepository achievementDyscyplineRepository { get; }

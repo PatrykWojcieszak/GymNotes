@@ -29,7 +29,6 @@
   <ItemGroup>
     <Folder Include="Enum\" />
     <Folder Include="ViewModels\UserInfo\" />
-    <Folder Include="ViewModels\Training\" />
   </ItemGroup>
 
 </Project>
