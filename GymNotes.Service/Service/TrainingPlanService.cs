@@ -68,5 +68,22 @@ namespace GymNotes.Service.Service
 
       return trainingPlan;
     }
+
+    public List<TrainingPlanVm> GetAll(string id)
+    {
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var trainingPlan = _unitOfWork.trainingPlanRepository.GetAllTrainingPlans(id)
+        .Select(x => _mapper.Map<TrainingPlanVm>(x))
+        .ToList();
+
+      if (trainingPlan == null)
+        throw new MyNotFoundException(ApiResponseDescription.TRAINING_PLAN_NOT_FOUND);
+
+      return trainingPlan;
+    }
   }
 }

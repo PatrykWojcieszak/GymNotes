@@ -36,12 +36,14 @@
 
 <div class="content-container">
 
+  <app-TrainingPlanCard *ngFor="let item of trainingPlan" [TrainingPlan]="item"></app-TrainingPlanCard>
+
   <div class=" training-container selected">
     <div class="left-side">
       <span class="title">Training plan name</span>
       <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
         lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
+      <span class="info-text">Last edit: 2020-02-01</span>
     </div>
     <div class="right-side">
       <div class="icon">
@@ -76,7 +78,8 @@
       <span class="title">Training plan name</span>
       <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
         lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
+      <span class="info-text">Last edit: 2020-02-01</span>
+      <span class="info-text">Created by:</span>
     </div>
     <div class="right-side">
       <div class="icon">
@@ -111,7 +114,7 @@
       <span class="title">Training plan name</span>
       <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
         lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
+      <span class="info-text">Last edit: 2020-02-01</span>
     </div>
     <div class="right-side">
       <i class="far fa-heart"></i>
@@ -126,7 +129,7 @@
       <span class="title">Training plan name</span>
       <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
         lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
+      <span class="info-text">Last edit: 2020-02-01</span>
     </div>
     <div class="right-side">
       <i class="far fa-heart"></i>
@@ -135,82 +138,6 @@
       <i class="fas fa-trash-alt"></i>
     </div>
   </div>
-
-  <div class="training-container">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
-    </div>
-    <div class="right-side">
-      <i class="far fa-heart"></i>
-      <i class="fas fa-pencil-alt"></i>
-      <i class="fas fa-check"></i>
-      <i class="fas fa-trash-alt"></i>
-    </div>
-  </div>
-
-  <div class="training-container">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
-    </div>
-    <div class="right-side">
-      <i class="far fa-heart"></i>
-      <i class="fas fa-pencil-alt"></i>
-      <i class="fas fa-check"></i>
-      <i class="fas fa-trash-alt"></i>
-    </div>
-  </div>
-
-  <div class="training-container">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
-    </div>
-    <div class="right-side">
-      <i class="far fa-heart"></i>
-      <i class="fas fa-pencil-alt"></i>
-      <i class="fas fa-check"></i>
-      <i class="fas fa-trash-alt"></i>
-    </div>
-  </div>
-
-  <div class="training-container">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
-    </div>
-    <div class="right-side">
-      <i class="far fa-heart"></i>
-      <i class="fas fa-pencil-alt"></i>
-      <i class="fas fa-check"></i>
-      <i class="fas fa-trash-alt"></i>
-    </div>
-  </div>
-
-  <div class="training-container">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="date">Last edit: 2020-02-01</span>
-    </div>
-    <div class="right-side">
-      <i class="far fa-heart"></i>
-      <i class="fas fa-pencil-alt"></i>
-      <i class="fas fa-check"></i>
-      <i class="fas fa-trash-alt"></i>
-    </div>
-  </div>
-</div>
 
 <div class="pagination-wrapper">
   <nav class="pagination-container">

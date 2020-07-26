@@ -1,3 +1,3 @@
 export interface TrainingExercise {
-  ExerciseName: string;
+  exerciseName: string;
 }

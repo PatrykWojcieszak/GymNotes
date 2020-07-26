@@ -37,10 +37,13 @@ namespace GymNotes.Controllers
     #endregion POST
 
     #region GET
-    [HttpGet("{id}")]
+    [HttpGet("get/{id}")]
     public IActionResult GetTrainingPlan(int id) =>
       Ok(_trainingPlanService.GetTrainingPlan(id));
 
+    [HttpGet("getAll/{id}")]
+    public IActionResult GetAllTrainingPlan(string id) =>
+      Ok(_trainingPlanService.GetAll(id));
     #endregion GET
   }
 }

@@ -1,0 +1,34 @@
+<div class="training-container favorite">
+  <div class="left-side">
+    <span class="title">{{TrainingPlan.name}}</span>
+    <span>{{TrainingPlan.description}}</span>
+    <span class="info-text">{{TrainingPlan.modifiedTime | date: 'short'}}</span>
+    <span class="info-text">Created by: {{TrainingPlan.owner.fullName}}</span>
+  </div>
+  <div class="right-side">
+    <div class="icon">
+      <i class="fas fa-heart"></i>
+      <div class="icon-tooltip">
+        <p>Favorite</p>
+      </div>
+    </div>
+    <div class="icon">
+      <i class="fas fa-pencil-alt"></i>
+      <div class="icon-tooltip">
+        <p>Edit</p>
+      </div>
+    </div>
+    <div class="icon">
+      <i class="fas fa-check"></i>
+      <div class="icon-tooltip">
+        <p>Main plan</p>
+      </div>
+    </div>
+    <div class="icon">
+      <i class="fas fa-trash-alt"></i>
+      <div class="icon-tooltip">
+        <p>Delete</p>
+      </div>
+    </div>
+  </div>
+</div>

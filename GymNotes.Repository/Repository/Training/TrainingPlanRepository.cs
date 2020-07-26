@@ -31,5 +31,14 @@ namespace GymNotes.Repository.Repository.Training
         .ThenInclude(x => x.TrainingExercises).Where(x => x.Id == id)
         .AsNoTracking();
     }
+
+    public IQueryable<TrainingPlan> GetAllTrainingPlans(string id)
+    {
+      return _context.TrainingPlans
+        .Include(x => x.Owner)
+        .Include(x => x.Creator)
+        .Where(x => x.OwnerId == id)
+        .AsNoTracking();
+    }
   }
 }

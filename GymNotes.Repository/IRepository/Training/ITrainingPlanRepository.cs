@@ -10,5 +10,6 @@ namespace GymNotes.Repository.IRepository.Training
   public interface ITrainingPlanRepository : IBaseRepository<TrainingPlan>
   {
     IQueryable<TrainingPlan> GetTrainingPlan(int id);
+    IQueryable<TrainingPlan> GetAllTrainingPlans(string id);
   }
 }

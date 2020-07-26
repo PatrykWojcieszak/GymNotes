@@ -12,5 +12,6 @@ namespace GymNotes.Service.IService
     Task<ApiResponse> EditTrainingPlan(TrainingPlanVm trainingPlanVm);
     Task<ApiResponse> CreateTrainingPlan(TrainingPlanVm trainingPlanVm);
     TrainingPlanVm GetTrainingPlan(int id);
+    List<TrainingPlanVm> GetAll(string id);
   }
 }
