@@ -9,30 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddTrainingPlanComponent implements OnInit {
 
-  TrainingPlanForm: FormGroup;
-  ValidForNextStep = false;
-  SubmittedNextStep = false;
-
-  constructor(private fb: FormBuilder, public trainingPlanStorage: TrainingPlanStorageService) { }
+  constructor(
+    public trainingPlanStorage: TrainingPlanStorageService) { }
 
   ngOnInit() {
-    this.TrainingPlanForm = this.fb.group({
-      Name: ['', Validators.required],
-      Description: ['', Validators.required]
-    });
-  }
-
-  get form(){
-    return this.TrainingPlanForm.controls;
-  }
-
-  onNextStep(){
-    this.SubmittedNextStep = true;
-
-    if(this.TrainingPlanForm.invalid){
-      return;
-    }
-
-    this.ValidForNextStep = true;
+    this.trainingPlanStorage.createForm();
   }
 }

@@ -1,39 +1,130 @@
 <div class="main-container">
-
-  <div class="title-container">
-    <div class="input-wrapper width500">
-      <form [formGroup]="TrainingPlanForm" (submit)="onNextStep()">
-        <div class="input-field">
-          <input class="input-text effect-2" type="text" placeholder="Training plan name" maxlength="50" formControlName="Name">
-          <span class="focus-border"></span>
-        </div>
-        <div class="errorContainer" *ngIf="form.Name.touched || SubmittedNextStep">
-          <span class="errorInfo" *ngIf="form.Name.errors?.required">Name is required</span>
-        </div>
-        <div class="input-field">
-          <textarea class="input-text effect-2" type="text" placeholder="Description" maxlength="250" formControlName="Description"></textarea>
-          <span class="focus-border"></span>
-        </div>
-        <div class="errorContainer" *ngIf="form.Description.touched || SubmittedNextStep">
-          <span class="errorInfo" *ngIf="form.Description.errors?.required">Description is required</span>
-        </div>
-        <div class="btn-container">
-          <div class="sim-button button13" (click)="onNextStep()">Next</div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="content-container" >
-    <div class="training-plan-container">
-
-      <app-AddTrainingWeek *ngFor="let item of trainingPlanStorage.TrainingWeek" [Name]="item"></app-AddTrainingWeek>
-
+  <form [formGroup]="trainingPlanStorage.trainingPlanForm" (submit)="trainingPlanStorage.onNextStep()">
+    <div class="title-container">
       <div class="input-wrapper width500">
-        <div class="btn-container">
-          <div class="sim-button button13" (click)="trainingPlanStorage.addWeek('test')">Save training plan</div>
+          <div class="input-field">
+            <input
+              class="input-text effect-2"
+              type="text"
+              placeholder="Training plan name"
+              maxlength="50"
+              formControlName="name">
+            <span class="focus-border"></span>
+          </div>
+          <div class="errorContainer" *ngIf="trainingPlanStorage.form.name.touched || trainingPlanStorage.submittedNextStep">
+            <span class="errorInfo" *ngIf="trainingPlanStorage.form.name.errors?.required">Name is required</span>
+          </div>
+          <div class="input-field">
+            <textarea
+              class="input-text effect-2"
+              type="text"
+              placeholder="Description"
+              maxlength="250"
+              formControlName="description">
+            </textarea>
+            <span class="focus-border"></span>
+          </div>
+          <div class="errorContainer" *ngIf="trainingPlanStorage.form.description.touched || trainingPlanStorage.submittedNextStep">
+            <span class="errorInfo" *ngIf="trainingPlanStorage.form.description.errors?.required">Description is required</span>
+          </div>
+          <div class="btn-container">
+            <div class="sim-button button13" (click)="trainingPlanStorage.onNextStep()">Next</div>
+          </div>
+      </div>
+    </div>
+
+    <div class="content-container" *ngIf="trainingPlanStorage.validForNextStep">
+      <div class="training-plan-container" formArrayName="trainingWeek">
+
+        <div class="training-week" *ngFor="let weekSection of trainingPlanStorage.getWeek(trainingPlanStorage.trainingPlanForm); let i = index" [formGroupName]="i">
+          <div class="input-wrapper width500">
+            <div class="input-field">
+              <input class="input-text effect-2" type="text" placeholder="Training week name" maxlength="50" formControlName="name">
+              <span class="focus-border"></span>
+            </div>
+          </div>
+          <div formArrayName="trainingDay" class="training-day-wrapper">
+            <div class="training-day" [formGroupName]="j" *ngFor="let daySection of trainingPlanStorage.getDay(weekSection); let j = index">
+              <div class="input-wrapper width500">
+                <div class="input-field">
+                  <input class="input-text effect-2" type="text" placeholder="Training day name" maxlength="50" formControlName="name">
+                  <span class="focus-border"></span>
+                </div>
+              </div>
+              <div class="training-exercise" formArrayName="trainingExercise">
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col" style="width: 200px;">Exercise</th>
+                        <th scope="col" style="width: 60px;">Sets</th>
+                        <th scope="col" style="width: 60px;">Reps</th>
+                        <th scope="col" style="width: 60px;">Tempo</th>
+                        <th scope="col" style="width: 60px;">Rest[s]</th>
+                        <th scope="col" style="width: 60px;">RPE</th>
+                        <th scope="col" style="width: 140px;">Weight[pounds]</th>
+                        <th scope="col" style="width: 200px;">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr [formGroupName]="k" *ngFor="let exerciseSection of trainingPlanStorage.getExercise(daySection); let k=index">
+                        <td><input class="input-table" type="text" maxlength="50" formControlName="exerciseName"/></td>
+                        <td><input class="input-table" type="number" min="0" step="1" formControlName="sets"/></td>
+                        <td><input class="input-table" type="number" min="0" step="1" formControlName="reps"/></td>
+                        <td><input class="input-table" type="text" maxlength="7" formControlName="tempo"/></td>
+                        <td><input class="input-table" type="number" min="0" step="1" formControlName="rest"/></td>
+                        <td><input class="input-table" type="number" min="0" max="10" step="1" formControlName="rPE"/></td>
+                        <td><input class="input-table" type="number" min="0" step="1" formControlName="weight"/></td>
+                        <td><input class="input-table" type="text" maxlength="150" formControlName="description"/></td>
+                        <td
+                          class="table-icon"
+                          *ngIf="trainingPlanStorage.getExercise(daySection).length > 1" >
+                          <span
+                            class="fas fa-trash-alt"
+                            title="Delete"
+                            (click)="trainingPlanStorage.removeExercise(i,j,k)">
+                          </span>
+                        </td>
+                        <td
+                          class="table-icon"
+                          *ngIf="trainingPlanStorage.isMoreThanZeroExercise(k, i, j)">
+                          <span
+                            class="fas fa-plus"
+                            title="Add"
+                            (click)="trainingPlanStorage.addExercise(i,j)">
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="btn-wrapper width500">
+                <div class="btn-container btn-width100" *ngIf="trainingPlanStorage.getDay(weekSection).length > 1">
+                  <div class="sim-button button13" (click)="trainingPlanStorage.removeDay(i)">Remove training day</div>
+                </div>
+                <div class="btn-container btn-width100" *ngIf="trainingPlanStorage.isMoreThanZeroDay(j, i)">
+                  <div class="sim-button-green button13-green" (click)="trainingPlanStorage.addDay(i)">Add training day</div>
+                </div>
+              </div>
+            </div>
+            <div class="btn-wrapper width500">
+              <div class="btn-container btn-width100" *ngIf="trainingPlanStorage.getWeek(trainingPlanStorage.trainingPlanForm).length > 1" >
+                <div class="sim-button button13" (click)="trainingPlanStorage.removeWeek(i)">Remove training week</div>
+              </div>
+              <div class="btn-container btn-width100" *ngIf="trainingPlanStorage.isMoreThanZeroWeek(i)" >
+                <div class="sim-button-green button13-green" (click)="trainingPlanStorage.addWeek()">Add training week</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-wrapper width500">
+          <div class="btn-container">
+            <div class="sim-button button13" (click)="trainingPlanStorage.onSubmit()">Save training plan</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
