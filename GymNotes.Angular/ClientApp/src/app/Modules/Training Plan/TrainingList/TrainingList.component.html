@@ -1,26 +1,19 @@
-<div class="navbar">
-  <div class="select-list-container">
-    <div class="data-container">
-      <select id="filter-option" class="form-control input" name="filter-option">
-        <option value="Male">All</option>
-        <option value="Male">Favorites</option>
-        <option value="Female">Newest</option>
-      </select>
-    </div>
-  </div>
-  <div class="btn-container">
+<app-Header [showSecondFilter]="false" [isSearchBox]="true" (searchBox)="updateSearch($event)">
+
+  <app-Dropdown firstSelectBox [defaultValue]="utilityService.getKeyByValue(filterOption, 1)" [listElements]="filterOption" (selectedItem)="filterOptionDropdown($event)">
+  </app-Dropdown>
+
+  <div buttons class="btn-container">
     <div class="sim-button button13" [routerLink]="['add-training-plan']" routerLinkActive="router-link-active">
       Add
       training</div>
   </div>
-  <div class="input-field">
-    <input class="input-text effect-2" type="email" placeholder="Search">
-    <span class="fas fa-search fa-search-input fa-lg"></span>
-    <span class="focus-border"></span>
-  </div>
-</div>
+</app-Header>
 
-<div class="pagination-wrapper">
+<app-Pagination [paginatedList]="trainingPlan" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+</app-Pagination>
+
+<!-- <div class="pagination-wrapper">
   <nav class="pagination-container">
     <div class="pagination">
       <a class="pagination-newer">PREV</a>
@@ -32,7 +25,7 @@
       <a class="pagination-older">NEXT</a>
     </div>
   </nav>
-</div>
+</div> -->
 
 <div class="content-container">
 
@@ -124,22 +117,11 @@
     </div>
   </div>
 
-  <div class="training-container">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="info-text">Last edit: 2020-02-01</span>
-    </div>
-    <div class="right-side">
-      <i class="far fa-heart"></i>
-      <i class="fas fa-pencil-alt"></i>
-      <i class="fas fa-check"></i>
-      <i class="fas fa-trash-alt"></i>
-    </div>
-  </div>
+</div>
 
-<div class="pagination-wrapper">
+  <app-Pagination [paginatedList]="trainingPlan" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+  </app-Pagination>
+<!-- <div class="pagination-wrapper">
   <nav class="pagination-container">
     <div class="pagination">
       <a class="pagination-newer">PREV</a>
@@ -151,4 +133,4 @@
       <a class="pagination-older">NEXT</a>
     </div>
   </nav>
-</div>
+</div> -->

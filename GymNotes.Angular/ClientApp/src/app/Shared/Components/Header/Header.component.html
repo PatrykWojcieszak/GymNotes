@@ -5,11 +5,14 @@
       <ng-content select="[firstSelectBox]"></ng-content>
     </div>
 
-    <div class="data-container">
+    <div class="data-container" *ngIf="showSecondFilter">
       <ng-content select="[secondSelectBox]"></ng-content>
     </div>
 
   </div>
+
+  <ng-content select="[buttons]"></ng-content>
+
   <div class="input-field" *ngIf="isSearchBox">
     <input [(ngModel)]="searchText" (input)="updateSearch()" class="input-text effect-2" type="text"
       placeholder="Search" name="searchBar">

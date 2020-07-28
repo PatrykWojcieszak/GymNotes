@@ -8,9 +8,10 @@ import { IQueryAPI } from 'src/Common';
 	styleUrls: [ './Header.component.scss' ]
 })
 export class HeaderComponent implements OnInit {
-	public searchText: string = '';
+	public searchText = '';
 
 	@Input() isSearchBox: boolean;
+	@Input() showSecondFilter = true;
 	@Output() searchBox: EventEmitter<string> = new EventEmitter<string>();
 
 	constructor(private userListStorage: UserListStorageService) {}

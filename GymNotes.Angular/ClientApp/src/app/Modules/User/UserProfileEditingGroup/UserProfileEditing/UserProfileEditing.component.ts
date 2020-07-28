@@ -48,7 +48,7 @@ export class UserProfileEditingComponent implements OnInit {
 	coachDropdownList = {
     Yes: 1,
     No: 2,
-  } ;
+  };
 
 	constructor(
 		private dialogRef: MatDialogRef<UserProfileEditingComponent>,
