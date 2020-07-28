@@ -14,18 +14,16 @@ export class UserListComponent implements OnInit {
     Coaches: 1,
     Everyone: 2
   };
-	// firstFilterDropdownList = [ 'Coaches', 'Everyone' ];
-	// secondFilterDropdownList = [ 'Featured', 'Newest', 'Highest rating' ];
+
 	secondFilterDropdownList = {
     Featured: 1,
     Newest: 2,
     HighestRating: 3,
   };
 
-	public searchText: string = '';
 	public queryAPI: IQueryAPI = {
 		page: '1',
-		orderby: [1, 1],
+		filterby: [1, 1],
 		pagesize: '8',
     search: '',
 	};
@@ -56,14 +54,14 @@ export class UserListComponent implements OnInit {
   }
 
   public userTypeDropdown(type: number){
-    const tempVal = this.queryAPI.orderby[1];
-    this.queryAPI = {...this.queryAPI, orderby: [type, tempVal]};
+    const tempVal = this.queryAPI.filterby[1];
+    this.queryAPI = {...this.queryAPI, filterby: [type, tempVal]};
     this.search();
   }
 
   public filterByDropdown(type: number){
-    const tempVal = this.queryAPI.orderby[0];
-    this.queryAPI = {...this.queryAPI, orderby: [tempVal, type]};
+    const tempVal = this.queryAPI.filterby[0];
+    this.queryAPI = {...this.queryAPI, filterby: [tempVal, type]};
     this.search();
   }
 }

@@ -18,15 +18,15 @@ export class UserListStorageService {
 		totalPages: 0
   };
 
-	public isLoading: boolean = false;
+	public isLoading = false;
 	public error: Error = null;
-	private isLoaded: boolean = false;
-	private isFoundAny: boolean = false;
+	private isLoaded = false;
+	private isFoundAny = false;
 
-	public searchText: string = '';
+	public searchText = '';
 	public queryAPI: IQueryAPI = {
 		page: '1',
-		orderby: [1, 1],
+		filterby: [1, 1],
 		pagesize: '5',
 		search: ''
   };
@@ -62,7 +62,6 @@ export class UserListStorageService {
 				this.userList = users;
 				console.warn(users);
 				this.setSuccess();
-				console.dir(this.userList); // TODO delete it
 			},
 			(error: Error) => {
 				this.setError(error);

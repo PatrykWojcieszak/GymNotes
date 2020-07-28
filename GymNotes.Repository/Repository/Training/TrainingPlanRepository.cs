@@ -40,5 +40,23 @@ namespace GymNotes.Repository.Repository.Training
         .Where(x => x.OwnerId == id)
         .AsNoTracking();
     }
+
+    public IQueryable<TrainingPlan> FilterBy(IQueryable<TrainingPlan> query, int filterBy)
+    {
+      switch (filterBy)
+      {
+        case (int)FilterByTrainingPlan.All:
+          return query;
+
+        case (int)FilterByTrainingPlan.Favorites:
+          return query;
+        
+        case (int)FilterByTrainingPlan.Newest:
+          return query;
+
+        default:
+          return query;
+      }
+    }
   }
 }

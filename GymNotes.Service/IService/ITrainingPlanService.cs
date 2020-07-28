@@ -1,4 +1,5 @@
-﻿using GymNotes.Service.ViewModels;
+﻿using GymNotes.Service.Utils;
+using GymNotes.Service.ViewModels;
 using GymNotes.Service.ViewModels.Training;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,6 @@ namespace GymNotes.Service.IService
     Task<ApiResponse> EditTrainingPlan(TrainingPlanVm trainingPlanVm);
     Task<ApiResponse> CreateTrainingPlan(TrainingPlanVm trainingPlanVm);
     TrainingPlanVm GetTrainingPlan(int id);
-    List<TrainingPlanVm> GetAll(string id);
+    Task<PaginatedList<TrainingPlanVm>> Search(string id, PageQuery pageQuery);
   }
 }

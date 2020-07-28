@@ -1,6 +1,5 @@
 import { UserListStorageService } from './../../../Core/Services/Storage/UserList-Storage.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IQueryAPI } from 'src/Common';
 
 @Component({
 	selector: 'app-Header',

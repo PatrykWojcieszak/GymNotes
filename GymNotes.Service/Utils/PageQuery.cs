@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace GymNotes.Service.Utils {
   public class PageQuery {
 
-    public List<int> Orderby { get; set; }
+    public List<int> Filterby { get; set; }
 
     public int Page { get; set; } = 1;
 
@@ -13,7 +13,7 @@ namespace GymNotes.Service.Utils {
 
     public PageQuery()
     {
-      Orderby = new List<int>();
+      Filterby = new List<int>();
     }
   }
 }

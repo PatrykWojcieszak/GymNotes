@@ -1,7 +1,7 @@
 
 export interface IQueryAPI {
     readonly search?: string;
-    readonly orderby?: number[];
+    readonly filterby?: number[];
     readonly page?: string;
     readonly pagesize?: string;
 }

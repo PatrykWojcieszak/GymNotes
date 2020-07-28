@@ -13,23 +13,35 @@
 <app-Pagination [paginatedList]="trainingPlan" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
 </app-Pagination>
 
-<!-- <div class="pagination-wrapper">
-  <nav class="pagination-container">
-    <div class="pagination">
-      <a class="pagination-newer">PREV</a>
-      <span class="pagination-inner">
-        <a>1</a>
-        <a class="pagination-active">2</a>
-        <a>3</a>
-      </span>
-      <a class="pagination-older">NEXT</a>
+<main class="content-container container d-flex flex-column">
+
+  <app-TrainingPlanCard *ngFor="let item of trainingPlan.items" [TrainingPlan]="item"></app-TrainingPlanCard>
+
+  <div *ngIf="isLoading" class="row">
+    <div class="spinner">
+      <div class=" text-center">
+        <div class="spinner-grow spinner-grow-lg" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
     </div>
-  </nav>
-</div> -->
+  </div>
 
-<div class="content-container">
+  <div *ngIf="showNoResults" class="row no-results">
+    <div *ngIf="true">
+      <span class="secondaryText">
+        No results.
+      </span>
+    </div>
+  </div>
 
-  <app-TrainingPlanCard *ngFor="let item of trainingPlan" [TrainingPlan]="item"></app-TrainingPlanCard>
+  <div *ngIf="error" class="row no-results">
+    <div *ngIf="true">
+      <span class="secondaryText">
+        Something went wrong!
+      </span>
+    </div>
+  </div>
 
   <div class=" training-container selected">
     <div class="left-side">
@@ -117,20 +129,8 @@
     </div>
   </div>
 
-</div>
+</main>
 
-  <app-Pagination [paginatedList]="trainingPlan" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
-  </app-Pagination>
-<!-- <div class="pagination-wrapper">
-  <nav class="pagination-container">
-    <div class="pagination">
-      <a class="pagination-newer">PREV</a>
-      <span class="pagination-inner">
-        <a>1</a>
-        <a class="pagination-active">2</a>
-        <a>3</a>
-      </span>
-      <a class="pagination-older">NEXT</a>
-    </div>
-  </nav>
-</div> -->
+<app-Pagination [paginatedList]="trainingPlan" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+</app-Pagination>
+

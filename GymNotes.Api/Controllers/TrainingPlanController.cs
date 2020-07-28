@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GymNotes.Filters;
 using GymNotes.Service.IService;
+using GymNotes.Service.Utils;
 using GymNotes.Service.ViewModels.Training;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,16 +35,18 @@ namespace GymNotes.Controllers
     public async Task<IActionResult> CreateTrainingPlan([FromBody] TrainingPlanVm trainingPlanVm) =>
       Ok(await _trainingPlanService.CreateTrainingPlan(trainingPlanVm));
 
+    [HttpPost("search/{id}")]
+    public async Task<IActionResult> GetAllTrainingPlan(string id, [FromBody] PageQuery pageQuery) =>
+      Ok(await _trainingPlanService.Search(id, pageQuery));
+
     #endregion POST
 
     #region GET
+    
     [HttpGet("get/{id}")]
     public IActionResult GetTrainingPlan(int id) =>
       Ok(_trainingPlanService.GetTrainingPlan(id));
-
-    [HttpGet("getAll/{id}")]
-    public IActionResult GetAllTrainingPlan(string id) =>
-      Ok(_trainingPlanService.GetAll(id));
+    
     #endregion GET
   }
 }

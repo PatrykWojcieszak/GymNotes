@@ -396,7 +396,7 @@ namespace GymNotes.Service.Service
     {
       var query = _unitOfWork.userRepository.FindAll();
 
-      query = _unitOfWork.userRepository.CoachFilterBy(query, pageQuery.Orderby[0]);
+      query = _unitOfWork.userRepository.CoachFilterBy(query, pageQuery.Filterby[0]);
       //query = _unitOfWork.userRepository.FilterBy(query, pageQuery.Orderby[1]);
 
       IQueryable<UserVm> FilteredQuery = GetSearchQuery(query, pageQuery.Search).Select(x => _mapper.Map<UserVm>(x)); // filtered when will be on DB
