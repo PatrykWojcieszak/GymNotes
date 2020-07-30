@@ -39,14 +39,30 @@ namespace GymNotes.Controllers
     public async Task<IActionResult> GetAllTrainingPlan(string id, [FromBody] PageQuery pageQuery) =>
       Ok(await _trainingPlanService.Search(id, pageQuery));
 
+    [HttpPost("favorite/{id}/{flag}")]
+    public async Task<IActionResult> ToggleFavorite(int id, bool flag) =>
+      Ok(await _trainingPlanService.ToggleFavorite(id, flag));
+
+    [HttpPost("main/{userId}/{id}/{flag}")]
+    public async Task<IActionResult> ToggleMain(string userId, int id, bool flag) =>
+      Ok(await _trainingPlanService.ToggleMain(userId, id, flag));
+
     #endregion POST
 
     #region GET
-    
+
     [HttpGet("get/{id}")]
     public IActionResult GetTrainingPlan(int id) =>
       Ok(_trainingPlanService.GetTrainingPlan(id));
-    
+
     #endregion GET
+
+    #region DELETE
+
+    [HttpPost("delete/{userId}/{id}")]
+    public async Task<IActionResult> Delete(string userId, int id) =>
+      Ok(await _trainingPlanService.Delete(userId, id));
+
+    #endregion DELETE
   }
 }

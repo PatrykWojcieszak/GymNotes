@@ -98,5 +98,78 @@ namespace GymNotes.Service.Service
       return query
           .Where(trainingPlan => trainingPlan.Name.ToUpper().Contains(searchString.ToUpper()));
     }
+
+    public async Task<ApiResponse> ToggleFavorite(int id, bool flag)
+    {
+      var trainingPlan = _unitOfWork.trainingPlanRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+
+      if (trainingPlan == null)
+        throw new MyNotFoundException(ApiResponseDescription.TRAINING_PLAN_NOT_FOUND);
+
+      trainingPlan.IsFavorite = flag;
+      _unitOfWork.trainingPlanRepository.Update(trainingPlan);
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
+    }
+
+    public async Task<ApiResponse> ToggleMain(string userId, int id, bool flag)
+    {
+      var mainTrainingPlan = _unitOfWork.trainingPlanRepository
+        .FindByCondition(x => x.OwnerId == userId && x.IsMain == true)
+        .FirstOrDefault();
+
+      if(mainTrainingPlan != null)
+      {
+        if (mainTrainingPlan.Id == id)
+        {
+          mainTrainingPlan.IsMain = flag;
+          _unitOfWork.trainingPlanRepository.Update(mainTrainingPlan);
+        }
+        else
+        {
+          mainTrainingPlan.IsMain = !flag;
+
+          var trainingPlan = _unitOfWork.trainingPlanRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+
+          if (trainingPlan == null)
+            throw new MyNotFoundException(ApiResponseDescription.TRAINING_PLAN_NOT_FOUND);
+
+          trainingPlan.IsMain = flag;
+
+          _unitOfWork.trainingPlanRepository.Update(mainTrainingPlan);
+          _unitOfWork.trainingPlanRepository.Update(trainingPlan);
+
+        }
+      }
+      else
+      {
+        var training = _unitOfWork.trainingPlanRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+
+        if (training == null)
+          throw new MyNotFoundException(ApiResponseDescription.TRAINING_PLAN_NOT_FOUND);
+
+        training.IsMain = flag;
+
+        _unitOfWork.trainingPlanRepository.Update(training);
+      }
+
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
+    }
+
+    public async Task<ApiResponse> Delete(string userId, int id)
+    {
+      var trainingPlan = _unitOfWork.trainingPlanRepository.GetTrainingPlan(id).FirstOrDefault();
+
+      if (trainingPlan == null)
+        throw new MyNotFoundException(ApiResponseDescription.TRAINING_PLAN_NOT_FOUND);
+
+      _unitOfWork.trainingPlanRepository.Delete(trainingPlan);
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
+    }
   }
 }

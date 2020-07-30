@@ -1,5 +1,5 @@
 <div class="main-container">
-  <form [formGroup]="trainingPlanStorage.trainingPlanForm" (submit)="trainingPlanStorage.onNextStep()">
+  <form [formGroup]="trainingPlanForm" (submit)="onNextStep()">
     <div class="title-container">
       <div class="input-wrapper width500">
           <div class="input-field">
@@ -11,8 +11,8 @@
               formControlName="name">
             <span class="focus-border"></span>
           </div>
-          <div class="errorContainer" *ngIf="trainingPlanStorage.form.name.touched || trainingPlanStorage.submittedNextStep">
-            <span class="errorInfo" *ngIf="trainingPlanStorage.form.name.errors?.required">Name is required</span>
+          <div class="errorContainer" *ngIf="form.name.touched || submittedNextStep">
+            <span class="errorInfo" *ngIf="form.name.errors?.required">Name is required</span>
           </div>
           <div class="input-field">
             <textarea
@@ -24,19 +24,19 @@
             </textarea>
             <span class="focus-border"></span>
           </div>
-          <div class="errorContainer" *ngIf="trainingPlanStorage.form.description.touched || trainingPlanStorage.submittedNextStep">
-            <span class="errorInfo" *ngIf="trainingPlanStorage.form.description.errors?.required">Description is required</span>
+          <div class="errorContainer" *ngIf="form.description.touched || submittedNextStep">
+            <span class="errorInfo" *ngIf="form.description.errors?.required">Description is required</span>
           </div>
           <div class="btn-container">
-            <div class="sim-button button13" (click)="trainingPlanStorage.onNextStep()">Next</div>
+            <div class="sim-button button13" (click)="onNextStep()">Next</div>
           </div>
       </div>
     </div>
 
-    <div class="content-container" *ngIf="trainingPlanStorage.validForNextStep">
+    <div class="content-container" *ngIf="validForNextStep">
       <div class="training-plan-container" formArrayName="trainingWeeks">
 
-        <div class="training-week" *ngFor="let weekSection of trainingPlanStorage.getWeek(trainingPlanStorage.trainingPlanForm); let i = index" [formGroupName]="i">
+        <div class="training-week" *ngFor="let weekSection of getWeek(trainingPlanForm); let i = index" [formGroupName]="i">
           <div class="input-wrapper width500">
             <div class="input-field">
               <input class="input-text effect-2" type="text" placeholder="Training week name" maxlength="50" formControlName="name">
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div formArrayName="trainingDays" class="training-day-wrapper">
-            <div class="training-day" [formGroupName]="j" *ngFor="let daySection of trainingPlanStorage.getDay(weekSection); let j = index">
+            <div class="training-day" [formGroupName]="j" *ngFor="let daySection of getDay(weekSection); let j = index">
               <div class="input-wrapper width500">
                 <div class="input-field">
                   <input class="input-text effect-2" type="text" placeholder="Training day name" maxlength="50" formControlName="name">
@@ -67,7 +67,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr [formGroupName]="k" *ngFor="let exerciseSection of trainingPlanStorage.getExercise(daySection); let k=index">
+                      <tr [formGroupName]="k" *ngFor="let exerciseSection of getExercise(daySection); let k=index">
                         <td><input class="input-table" type="text" maxlength="50" formControlName="exerciseName"/></td>
                         <td><input class="input-table" type="number" min="0" step="1" formControlName="sets"/></td>
                         <td><input class="input-table" type="number" min="0" step="1" formControlName="reps"/></td>
@@ -78,20 +78,20 @@
                         <td><input class="input-table" type="text" maxlength="150" formControlName="description"/></td>
                         <td
                           class="table-icon"
-                          *ngIf="trainingPlanStorage.getExercise(daySection).length > 1" >
+                          *ngIf="getExercise(daySection).length > 1" >
                           <span
                             class="fas fa-trash-alt"
                             title="Delete"
-                            (click)="trainingPlanStorage.removeExercise(i,j,k)">
+                            (click)="removeExercise(i,j,k)">
                           </span>
                         </td>
                         <td
                           class="table-icon"
-                          *ngIf="trainingPlanStorage.isMoreThanZeroExercise(k, i, j)">
+                          *ngIf="isMoreThanZeroExercise(k, i, j)">
                           <span
                             class="fas fa-plus"
                             title="Add"
-                            (click)="trainingPlanStorage.addExercise(i,j)">
+                            (click)="addExercise(i,j)">
                           </span>
                         </td>
                       </tr>
@@ -100,20 +100,20 @@
                 </div>
               </div>
               <div class="btn-wrapper width500">
-                <div class="btn-container btn-width100" *ngIf="trainingPlanStorage.getDay(weekSection).length > 1">
-                  <div class="sim-button button13" (click)="trainingPlanStorage.removeDay(i)">Remove training day</div>
+                <div class="btn-container btn-width100" *ngIf="getDay(weekSection).length > 1">
+                  <div class="sim-button button13" (click)="removeDay(i)">Remove training day</div>
                 </div>
-                <div class="btn-container btn-width100" *ngIf="trainingPlanStorage.isMoreThanZeroDay(j, i)">
-                  <div class="sim-button-green button13-green" (click)="trainingPlanStorage.addDay(i)">Add training day</div>
+                <div class="btn-container btn-width100" *ngIf="isMoreThanZeroDay(j, i)">
+                  <div class="sim-button-green button13-green" (click)="addDay(i)">Add training day</div>
                 </div>
               </div>
             </div>
             <div class="btn-wrapper width500">
-              <div class="btn-container btn-width100" *ngIf="trainingPlanStorage.getWeek(trainingPlanStorage.trainingPlanForm).length > 1" >
-                <div class="sim-button button13" (click)="trainingPlanStorage.removeWeek(i)">Remove training week</div>
+              <div class="btn-container btn-width100" *ngIf="getWeek(trainingPlanForm).length > 1" >
+                <div class="sim-button button13" (click)="removeWeek(i)">Remove training week</div>
               </div>
-              <div class="btn-container btn-width100" *ngIf="trainingPlanStorage.isMoreThanZeroWeek(i)" >
-                <div class="sim-button-green button13-green" (click)="trainingPlanStorage.addWeek()">Add training week</div>
+              <div class="btn-container btn-width100" *ngIf="isMoreThanZeroWeek(i)" >
+                <div class="sim-button-green button13-green" (click)="addWeek()">Add training week</div>
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@
 
         <div class="input-wrapper width500">
           <div class="btn-container">
-            <div class="sim-button button13" (click)="trainingPlanStorage.onSubmit()">Save training plan</div>
+            <div class="sim-button button13" (click)="onSubmit()">Save training plan</div>
           </div>
         </div>
       </div>

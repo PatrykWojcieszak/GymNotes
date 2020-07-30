@@ -32,6 +32,12 @@ namespace GymNotes.Entity.Models.NewFolder
     [Required]
     public string Name { get; set; }
 
+    [Required]
+    public bool IsFavorite { get; set; }
+
+    [Required]
+    public bool IsMain { get; set; }
+
     public virtual ICollection<TrainingWeek> TrainingWeeks { get; set; }
   }
 }

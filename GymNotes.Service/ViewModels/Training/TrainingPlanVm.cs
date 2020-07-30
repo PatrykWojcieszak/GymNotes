@@ -23,5 +23,9 @@ namespace GymNotes.Service.ViewModels.Training
     public string CreatorId { get; set; }
 
     public UserVm Creator { get; set; }
+
+    public bool IsMain { get; set; }
+
+    public bool IsFavorite { get; set; }
   }
 }

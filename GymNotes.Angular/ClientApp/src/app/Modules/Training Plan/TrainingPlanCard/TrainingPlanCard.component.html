@@ -1,4 +1,4 @@
-<div class="training-container favorite">
+<div class="training-container favorite" [ngClass]="{'favorite': TrainingPlan.isFavorite, 'selected': TrainingPlan.isMain}">
   <div class="left-side">
     <span class="title">{{TrainingPlan.name}}</span>
     <span >{{TrainingPlan.description}}</span>
@@ -6,8 +6,8 @@
     <span class="info-text">Created by: {{TrainingPlan.owner.fullName}}</span>
   </div>
   <div class="right-side">
-    <div class="icon">
-      <i class="fas fa-heart"></i>
+    <div class="icon" (click)="onToggleFavorite()">
+      <i class="fa-heart" [ngClass]="{'fas': TrainingPlan.isFavorite, 'far': !TrainingPlan.isFavorite}"></i>
       <div class="icon-tooltip">
         <p>Favorite</p>
       </div>
@@ -18,13 +18,13 @@
         <p>Edit</p>
       </div>
     </div>
-    <div class="icon">
-      <i class="fas fa-check"></i>
+    <div class="icon" (click)="onToggleMain()">
+      <i class="fas fa-check" [ngClass]="{'green': TrainingPlan.isMain}"></i>
       <div class="icon-tooltip">
         <p>Main plan</p>
       </div>
     </div>
-    <div class="icon">
+    <div class="icon" (click)="onDelete()">
       <i class="fas fa-trash-alt"></i>
       <div class="icon-tooltip">
         <p>Delete</p>

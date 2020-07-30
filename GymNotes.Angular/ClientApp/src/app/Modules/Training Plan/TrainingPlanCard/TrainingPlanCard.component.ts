@@ -1,3 +1,6 @@
+import { ConfirmationDialogService } from './../../../Core/Services/Utility/ConfirmationDialog.service';
+import { TrainingPlanService } from './../../../Core/Services/Http/TrainingPlan/TrainingPlan.service';
+import { AuthenticationService } from './../../../Auth/Authentication.service';
 import { TrainingWeek } from './../../../Shared/Models/Training/TrainingWeek';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -15,6 +18,8 @@ export class TrainingPlanCardComponent implements OnInit {
     description: '',
     id: 0,
     modifiedTime: null,
+    isMain: false,
+    isFavorite: false,
     creator: null,
     owner: null,
     trainingWeeks: [{
@@ -28,10 +33,45 @@ export class TrainingPlanCardComponent implements OnInit {
     }],
   };
 
-  constructor() { }
+  constructor(
+    private authentication: AuthenticationService,
+    private trainingPlanService: TrainingPlanService,
+    private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit() {
     console.warn(this.TrainingPlan);
   }
 
+  onDelete(){
+    this.confirmationDialogService
+			.confirm(
+				'Please confirm..',
+				'Do you really want to delete ' + this.TrainingPlan.name + '?'
+			)
+			.then((confirmed) => {
+        const parameters = [this.authentication.UserId, this.TrainingPlan.id]
+
+        this.trainingPlanService.Delete(parameters).subscribe(x => console.warn(x));
+				console.log('User confirmed:', confirmed);
+			})
+			.catch(() =>
+				console.log(
+					'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
+				)
+      );
+  }
+
+  onToggleFavorite(){
+    const parameters = [this.TrainingPlan.id, !this.TrainingPlan.isFavorite];
+    this.TrainingPlan.isFavorite = !this.TrainingPlan.isFavorite;
+
+    this.trainingPlanService.ToggleFavorite(parameters).subscribe(x => console.warn(x));
+  }
+
+  onToggleMain(){
+    const parameters = [this.authentication.UserId, this.TrainingPlan.id, !this.TrainingPlan.isMain]
+    this.TrainingPlan.isMain = !this.TrainingPlan.isMain;
+
+    this.trainingPlanService.ToggleMain(parameters).subscribe(x => console.warn(x));
+  }
 }

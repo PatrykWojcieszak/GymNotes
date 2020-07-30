@@ -14,5 +14,8 @@ namespace GymNotes.Service.IService
     Task<ApiResponse> CreateTrainingPlan(TrainingPlanVm trainingPlanVm);
     TrainingPlanVm GetTrainingPlan(int id);
     Task<PaginatedList<TrainingPlanVm>> Search(string id, PageQuery pageQuery);
+    Task<ApiResponse> ToggleFavorite(int id, bool flag);
+    Task<ApiResponse> ToggleMain(string userId, int id, bool flag);
+    Task<ApiResponse> Delete(string userId, int id);
   }
 }

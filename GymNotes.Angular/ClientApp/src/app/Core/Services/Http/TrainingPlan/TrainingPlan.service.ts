@@ -10,6 +10,9 @@ export class TrainingPlanService {
   private CREATE_TRAINING_PLAN = 'create';
   private GET = 'get';
   private GET_ALL = 'search';
+  private FAVORITE = 'favorite';
+  private MAIN = 'main';
+  private DELETE = 'delete';
 
   constructor(private API: APIService) { }
 
@@ -23,5 +26,17 @@ export class TrainingPlanService {
 
   public GetAll(model, parameters) {
 		return this.API.Post(model, this.API.BuildAddress(this.CONTROLLER, this.GET_ALL, parameters));
+  }
+
+  public ToggleFavorite(parameters) {
+		return this.API.Post(null, this.API.BuildAddress(this.CONTROLLER, this.FAVORITE, parameters));
+  }
+
+  public ToggleMain(parameters) {
+		return this.API.Post(null, this.API.BuildAddress(this.CONTROLLER, this.MAIN, parameters));
+  }
+
+  public Delete(parameters) {
+		return this.API.Post(null, this.API.BuildAddress(this.CONTROLLER, this.DELETE, parameters));
 	}
 }

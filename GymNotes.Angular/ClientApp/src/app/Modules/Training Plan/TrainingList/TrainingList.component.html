@@ -1,6 +1,10 @@
-<app-Header [showSecondFilter]="false" [isSearchBox]="true" (searchBox)="updateSearch($event)">
+<app-Header [showSecondFilter]="false" [isSearchBox]="true" (searchBox)="trainingPlanStorage.updateSearch($event)">
 
-  <app-Dropdown firstSelectBox [defaultValue]="utilityService.getKeyByValue(filterOption, 1)" [listElements]="filterOption" (selectedItem)="filterOptionDropdown($event)">
+  <app-Dropdown
+    firstSelectBox
+    [defaultValue]="utilityService.getKeyByValue(trainingPlanStorage.filterOption, 1)"
+    [listElements]="trainingPlanStorage.filterOption"
+    (selectedItem)="trainingPlanStorage.filterOptionDropdown($event)">
   </app-Dropdown>
 
   <div buttons class="btn-container">
@@ -10,14 +14,14 @@
   </div>
 </app-Header>
 
-<app-Pagination [paginatedList]="trainingPlan" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+<app-Pagination [paginatedList]="trainingPlanStorage.trainingPlan" (nextPageEvent)="trainingPlanStorage.nextPage()" (prevPageEvent)="trainingPlanStorage.prevPage()">
 </app-Pagination>
 
 <main class="content-container container d-flex flex-column">
 
-  <app-TrainingPlanCard *ngFor="let item of trainingPlan.items" [TrainingPlan]="item"></app-TrainingPlanCard>
+  <app-TrainingPlanCard *ngFor="let item of trainingPlanStorage.trainingPlan.items" [TrainingPlan]="item"></app-TrainingPlanCard>
 
-  <div *ngIf="isLoading" class="row">
+  <div *ngIf="trainingPlanStorage.isLoading" class="row">
     <div class="spinner">
       <div class=" text-center">
         <div class="spinner-grow spinner-grow-lg" role="status">
@@ -27,7 +31,7 @@
     </div>
   </div>
 
-  <div *ngIf="showNoResults" class="row no-results">
+  <div *ngIf="trainingPlanStorage.showNoResults" class="row no-results">
     <div *ngIf="true">
       <span class="secondaryText">
         No results.
@@ -35,7 +39,7 @@
     </div>
   </div>
 
-  <div *ngIf="error" class="row no-results">
+  <div *ngIf="trainingPlanStorage.error" class="row no-results">
     <div *ngIf="true">
       <span class="secondaryText">
         Something went wrong!
@@ -43,94 +47,11 @@
     </div>
   </div>
 
-  <div class=" training-container selected">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="info-text">Last edit: 2020-02-01</span>
-    </div>
-    <div class="right-side">
-      <div class="icon">
-        <i class="fas fa-heart"></i>
-        <div class="icon-tooltip">
-          <p>Favorite</p>
-        </div>
-      </div>
-      <div class="icon">
-        <i class="fas fa-pencil-alt"></i>
-        <div class="icon-tooltip">
-          <p>Edit</p>
-        </div>
-      </div>
-      <div class="icon">
-        <i class="fas fa-check"></i>
-        <div class="icon-tooltip">
-          <p>Main plan</p>
-        </div>
-      </div>
-      <div class="icon">
-        <i class="fas fa-trash-alt"></i>
-        <div class="icon-tooltip">
-          <p>Delete</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="training-container favorite">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="info-text">Last edit: 2020-02-01</span>
-      <span class="info-text">Created by:</span>
-    </div>
-    <div class="right-side">
-      <div class="icon">
-        <i class="fas fa-heart"></i>
-        <div class="icon-tooltip">
-          <p>Favorite</p>
-        </div>
-      </div>
-      <div class="icon">
-        <i class="fas fa-pencil-alt"></i>
-        <div class="icon-tooltip">
-          <p>Edit</p>
-        </div>
-      </div>
-      <div class="icon">
-        <i class="fas fa-check"></i>
-        <div class="icon-tooltip">
-          <p>Main plan</p>
-        </div>
-      </div>
-      <div class="icon">
-        <i class="fas fa-trash-alt"></i>
-        <div class="icon-tooltip">
-          <p>Delete</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="training-container">
-    <div class="left-side">
-      <span class="title">Training plan name</span>
-      <span>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-        lorem lorem lorem lorem lorem</span>
-      <span class="info-text">Last edit: 2020-02-01</span>
-    </div>
-    <div class="right-side">
-      <i class="far fa-heart"></i>
-      <i class="fas fa-pencil-alt"></i>
-      <i class="fas fa-check"></i>
-      <i class="fas fa-trash-alt"></i>
-    </div>
-  </div>
-
 </main>
 
-<app-Pagination [paginatedList]="trainingPlan" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+<app-Pagination
+  [paginatedList]="trainingPlanStorage.trainingPlan"
+  (nextPageEvent)="trainingPlanStorage.nextPage()"
+  (prevPageEvent)="trainingPlanStorage.prevPage()">
 </app-Pagination>
 

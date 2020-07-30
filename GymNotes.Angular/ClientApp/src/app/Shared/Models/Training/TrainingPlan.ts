@@ -9,4 +9,6 @@ export interface TrainingPlan {
   creator: User;
   modifiedTime: Date;
   id: number;
+  isMain: boolean;
+  isFavorite: boolean;
 }

@@ -49,10 +49,10 @@ namespace GymNotes.Repository.Repository.Training
           return query;
 
         case (int)FilterByTrainingPlan.Favorites:
-          return query;
+          return query.Where(x => x.IsFavorite);
         
         case (int)FilterByTrainingPlan.Newest:
-          return query;
+          return query.OrderByDescending(x => x.ModifiedAt);
 
         default:
           return query;

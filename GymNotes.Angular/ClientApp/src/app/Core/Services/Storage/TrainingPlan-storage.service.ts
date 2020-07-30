@@ -1,144 +1,113 @@
-import { TrainingPlanService } from './../Http/TrainingPlan/TrainingPlan.service';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { AuthenticationService } from './../../../Auth/Authentication.service';
-import { TrainingDay } from './../../../Shared/Models/Training/TrainingDay';
-import { TrainingWeek } from './../../../Shared/Models/Training/TrainingWeek';
 import { Injectable } from '@angular/core';
 
+import { TrainingPlanService } from './../Http/TrainingPlan/TrainingPlan.service';
+import { PaginatedList } from 'src/app/Shared/Models/PaginatedList';
 import { TrainingPlan } from 'src/app/Shared/Models/Training/TrainingPlan';
+import { IQueryAPI } from 'src/Common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrainingPlanStorageService {
 
-  trainingPlanForm: FormGroup;
+  public trainingPlan: PaginatedList<TrainingPlan> = {
+		hasNextPage: false,
+		hasPreviousPage: false,
+		items: [],
+		pageIndex: 1,
+		totalPages: 0
+  };
 
-  validForNextStep = false;
-  submittedNextStep = false;
+  filterOption = {
+    All: 1,
+    Favorites: 2,
+    Newest: 3,
+  };
 
-  constructor(private authentication: AuthenticationService, private fb: FormBuilder, private trainingPlanService: TrainingPlanService) { }
+  public isLoading = false;
+	public error: Error = null;
+	private isLoaded = false;
+  private isFoundAny = false;
 
-  createForm(){
-    this.trainingPlanForm = this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      creatorId: this.authentication.UserId,
-      ownerId: this.authentication.UserId,
-      trainingWeeks: new FormArray([ this.initWeek()]),
-    });
-  }
+	public queryAPI: IQueryAPI = {
+		page: '1',
+		filterby: [1, 1],
+		pagesize: '8',
+    search: '',
+  };
 
-  onSubmit(){
-    console.warn(this.trainingPlanForm.value);
+  constructor(
+    private authentication: AuthenticationService,
+    private trainingPlanService: TrainingPlanService) { }
 
-    if(this.trainingPlanForm.invalid)
-      return
-
-    this.trainingPlanService.Create(this.trainingPlanForm.value).subscribe(x => console.warn(x));
-  }
-
-  get form(){
-    return this.trainingPlanForm.controls;
-  }
-
-  getWeek(form) {
-		return form.controls.trainingWeeks.controls;
-  }
-
-	getDay(form) {
-		return form.controls.trainingDays.controls;
-  }
-
-	getExercise(form) {
-		return form.controls.trainingExercises.controls;
-  }
-
-  initWeek(){
-    return new FormGroup({
-      name: new FormControl(''),
-      trainingDays: new FormArray([this.initDay() ])
-    });
-  }
-
-  initDay(){
-    return new FormGroup({
-      name: new FormControl(''),
-      trainingExercises: new FormArray([this.initExercise()])
-    });
-  }
-
-  initExercise(){
-    return new FormGroup({
-      exerciseName: new FormControl(''),
-      sets: new FormControl(''),
-      reps: new FormControl(''),
-      tempo: new FormControl(''),
-      rest: new FormControl(''),
-      rPE: new FormControl(''),
-      weight: new FormControl(''),
-      description: new FormControl(''),
-    });
-  }
-
-  addWeek() {
-		const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
-		control.push(this.initWeek());
-	}
-
-	addDay(j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
-		control.push(this.initDay());
-	}
-
-	addExercise(i, j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
-		control.push(this.initExercise());
-	}
-
-  removeDay(j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
-		control.removeAt(j);
-	}
-
-	removeWeek(i) {
-		const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
-		control.removeAt(i);
-	}
-
-	removeExercise(i, j, k) {
-		const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
-		control.removeAt(k);
-  }
-
-  isMoreThanZeroExercise(index, i, j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
-
-		if (index + 1 === control.length) return true;
-		else return false;
-	}
-
-	isMoreThanZeroDay(index, j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
-
-		if (index + 1 === control.length) return true;
-		else return false;
-	}
-
-	isMoreThanZeroWeek(index) {
-		const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
-
-		if (index + 1 === control.length) return true;
-		else return false;
-  }
-
-  onNextStep(){
-    this.submittedNextStep = true;
-
-    if(this.trainingPlanForm.invalid){
-      return;
+    public onStart(): void{
+      this.getTrainingPlanList(this.queryAPI);
     }
 
-    this.validForNextStep = true;
-  }
+    public getTrainingPlanList(query?: IQueryAPI){
+      this.setLoading();
+
+      const parameters: string[] = [ this.authentication.UserId ];
+
+      this.trainingPlanService.GetAll(query, parameters).subscribe(
+        (res: PaginatedList<TrainingPlan>) => {
+          this.trainingPlan = res;
+          console.warn(res);
+          this.setSuccess();
+        },
+        (error: Error) => {
+          this.setError(error);
+          console.error(error.message);
+        }
+      )
+    }
+
+    public search = () => {
+      this.getTrainingPlanList(this.queryAPI);
+    };
+
+    public get showNoResults(): boolean {
+      return this.isLoaded && !this.isFoundAny;
+    }
+
+    public updateSearch(searchText: string) {
+     this.queryAPI = { ...this.queryAPI, search: searchText };
+     this.search();
+    }
+
+    public filterOptionDropdown(type: number){
+      const tempVal = this.queryAPI.filterby[1];
+      this.queryAPI = {...this.queryAPI, filterby: [type, tempVal]};
+      this.search();
+    }
+
+    public nextPage(): void {
+      this.queryAPI = { ...this.queryAPI, page: (this.trainingPlan.pageIndex + 1).toString() };
+      this.search();
+    }
+
+    public prevPage(): void {
+      this.queryAPI = { ...this.queryAPI, page: (this.trainingPlan.pageIndex - 1).toString() };
+      this.search();
+    }
+
+    private setLoading() {
+      this.isLoading = true;
+      this.isLoaded = false;
+      this.error = null;
+      this.isFoundAny = false;
+    }
+
+    private setSuccess() {
+      this.isLoaded = true;
+      this.isLoading = false;
+      this.isFoundAny = this.trainingPlan.items.length !== 0;
+    }
+
+    private setError(error: Error) {
+      this.error = error;
+      this.isLoading = false;
+    }
 }
