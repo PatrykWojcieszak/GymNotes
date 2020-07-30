@@ -27,7 +27,7 @@
           <div class="errorContainer" *ngIf="form.description.touched || submittedNextStep">
             <span class="errorInfo" *ngIf="form.description.errors?.required">Description is required</span>
           </div>
-          <div class="btn-container">
+          <div class="btn-container" *ngIf="!validForNextStep">
             <div class="sim-button button13" (click)="onNextStep()">Next</div>
           </div>
       </div>
@@ -73,7 +73,7 @@
                         <td><input class="input-table" type="number" min="0" step="1" formControlName="reps"/></td>
                         <td><input class="input-table" type="text" maxlength="7" formControlName="tempo"/></td>
                         <td><input class="input-table" type="number" min="0" step="1" formControlName="rest"/></td>
-                        <td><input class="input-table" type="number" min="0" max="10" step="1" formControlName="rPE"/></td>
+                        <td><input class="input-table" type="number" min="0" max="10" step="1" formControlName="rpe"/></td>
                         <td><input class="input-table" type="number" min="0" step="1" formControlName="weight"/></td>
                         <td><input class="input-table" type="text" maxlength="150" formControlName="description"/></td>
                         <td

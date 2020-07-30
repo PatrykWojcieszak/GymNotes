@@ -17,6 +17,11 @@ const routes: Routes = [
     component: AddTrainingPlanComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'add-training-plan/:id',
+    component: AddTrainingPlanComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

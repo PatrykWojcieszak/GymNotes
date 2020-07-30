@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogService } from './../../../Core/Services/Utility/ConfirmationDialog.service';
 import { TrainingPlanService } from './../../../Core/Services/Http/TrainingPlan/TrainingPlan.service';
 import { AuthenticationService } from './../../../Auth/Authentication.service';
@@ -36,7 +37,9 @@ export class TrainingPlanCardComponent implements OnInit {
   constructor(
     private authentication: AuthenticationService,
     private trainingPlanService: TrainingPlanService,
-    private confirmationDialogService: ConfirmationDialogService) { }
+    private confirmationDialogService: ConfirmationDialogService,
+    private router: Router,
+    private route: ActivatedRoute,) { }
 
   ngOnInit() {
     console.warn(this.TrainingPlan);
@@ -73,5 +76,9 @@ export class TrainingPlanCardComponent implements OnInit {
     this.TrainingPlan.isMain = !this.TrainingPlan.isMain;
 
     this.trainingPlanService.ToggleMain(parameters).subscribe(x => console.warn(x));
+  }
+
+  onTrainingPlanSelected(){
+    this.router.navigate(['add-training-plan/', this.TrainingPlan.id], {relativeTo: this.route});
   }
 }

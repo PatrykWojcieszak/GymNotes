@@ -46,12 +46,7 @@ namespace GymNotes.Service.Service
 
       trainingPlanVm.ModifiedTime = DateTime.Now;
 
-      var trainingMapped = _mapper.Map<TrainingPlan>(trainingPlanVm);
-
-      trainingMapped.Creator = creator;
-      trainingMapped.Owner = owner;
-
-      _unitOfWork.trainingPlanRepository.Create(trainingMapped);
+      _unitOfWork.trainingPlanRepository.Create(_mapper.Map<TrainingPlan>(trainingPlanVm));
 
       await _unitOfWork.CompleteAsync();
 
