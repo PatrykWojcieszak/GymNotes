@@ -1,4 +1,4 @@
-import { AddTrainingToCalendarComponent } from "./../AddTrainingToCalendar/AddTrainingToCalendar.component";
+import { AddFinishedWorkoutComponent } from './../AddFinishedWorkout/AddFinishedWorkout.component';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -195,8 +195,8 @@ export class Calendar {
 
   addTraining() {
     const dialogConfig = new MatDialogConfig();
-    this.matDialog.open(AddTrainingToCalendarComponent, {
-      width: "70%",
+    this.matDialog.open(AddFinishedWorkoutComponent, {
+      width: '50%',
     });
     this.matDialog._afterAllClosed.subscribe((x) => {});
   }

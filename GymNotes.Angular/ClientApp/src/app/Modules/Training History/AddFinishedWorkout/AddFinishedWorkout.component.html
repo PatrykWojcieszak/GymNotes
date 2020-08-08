@@ -1,0 +1,112 @@
+<div class="panel-container" ngClass="{'panel-container-active': showElement === 'custom'}">
+  <div class="panel-wrapper" (click)="showElement != 'custom' ? toggle('custom') : toggle('')">
+    <div class="left">
+      <div class="panel-title-wrapper">
+        <span class="panel-title">Add custom workout</span>
+      </div>
+    </div>
+    <div class="icon-right">
+      <i *ngIf="showElement != 'custom'" class="fas fa-sort-down"></i>
+      <i *ngIf="showElement === 'custom'" class="fas fa-sort-up"></i>
+    </div>
+  </div>
+  <div class="content-panel-container" *ngIf="showElement === 'custom'">
+
+    <div>
+      <span class="content-panel-title">Workout name</span>
+      <div class="input-field">
+        <input class="input-text effect-2" type="text" placeholder="Workout name">
+        <span class="focus-border"></span>
+      </div>
+    </div>
+
+    <div class="training-exercise">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 200px;">Exercise</th>
+              <th scope="col" style="width: 60px;">Sets</th>
+              <th scope="col" style="width: 60px;">Reps</th>
+              <th scope="col" style="width: 60px;">Tempo</th>
+              <th scope="col" style="width: 60px;">Rest[s]</th>
+              <th scope="col" style="width: 60px;">RPE</th>
+              <th scope="col" style="width: 140px;">Weight[pounds]</th>
+              <th scope="col" style="width: 200px;">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input class="input-table" type="text" maxlength="50" /></td>
+              <td><input class="input-table" type="number" min="0" step="1" /></td>
+              <td><input class="input-table" type="number" min="0" step="1" /></td>
+              <td><input class="input-table" type="text" maxlength="7" /></td>
+              <td><input class="input-table" type="number" min="0" step="1" /></td>
+              <td><input class="input-table" type="number" min="0" max="10" step="1" /></td>
+              <td><input class="input-table" type="number" min="0" step="1" /></td>
+              <td><input class="input-table" type="text" maxlength="150" /></td>
+              <td
+                class="table-icon">
+                <span
+                  class="fas fa-trash-alt"
+                  title="Delete">
+                </span>
+              </td>
+              <td
+                class="table-icon">
+                <span
+                  class="fas fa-plus"
+                  title="Add">
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="btn-wrapper">
+      <div class="btn-container">
+        <div class="sim-button button13">Save</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel-container" ngClass="{'panel-container-active': showElement === 'fromTrainingPlan'}">
+  <div class="panel-wrapper" (click)="showElement != 'fromTrainingPlan' ? toggle('fromTrainingPlan') : toggle('')">
+    <div class="left">
+      <div class="panel-title-wrapper">
+        <span class="panel-title">Add workout from training plan</span>
+      </div>
+    </div>
+    <div class="icon-right">
+      <i *ngIf="showElement != 'fromTrainingPlan'" class="fas fa-sort-down"></i>
+      <i *ngIf="showElement === 'fromTrainingPlan'" class="fas fa-sort-up"></i>
+    </div>
+  </div>
+  <div class="content-panel-container" *ngIf="showElement === 'fromTrainingPlan'">
+
+    <div class="dropdown-wrapper">
+      <app-Dropdown (selectedItem)="onTrainingPlanSelected($event)" defaultValue="{{'Select training plan'}}"
+        [listElements]="trainingPlanList">
+      </app-Dropdown>
+    </div>
+
+    <div class="dropdown-wrapper">
+      <app-Dropdown (selectedItem)="onTrainingWeekSelected($event)" defaultValue="{{'Select training week'}}"
+        [listElements]="trainingWeekList">
+      </app-Dropdown>
+    </div>
+
+    <div class="dropdown-wrapper">
+      <app-Dropdown (selectedItem)="onTrainingDaySelected($event)" defaultValue="{{'Select training day'}}"
+        [listElements]="trainingDayList">
+      </app-Dropdown>
+    </div>
+
+    <div class="btn-wrapper">
+      <div class="btn-container">
+        <div class="sim-button button13">Save</div>
+      </div>
+    </div>
+  </div>
+</div>
