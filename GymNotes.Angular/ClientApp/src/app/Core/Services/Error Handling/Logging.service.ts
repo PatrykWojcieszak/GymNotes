@@ -13,8 +13,8 @@ export class LoggingService {
 
 	logError(message: string, stack: string) {
 		//const webHook = 'https://hooks.slack.com/services/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';
-    console.warn(message);
-    console.warn(stack);
+    //console.warn(message);
+    //console.warn(stack);
 		const slackMessage = {
 			channel: '#angular',
 			text: message
@@ -24,6 +24,6 @@ export class LoggingService {
 
 		//this.httpClient.post(webHook, JSON.stringify(slackMessage), { headers }).subscribe();
 
-		console.log('LoggingService: ' + message);
+		//console.log('LoggingService: ' + message);
 	}
 }

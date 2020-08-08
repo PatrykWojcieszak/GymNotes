@@ -192,6 +192,7 @@ export class Calendar {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
   addTraining() {
     const dialogConfig = new MatDialogConfig();
     this.matDialog.open(AddTrainingToCalendarComponent, {

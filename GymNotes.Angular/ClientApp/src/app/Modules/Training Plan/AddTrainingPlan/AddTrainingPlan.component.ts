@@ -6,6 +6,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { TrainingPlan } from 'src/app/Shared/Models/Training/TrainingPlan';
 import { param } from 'jquery';
 import { SpinnerOverlayService } from 'src/app/Core/Services/Utility/SpinnerOverlay.service';
+import { startLoadingIndicator, stopLoadingIndicator } from '@btapai/ng-loading-indicator';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-AddTrainingPlan',
@@ -41,16 +43,19 @@ export class AddTrainingPlanComponent implements OnInit {
     }],
   };
 
+  isLoading = true;
+
   constructor(
     private authentication: AuthenticationService,
     private fb: FormBuilder,
     private trainingPlanService: TrainingPlanService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    public spinner: SpinnerOverlayService) { }
 
   ngOnInit() {
+
     this.route.params.subscribe((params: Params) => {
       this.trainingPlanId = params.id;
-
       if(params.id)
       {
         this.trainingPlanForm = this.fb.group({
@@ -66,8 +71,8 @@ export class AddTrainingPlanComponent implements OnInit {
 
         this.trainingPlanService.GetTrainingPlan(parameters).subscribe( (res: TrainingPlan) => {
           this.trainingPlan = res;
-          console.warn(res);
           this.loadForm(res);
+          this.isLoading = false;
         })
       }
       else{
@@ -160,19 +165,19 @@ export class AddTrainingPlanComponent implements OnInit {
 
   addWeek() {
     const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
-    console.warn('forma tydzień: ' + control);
+    //console.warn('forma tydzień: ' + control);
 		control.push(this.initWeek());
 	}
 
 	addDay(j) {
     const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
-    console.warn('forma dzień: ' + control);
+    //console.warn('forma dzień: ' + control);
 		control.push(this.initDay());
 	}
 
 	addExercise(i, j) {
     const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
-    console.warn('forma ćwiczenie: ' + control);
+    //console.warn('forma ćwiczenie: ' + control);
 		control.push(this.initExercise());
 	}
 

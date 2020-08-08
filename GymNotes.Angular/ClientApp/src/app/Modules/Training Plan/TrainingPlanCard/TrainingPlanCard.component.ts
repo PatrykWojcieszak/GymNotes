@@ -1,10 +1,9 @@
 import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+
 import { ConfirmationDialogService } from './../../../Core/Services/Utility/ConfirmationDialog.service';
 import { TrainingPlanService } from './../../../Core/Services/Http/TrainingPlan/TrainingPlan.service';
 import { AuthenticationService } from './../../../Auth/Authentication.service';
-import { TrainingWeek } from './../../../Shared/Models/Training/TrainingWeek';
-import { Component, OnInit, Input } from '@angular/core';
-
 import { TrainingPlan } from 'src/app/Shared/Models/Training/TrainingPlan';
 
 @Component({
@@ -39,7 +38,7 @@ export class TrainingPlanCardComponent implements OnInit {
     private trainingPlanService: TrainingPlanService,
     private confirmationDialogService: ConfirmationDialogService,
     private router: Router,
-    private route: ActivatedRoute,) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     console.warn(this.TrainingPlan);

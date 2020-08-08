@@ -54,7 +54,6 @@ export class TrainingPlanStorageService {
       this.trainingPlanService.GetAll(query, parameters).subscribe(
         (res: PaginatedList<TrainingPlan>) => {
           this.trainingPlan = res;
-          console.warn(res);
           this.setSuccess();
         },
         (error: Error) => {
