@@ -69,42 +69,42 @@
         </div>
       </form>
     </div>
-    <div class="panel-container" ngClass="{'panel-container-active': showElement === 'fromTrainingPlan'}">
-      <div class="panel-wrapper" (click)="showElement != 'fromTrainingPlan' ? toggle('fromTrainingPlan') : toggle('')">
-        <div class="left">
-          <div class="panel-title-wrapper">
-            <span class="panel-title">Add workout from training plan</span>
-          </div>
-        </div>
-        <div class="icon-right">
-          <i *ngIf="showElement != 'fromTrainingPlan'" class="fas fa-sort-down"></i>
-          <i *ngIf="showElement === 'fromTrainingPlan'" class="fas fa-sort-up"></i>
+  </div>
+  <div class="panel-container" ngClass="{'panel-container-active': showElement === 'fromTrainingPlan'}">
+    <div class="panel-wrapper" (click)="showElement != 'fromTrainingPlan' ? toggle('fromTrainingPlan') : toggle('')">
+      <div class="left">
+        <div class="panel-title-wrapper">
+          <span class="panel-title">Add workout from training plan</span>
         </div>
       </div>
-      <div class="content-panel-container" *ngIf="showElement === 'fromTrainingPlan'">
+      <div class="icon-right">
+        <i *ngIf="showElement != 'fromTrainingPlan'" class="fas fa-sort-down"></i>
+        <i *ngIf="showElement === 'fromTrainingPlan'" class="fas fa-sort-up"></i>
+      </div>
+    </div>
+    <div class="content-panel-container" *ngIf="showElement === 'fromTrainingPlan'">
 
-        <div class="dropdown-wrapper">
-          <app-Dropdown (selectedItem)="onTrainingPlanSelected($event)" defaultValue="{{'Select training plan'}}"
-            [listElements]="trainingPlanList.elementName">
-          </app-Dropdown>
-        </div>
+      <div class="dropdown-wrapper">
+        <app-Dropdown (selectedItem)="onTrainingPlanSelected($event)" defaultValue="{{'Select training plan'}}"
+          [listElements]="trainingPlanList.elementName">
+        </app-Dropdown>
+      </div>
 
-        <div class="dropdown-wrapper">
-          <app-Dropdown (selectedItem)="onTrainingWeekSelected($event)" defaultValue="{{'Select training week'}}"
-            [listElements]="trainingWeekList.elementName">
-          </app-Dropdown>
-        </div>
+      <div class="dropdown-wrapper">
+        <app-Dropdown (selectedItem)="onTrainingWeekSelected($event)" defaultValue="{{'Select training week'}}"
+          [listElements]="trainingWeekList.elementName">
+        </app-Dropdown>
+      </div>
 
-        <div class="dropdown-wrapper">
-          <app-Dropdown (selectedItem)="onTrainingDaySelected($event)" defaultValue="{{'Select training day'}}"
-            [listElements]="trainingDayList.elementName">
-          </app-Dropdown>
-        </div>
+      <div class="dropdown-wrapper">
+        <app-Dropdown (selectedItem)="onTrainingDaySelected($event)" defaultValue="{{'Select training day'}}"
+          [listElements]="trainingDayList.elementName">
+        </app-Dropdown>
+      </div>
 
-        <div class="btn-wrapper">
-          <div class="btn-container">
-            <div class="sim-button button13">Save</div>
-          </div>
+      <div class="btn-wrapper">
+        <div class="btn-container">
+          <div class="sim-button button13">Save</div>
         </div>
       </div>
     </div>

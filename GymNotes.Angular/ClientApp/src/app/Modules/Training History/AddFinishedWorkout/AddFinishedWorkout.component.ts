@@ -105,6 +105,9 @@ export class AddFinishedWorkoutComponent implements OnInit {
       this.trainingWeekList = x;
       console.warn(x);
     });
+
+    this.trainingWeekList = null;
+    this.trainingDayList = null;
   }
 
   onTrainingWeekSelected(data){
@@ -114,6 +117,8 @@ export class AddFinishedWorkoutComponent implements OnInit {
       this.trainingDayList = x;
       console.warn(x);
     });
+
+    this.trainingDayList = null;
   }
 
   onTrainingDaySelected(data){
