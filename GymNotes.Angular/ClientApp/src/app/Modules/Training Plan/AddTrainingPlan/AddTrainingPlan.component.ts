@@ -165,19 +165,16 @@ export class AddTrainingPlanComponent implements OnInit {
 
   addWeek() {
     const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
-    //console.warn('forma tydzień: ' + control);
 		control.push(this.initWeek());
 	}
 
 	addDay(j) {
     const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
-    //console.warn('forma dzień: ' + control);
 		control.push(this.initDay());
 	}
 
 	addExercise(i, j) {
     const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
-    //console.warn('forma ćwiczenie: ' + control);
 		control.push(this.initExercise());
 	}
 

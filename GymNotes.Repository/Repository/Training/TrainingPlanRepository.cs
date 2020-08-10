@@ -32,6 +32,14 @@ namespace GymNotes.Repository.Repository.Training
         .AsNoTracking();
     }
 
+    public IQueryable<TrainingPlan> GetWeeksFromTrainingPlan(int id)
+    {
+      return _context.TrainingPlans
+        .Include(x => x.TrainingWeeks)
+        .Where(x => x.Id == id)
+        .AsNoTracking();
+    }
+
     public IQueryable<TrainingPlan> GetAllTrainingPlans(string id)
     {
       return _context.TrainingPlans

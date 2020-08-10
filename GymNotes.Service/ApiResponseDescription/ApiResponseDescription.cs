@@ -18,5 +18,6 @@ namespace GymNotes.Service
     public const string EMAIL_ALREADY_IN_USE = "Email already in use.";
 
     public const string TRAINING_PLAN_NOT_FOUND = "Training plan not found.";
+    public const string TRAINING_WEEK_NOT_FOUND = "Training week not found.";
   }
 }

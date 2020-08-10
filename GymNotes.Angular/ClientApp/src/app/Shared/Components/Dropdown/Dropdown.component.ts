@@ -20,10 +20,10 @@ export class DropdownComponent implements OnInit {
 
 	itemSelected(name) {
     this.selectedElement = name;
-    this.selectedItem.emit(this.listElements[name]);
+    this.selectedItem.emit(+this.utilityService.getKeyByValue(this.listElements, name));
   }
 
   getValues(){
-    return Object.keys(this.listElements);
+    return Object.values(this.listElements);
   }
 }

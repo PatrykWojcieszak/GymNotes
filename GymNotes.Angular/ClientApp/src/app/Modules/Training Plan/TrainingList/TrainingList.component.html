@@ -2,7 +2,7 @@
 
   <app-Dropdown
     firstSelectBox
-    [defaultValue]="utilityService.getKeyByValue(trainingPlanStorage.filterOption, 1)"
+    [defaultValue]="utilityService.getValueByKey(trainingPlanStorage.filterOption, 1)"
     [listElements]="trainingPlanStorage.filterOption"
     (selectedItem)="trainingPlanStorage.filterOptionDropdown($event)">
   </app-Dropdown>

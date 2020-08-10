@@ -11,14 +11,14 @@ import { IQueryAPI } from '../../../../Common';
 })
 export class UserListComponent implements OnInit {
   firstFilterDropdownList = {
-    Coaches: 1,
-    Everyone: 2
+    1: 'Coaches',
+    2: 'Everyone'
   };
 
 	secondFilterDropdownList = {
-    Featured: 1,
-    Newest: 2,
-    HighestRating: 3,
+    1: 'Featured',
+    2: 'Newest',
+    3: 'Highest Rating',
   };
 
 	public queryAPI: IQueryAPI = {

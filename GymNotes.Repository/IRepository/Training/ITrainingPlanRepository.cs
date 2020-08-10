@@ -12,5 +12,6 @@ namespace GymNotes.Repository.IRepository.Training
     IQueryable<TrainingPlan> GetTrainingPlan(int id);
     IQueryable<TrainingPlan> GetAllTrainingPlans(string id);
     IQueryable<TrainingPlan> FilterBy(IQueryable<TrainingPlan> query, int filterBy);
+    IQueryable<TrainingPlan> GetWeeksFromTrainingPlan(int id);
   }
 }

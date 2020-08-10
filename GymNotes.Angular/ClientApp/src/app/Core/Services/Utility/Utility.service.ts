@@ -32,6 +32,10 @@ constructor() { }
     return Object.keys(object).find(key => object[key] === value);
   }
 
+  public getValueByKey(object, value) {
+    return object[value];
+  }
+
   public putToLocalStorage(name: string, object: any){
     localStorage.setItem(name, JSON.stringify(object));
   }

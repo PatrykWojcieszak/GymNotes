@@ -10,6 +10,7 @@ import { AddFinishedWorkoutComponent } from './AddFinishedWorkout/AddFinishedWor
 import { Calendar } from './Calendar/Calendar.component';
 
 import { TrainingHistoryRoutingModule } from './trainingHistory-routing.module';
+import { AngularMaterialModule } from 'src/app/angular-material.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TrainingHistoryRoutingModule } from './trainingHistory-routing.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    AngularMaterialModule,
     TrainingHistoryRoutingModule,
     CalendarModule.forRoot({
       provide: DateAdapter,

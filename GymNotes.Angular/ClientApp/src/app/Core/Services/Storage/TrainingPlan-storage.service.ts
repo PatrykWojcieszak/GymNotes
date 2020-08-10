@@ -21,9 +21,9 @@ export class TrainingPlanStorageService {
   };
 
   filterOption = {
-    All: 1,
-    Favorites: 2,
-    Newest: 3,
+    1: 'All',
+    2: 'Favorites',
+    3: 'Newest',
   };
 
   public isLoading = false;
