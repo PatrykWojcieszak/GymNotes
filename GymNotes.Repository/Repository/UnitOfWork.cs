@@ -33,6 +33,8 @@ namespace GymNotes.Repository.Repository
     private ITrainingPlanRepository _trainingPlanRepository;
     private ITrainingDayRepository _trainingDayRepository;
     private ITrainingExerciseRepository _trainingExerciseRepository;
+    private IPlannedTrainingRepository _plannedTrainingRepository;
+    private ITrainingHistoryRepository _trainingHistoryRepository;
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -211,6 +213,28 @@ namespace GymNotes.Repository.Repository
           _trainingExerciseRepository = new TrainingExerciseRepository(_context);
 
         return _trainingExerciseRepository;
+      }
+    }
+    
+    public ITrainingHistoryRepository trainingHistoryRepository
+    {
+      get
+      {
+        if (_trainingHistoryRepository == null)
+          _trainingHistoryRepository = new TrainingHistoryRepository(_context);
+
+        return _trainingHistoryRepository;
+      }
+    }
+    
+    public IPlannedTrainingRepository plannedTrainingRepository
+    {
+      get
+      {
+        if (_plannedTrainingRepository == null)
+          _plannedTrainingRepository = new PlannedTrainingRepository(_context);
+
+        return _plannedTrainingRepository;
       }
     }
 

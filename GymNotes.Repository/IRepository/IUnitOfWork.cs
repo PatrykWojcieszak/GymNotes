@@ -33,6 +33,9 @@ namespace GymNotes.Repository.IRepository
     IAchievementRepository achievementsRepository { get; }
     IAchievementDyscyplineRepository achievementDyscyplineRepository { get; }
 
+    ITrainingHistoryRepository trainingHistoryRepository { get; }
+    IPlannedTrainingRepository plannedTrainingRepository { get; }
+
     Task CompleteAsync();
 
     Task Dispose();

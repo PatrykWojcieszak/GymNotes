@@ -1,3 +1,4 @@
+import { TrainingHistory } from './../../../Shared/Models/TrainingHistory/TrainingHistory';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { AuthenticationService } from './../../../Auth/Authentication.service';
 import { TrainingHistoryService } from './../../../Core/Services/Http/TrainingHistory/TrainingHistory.service';
@@ -30,6 +31,12 @@ export class AddFinishedWorkoutComponent implements OnInit {
   };
 
   submitted = false;
+
+  selectedTrainingPlan: number;
+  selectedTrainingWeek: number;
+  selectedTrainingDay: number;
+
+  isSelectedWorkoutError = false;
 
   constructor(
     private trainingHistory: TrainingHistoryService,
@@ -100,32 +107,64 @@ export class AddFinishedWorkoutComponent implements OnInit {
 
   onTrainingPlanSelected(data){
     const parameters = [this.trainingPlanList.elementId[data]];
-    console.warn(data);
     this.trainingHistory.GetTrainingWeek(parameters).subscribe((x: any) => {
       this.trainingWeekList = x;
-      console.warn(x);
     });
 
-    this.trainingWeekList = null;
-    this.trainingDayList = null;
+    this.selectedTrainingPlan = data;
+    this.selectedTrainingWeek = null;
+    this.selectedTrainingDay = null;
   }
 
   onTrainingWeekSelected(data){
     const parameters = [this.trainingWeekList.elementId[data]];
-
     this.trainingHistory.GetTrainingDay(parameters).subscribe((x: any) => {
       this.trainingDayList = x;
-      console.warn(x);
     });
 
-    this.trainingDayList = null;
+    this.selectedTrainingWeek = data;
+    this.selectedTrainingDay = null;
   }
 
   onTrainingDaySelected(data){
-
+    this.selectedTrainingDay = data;
   }
 
-  onSubmitExercise(){
+  onAddedWorkout(isCustomWorkout: boolean){
     this.submitted = true;
+
+    let model = new TrainingHistory();
+    model.isCustomTraining = isCustomWorkout;
+    model.userId = this.authentication.UserId;
+
+    if(isCustomWorkout)
+    {
+      console.warn(this.workoutForm.controls.trainingExercise.value);
+      model.workoutName = this.workoutForm.controls.workoutName.value;
+      model.trainingExercise = this.workoutForm.controls.trainingExercise.value;
+    }
+    else
+    {
+      if(this.selectedTrainingPlan === null || this.selectedTrainingWeek === null || this.selectedTrainingDay === null)
+      {
+        this.isSelectedWorkoutError = true;
+        return;
+      }
+      else
+        this.isSelectedWorkoutError = false;
+
+      model.plannedTraining = {
+        id: 0,
+        trainingPlanId: this.trainingPlanList.elementId[this.selectedTrainingPlan],
+        trainingWeekId: this.trainingWeekList.elementId[this.selectedTrainingWeek],
+        trainingDayId: this.trainingDayList.elementId[this.selectedTrainingDay]
+      }
+
+      model.workoutName = this.trainingPlanList.elementName[this.selectedTrainingPlan] + ' - ' +
+      this.trainingWeekList.elementName[this.selectedTrainingWeek] + ' - ' +
+      this.trainingDayList.elementName[this.selectedTrainingDay];
+    }
+
+    this.trainingHistory.AddFinishedWorkout(model).subscribe(x => console.warn(x));
   }
 }

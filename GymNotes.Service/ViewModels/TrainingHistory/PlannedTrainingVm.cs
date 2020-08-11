@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace GymNotes.Entity.Models.TrainingHistory
+namespace GymNotes.Service.ViewModels.TrainingHistory
 {
-  public class PlannedTraining
+  public class PlannedTrainingVm
   {
-    [Key]
     public int Id { get; set; }
 
-    [Required]
     public int TrainingPlanId { get; set; }
 
-    [Required]
     public int TrainingWeekId { get; set; }
 
-    [Required]
     public int TrainingDayId { get; set; }
   }
 }

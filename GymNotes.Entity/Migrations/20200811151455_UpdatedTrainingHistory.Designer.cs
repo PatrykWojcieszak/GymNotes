@@ -4,14 +4,16 @@ using GymNotes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GymNotes.Entity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200811151455_UpdatedTrainingHistory")]
+    partial class UpdatedTrainingHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,17 +201,12 @@ namespace GymNotes.Entity.Migrations
                     b.Property<int?>("TrainingDayId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TrainingHistoryId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TrainingDayId");
-
-                    b.HasIndex("TrainingHistoryId");
 
                     b.ToTable("TrainingExercises");
                 });
@@ -395,7 +392,10 @@ namespace GymNotes.Entity.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PlannedTrainingId")
+                    b.Property<int>("PlannedTrainingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainingExerciseId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -409,6 +409,8 @@ namespace GymNotes.Entity.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PlannedTrainingId");
+
+                    b.HasIndex("TrainingExerciseId");
 
                     b.HasIndex("UserId");
 
@@ -838,10 +840,6 @@ namespace GymNotes.Entity.Migrations
                     b.HasOne("GymNotes.Entity.Models.NewFolder.TrainingDay", null)
                         .WithMany("TrainingExercises")
                         .HasForeignKey("TrainingDayId");
-
-                    b.HasOne("GymNotes.Entity.Models.TrainingHistory.TrainingHistory", null)
-                        .WithMany("TrainingExercise")
-                        .HasForeignKey("TrainingHistoryId");
                 });
 
             modelBuilder.Entity("GymNotes.Entity.Models.NewFolder.TrainingPlan", b =>
@@ -893,7 +891,15 @@ namespace GymNotes.Entity.Migrations
                 {
                     b.HasOne("GymNotes.Entity.Models.TrainingHistory.PlannedTraining", "PlannedTraining")
                         .WithMany()
-                        .HasForeignKey("PlannedTrainingId");
+                        .HasForeignKey("PlannedTrainingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GymNotes.Entity.Models.NewFolder.TrainingExercise", "TrainingExercise")
+                        .WithMany()
+                        .HasForeignKey("TrainingExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GymNotes.Models.ApplicationUser", "User")
                         .WithMany()

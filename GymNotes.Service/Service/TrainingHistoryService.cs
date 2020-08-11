@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using GymNotes.Entity.Models.TrainingHistory;
 using GymNotes.Repository.IRepository;
 using GymNotes.Service.Exceptions;
 using GymNotes.Service.IService;
+using GymNotes.Service.ViewModels;
 using GymNotes.Service.ViewModels.TrainingHistory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GymNotes.Service.Service
 {
@@ -74,6 +77,21 @@ namespace GymNotes.Service.Service
       }
 
       return result;
+    }
+
+    public async Task<ApiResponse> AddFinishedWorkout(TrainingHistoryVm trainingHistoryVm)
+    {
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == trainingHistoryVm.UserId).FirstOrDefault();
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      trainingHistoryVm.Date = DateTime.Now;
+
+      _unitOfWork.trainingHistoryRepository.Create(_mapper.Map<TrainingHistory>(trainingHistoryVm));
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
     }
   }
 }

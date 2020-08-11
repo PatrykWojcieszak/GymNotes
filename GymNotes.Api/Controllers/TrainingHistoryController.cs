@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GymNotes.Filters;
 using GymNotes.Service.IService;
+using GymNotes.Service.ViewModels.TrainingHistory;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +25,10 @@ namespace GymNotes.Controllers
 
     #region POST
 
-
+    [ApiValidationFilter]
+    [HttpPost("add")]
+    public async Task<IActionResult> AddFinishedWorkout([FromBody] TrainingHistoryVm trainingHistoryVm) => 
+      Ok(await _trainingHistoryService.AddFinishedWorkout(trainingHistoryVm));
 
     #endregion POST
 
