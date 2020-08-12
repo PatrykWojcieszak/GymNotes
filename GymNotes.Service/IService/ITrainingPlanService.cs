@@ -17,5 +17,6 @@ namespace GymNotes.Service.IService
     Task<ApiResponse> ToggleFavorite(int id, bool flag);
     Task<ApiResponse> ToggleMain(string userId, int id, bool flag);
     Task<ApiResponse> Delete(string userId, int id);
+    List<TrainingExerciseVm> GetTrainingExercise(int id);
   }
 }

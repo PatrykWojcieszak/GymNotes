@@ -1,55 +1,38 @@
+import { ConfirmationDialogService } from 'src/app/Core/Services/Utility/ConfirmationDialog.service';
+import { AuthenticationService } from 'src/app/Auth/Authentication.service';
+import { TrainingHistoryService } from './../../../Core/Services/Http/TrainingHistory/TrainingHistory.service';
 import { AddFinishedWorkoutComponent } from './../AddFinishedWorkout/AddFinishedWorkout.component';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-} from "@angular/core";
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from "date-fns";
-import { Subject } from "rxjs";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from "angular-calendar";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import {Component,ChangeDetectionStrategy,ViewChild,TemplateRef, OnInit} from '@angular/core';
+import {startOfDay,endOfDay,subDays,addDays,endOfMonth,isSameDay,isSameMonth,addHours,} from 'date-fns';
+import { Subject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {CalendarEvent,CalendarEventAction,CalendarEventTimesChangedEvent,CalendarView,} from 'angular-calendar';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 const colors: any = {
   red: {
-    primary: "#ad2121",
-    secondary: "#FAE3E3",
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
   },
   blue: {
-    primary: "#1e90ff",
-    secondary: "#D1E8FF",
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
   },
   yellow: {
-    primary: "#e3bc08",
-    secondary: "#FDF1BA",
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
   },
 };
 
 @Component({
   // tslint:disable-next-line: component-selector
-  selector: "mwl-demo-component",
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ["Calendar.component.scss"],
-  templateUrl: "Calendar.component.html",
+  selector: 'mwl-demo-component',
+  styleUrls: ['Calendar.component.scss'],
+  templateUrl: 'Calendar.component.html',
 })
 // tslint:disable-next-line: component-class-suffix
-export class Calendar {
-  @ViewChild("modalContent", { static: true }) modalContent: TemplateRef<any>;
+export class Calendar implements OnInit {
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
 
@@ -65,67 +48,61 @@ export class Calendar {
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fa fa-fw fa-pencil"></i>',
-      a11yLabel: "Edit",
+      a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent("Edited", event);
+        this.handleEvent('Edited', event);
       },
     },
     {
       label: '<i class="fa fa-fw fa-times"></i>',
-      a11yLabel: "Delete",
+      a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent("Deleted", event);
+        //this.events = this.events.filter((iEvent) => iEvent !== event);
+        //this.handleEvent('Deleted', event);
+        this.deleteWorkout(event);
       },
     },
   ];
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: "A 3 day event",
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: "An event with no end date",
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: "A long event that spans 2 months",
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: "A draggable and resizable event",
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal, private matDialog: MatDialog) {}
+  constructor(
+    private modal: NgbModal,
+    private matDialog: MatDialog,
+    private trainingHistory: TrainingHistoryService,
+    private authentication: AuthenticationService,
+    private confirmationDialog: ConfirmationDialogService) {}
+
+  ngOnInit(): void {
+    const parameters = [this.authentication.UserId];
+
+    this.trainingHistory.GetWorkoutHistory(parameters).subscribe(x => this.loadData(x));
+  }
+
+  loadData(data){
+    for (let i = 0; i < data.length; i++) {
+			this.events = [
+				...this.events,
+				{
+					id: data[i].id,
+					title: data[i].workoutName,
+					start: startOfDay(new Date(data[i].date)),
+					end: endOfDay(new Date(data[i].date)),
+					color: colors.red,
+					draggable: true,
+					actions: this.actions,
+					resizable: {
+						beforeStart: true,
+						afterEnd: true
+					}
+				}
+			];
+		}
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -156,29 +133,12 @@ export class Calendar {
       }
       return iEvent;
     });
-    this.handleEvent("Dropped or resized", event);
+    this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: "lg" });
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: "New event",
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
+    this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -199,5 +159,23 @@ export class Calendar {
       width: '50%',
     });
     this.matDialog._afterAllClosed.subscribe((x) => {});
+  }
+
+  deleteWorkout(event){
+    this.confirmationDialog
+			.confirm(
+				'Please confirm..',
+				'Do you really want to delete this workout ?'
+			)
+			.then((confirmed) => {
+        const parameters = [event.id];
+        this.trainingHistory.DeleteWorkout(parameters).subscribe(x => console.warn(x));
+        this.events = this.events.filter((temp) => temp !== event);
+			})
+			.catch(() =>
+				console.log(
+					'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
+				)
+			)
   }
 }

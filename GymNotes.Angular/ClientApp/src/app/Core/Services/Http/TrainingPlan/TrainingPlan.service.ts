@@ -13,6 +13,7 @@ export class TrainingPlanService {
   private FAVORITE = 'favorite';
   private MAIN = 'main';
   private DELETE = 'delete';
+  private GET_EXERCISE = 'getExercise';
 
   constructor(private API: APIService) { }
 
@@ -22,6 +23,10 @@ export class TrainingPlanService {
 
   public GetTrainingPlan(parameters) {
 		return this.API.Get(this.API.BuildAddress(this.CONTROLLER, this.GET, parameters));
+  }
+
+  public GetExercises(parameters) {
+		return this.API.Get(this.API.BuildAddress(this.CONTROLLER, this.GET_EXERCISE, parameters));
   }
 
   public GetAll(model, parameters) {

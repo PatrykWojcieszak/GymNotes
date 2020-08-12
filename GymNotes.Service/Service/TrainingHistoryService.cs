@@ -93,5 +93,31 @@ namespace GymNotes.Service.Service
 
       return new ApiResponse(true);
     }
+
+    public List<TrainingHistoryVm> GetWorkoutHistory(string id)
+    {
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var history = _unitOfWork.trainingHistoryRepository.GetWorkoutHistoryByIserOd(id).ToList();
+
+      return _mapper.Map<List<TrainingHistoryVm>>(history);
+    }
+
+    public async Task<ApiResponse> DeleteWorkoutHistory(int id)
+    {
+      var workout = _unitOfWork.trainingHistoryRepository.GetWorkoutHistory(id).FirstOrDefault();
+
+      if (workout == null)
+        throw new MyNotFoundException(ApiResponseDescription.WORKOUT_HISTORY_NOT_FOUND);
+
+
+      _unitOfWork.trainingHistoryRepository.Delete(workout);
+      await _unitOfWork.CompleteAsync();
+
+      return new ApiResponse(true);
+    }
   }
 }

@@ -166,5 +166,12 @@ namespace GymNotes.Service.Service
 
       return new ApiResponse(true);
     }
+
+    public List<TrainingExerciseVm> GetTrainingExercise(int id)
+    {
+      var exercise = _unitOfWork.trainingExerciseRepository.FindByCondition(x => x.Id == id).ToList();
+
+      return _mapper.Map<List<TrainingExerciseVm>>(exercise);
+    }
   }
 }

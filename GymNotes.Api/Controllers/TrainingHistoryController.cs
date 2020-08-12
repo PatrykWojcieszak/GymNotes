@@ -46,10 +46,17 @@ namespace GymNotes.Controllers
     public IActionResult GetTrainingDays(int id) =>
       Ok(_trainingHistoryService.GetTrainingDays(id));
 
+    [HttpGet("history/{id}")]
+    public IActionResult GetWorkoutHistory(string id) =>
+      Ok(_trainingHistoryService.GetWorkoutHistory(id));
+
     #endregion GET
 
     #region DELETE
 
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeletetWorkoutHistory(int id) =>
+      Ok(await _trainingHistoryService.DeleteWorkoutHistory(id));
 
     #endregion DELETE
   }

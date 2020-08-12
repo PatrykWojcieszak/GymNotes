@@ -13,5 +13,7 @@ namespace GymNotes.Service.IService
     TrainingElementsVm GetTrainingWeeks(int id);
     TrainingElementsVm GetTrainingDays(int id);
     Task<ApiResponse> AddFinishedWorkout(TrainingHistoryVm trainingHistoryVm);
+    List<TrainingHistoryVm> GetWorkoutHistory(string id);
+    Task<ApiResponse> DeleteWorkoutHistory(int id);
   }
 }

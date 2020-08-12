@@ -19,5 +19,7 @@ namespace GymNotes.Service
 
     public const string TRAINING_PLAN_NOT_FOUND = "Training plan not found.";
     public const string TRAINING_WEEK_NOT_FOUND = "Training week not found.";
+
+    public const string WORKOUT_HISTORY_NOT_FOUND = "Workout history not found.";
   }
 }
