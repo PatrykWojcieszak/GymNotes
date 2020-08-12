@@ -57,9 +57,14 @@
                     <span class="fas fa-plus" title="Add" (click)="addExercise()">
                     </span>
                   </td>
+                  <br>
+
                 </tr>
               </tbody>
             </table>
+            <div class="errorContainer" *ngIf="submitted">
+              <span class="errorInfo" *ngIf="isExerciseFormInValid">Exercise name and sets are required</span>
+            </div>
           </div>
         </div>
         <div class="btn-wrapper">

@@ -37,6 +37,7 @@ export class AddFinishedWorkoutComponent implements OnInit {
   selectedTrainingDay: number;
 
   isSelectedWorkoutError = false;
+  isExerciseFormInValid = false;
 
   constructor(
     private trainingHistory: TrainingHistoryService,
@@ -69,8 +70,8 @@ export class AddFinishedWorkoutComponent implements OnInit {
 
   initExercise(){
     return new FormGroup({
-      exerciseName: new FormControl(''),
-      sets: new FormControl(''),
+      exerciseName: new FormControl('', Validators.required),
+      sets: new FormControl('', Validators.required),
       reps: new FormControl(''),
       tempo: new FormControl(''),
       rest: new FormControl(''),
@@ -139,7 +140,16 @@ export class AddFinishedWorkoutComponent implements OnInit {
 
     if(isCustomWorkout)
     {
-      console.warn(this.workoutForm.controls.trainingExercise.value);
+      this.workoutForm.markAllAsTouched;
+
+      if(this.workoutForm.invalid)
+      {
+        this.isExerciseFormInValid = true;
+        return;
+      }
+
+      this.isExerciseFormInValid = false;
+
       model.workoutName = this.workoutForm.controls.workoutName.value;
       model.trainingExercise = this.workoutForm.controls.trainingExercise.value;
     }
