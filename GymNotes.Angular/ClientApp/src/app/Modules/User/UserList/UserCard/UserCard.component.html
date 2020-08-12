@@ -1,9 +1,9 @@
 <div class="card" (click)="onUserSelected(user.id)">
   <div class="front">
     <div class="content">
-      <span class="mainText">{{user.fullName}}</span>
-      <span class="secondaryText">Age: {{utility.printProp(utility.getAge(user.birthday))}} | Gender: {{utility.printProp(user.gender)}} |
-        Height: {{utility.printProp((0+user.height).toFixed(1))+'cm'}} | Weight: {{utility.printProp(null)}}</span>
+      <span class="mainText">{{user.fullName | defaultValue:'-'}}</span>
+      <span class="secondaryText">Age: {{utility.getAge(user.birthday) | defaultValue:'-'}} | Gender: {{user.gender | defaultValue:'-'}} |
+        Height: {{(0+user.height).toFixed(1) | defaultValue:'-' +'cm'}} | Weight: {{null | defaultValue:'-'}}</span>
       <span *ngIf="user.isCoach" class="secondaryText">Coach: <i class="fas fa-star"></i> <i
           class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
           class="fas fa-star-half-alt"></i></span>
@@ -22,25 +22,25 @@
         <img src="/images/russ.jpg" class="avatar-background">
       </div>
       <div class="icon-button">
-        <a target="_blank" [href]="utility.printProp(user.facebook)" class="btn-icon facebook" ><i
+        <a target="_blank" [href]="user.facebook | defaultValue:'#'" class="btn-icon facebook" ><i
             class="fab fa-facebook-f"></i></a>
-        <a target="_blank" [href]="utility.printProp(user.instagram)" class="btn-icon instagram"><i
+        <a target="_blank" [href]="user.instagram | defaultValue:'#'" class="btn-icon instagram"><i
             class="fab fa-instagram"></i></a>
-        <a target="_blank" [href]="utility.printProp(user.twitter)" class="btn-icon twitter"><i
+        <a target="_blank" [href]="user.twitter | defaultValue:'#'" class="btn-icon twitter"><i
             class="fab fa-twitter"></i></a>
-        <a target="_blank" [href]="utility.printProp(user.youTube)" class="btn-icon youtube"><i
+        <a target="_blank" [href]="user.youTube  | defaultValue:'#'" class="btn-icon youtube"><i
             class="fab fa-youtube"></i></a>
       </div>
       <div class="content-container">
-        <span class="mainText">{{utility.printProp(user.fullName)}}</span>
-        <span class="secondaryText">Age: {{utility.printProp(utility.getAge(user.birthday))}} | Gender: {{utility.printProp(user.gender)}}
-          | Height: {{utility.printProp((0+user.height).toFixed(1))+'cm'}} | Weight: {{utility.printProp(null)}}</span>
-        <span class="secondaryTextBack">{{utility.printProp(user.description)}}</span>
+        <span class="mainText">{{user.fullName | defaultValue:'-'}}</span>
+        <span class="secondaryText">Age: {{utility.getAge(user.birthday | defaultValue:'-')}} | Gender: {{user.gender | defaultValue:'-'}}
+          | Height: {{(0+user.height).toFixed(1) | defaultValue:'-'+'cm'}} | Weight: {{null | defaultValue:'-'}}</span>
+        <span class="secondaryTextBack">{{user.description | defaultValue:'-'}}</span>
         <span *ngIf="user.isCoach" class="secondaryTextBack">Coach: <i class="fas fa-star"></i> <i
             class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
             class="fas fa-star-half-alt"></i></span>
-        <span class="secondaryTextBack">Discipline: {{utility.printProp(user.discipline)}}</span>
-        <span class="secondaryTextBack">Years of experience: {{utility.printProp(user.yearsOfExperience)}}</span>
+        <span class="secondaryTextBack">Discipline: {{user.discipline | defaultValue:'-'}}</span>
+        <span class="secondaryTextBack">Years of experience: {{user.yearsOfExperience | defaultValue:'-'}}</span>
       </div>
     </div>
   </div>

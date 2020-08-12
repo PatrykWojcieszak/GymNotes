@@ -7,13 +7,6 @@ export class UtilityService {
 
 constructor() { }
 
-  public printProp(val: any): string {
-    if (!val) {
-      return '-';
-    }
-    return '' + val;
-  }
-
   public getAge(dateString: string): number {
 		if (!dateString) {
 			return null;

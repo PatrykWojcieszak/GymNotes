@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent } from './Components/ConfirmationDialog/Con
 import { DropdownDirective } from './Directives/dropdown.directive';
 import { AchievementsListComponent } from './Components/AchievementsList/AchievementsList.component';
 
+import { DefaultValuePipe } from './Pipes/DefaultValue.pipe';
 @NgModule({
 	declarations: [
 		ConfirmationDialogComponent,
@@ -22,6 +23,7 @@ import { AchievementsListComponent } from './Components/AchievementsList/Achieve
 		PaginationComponent,
     HeaderComponent,
     SpinnerComponent,
+    DefaultValuePipe,
 	],
 	imports: [ CommonModule, RouterModule, FormsModule, AngularMaterialModule ],
 	exports: [
@@ -31,7 +33,8 @@ import { AchievementsListComponent } from './Components/AchievementsList/Achieve
 		AchievementsListComponent,
 		PaginationComponent,
     HeaderComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DefaultValuePipe
 	],
 	entryComponents: [ ConfirmationDialogComponent, SpinnerComponent ]
 })

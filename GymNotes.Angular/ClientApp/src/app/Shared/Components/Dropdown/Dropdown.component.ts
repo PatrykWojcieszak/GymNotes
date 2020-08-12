@@ -16,14 +16,14 @@ export class DropdownComponent implements OnInit {
 	constructor(private utilityService: UtilityService) {}
 
 	ngOnInit() {
-  }
+	}
 
 	itemSelected(name) {
-    this.selectedElement = name;
-    this.selectedItem.emit(+this.utilityService.getKeyByValue(this.listElements, name));
-  }
+		this.selectedElement = name;
+		this.selectedItem.emit(+this.utilityService.getKeyByValue(this.listElements, name));
+  	}
 
-  getValues(){
-    return Object.values(this.listElements);
-  }
+	getValues(){
+		return Object.values(this.listElements);
+	}
 }
