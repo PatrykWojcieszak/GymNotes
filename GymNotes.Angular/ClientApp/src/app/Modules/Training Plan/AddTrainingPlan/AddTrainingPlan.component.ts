@@ -121,6 +121,8 @@ export class AddTrainingPlanComponent implements OnInit {
 	onSubmit() {
 		console.warn(this.trainingPlanForm.value);
 
+		this.trainingPlanForm.markAllAsTouched();
+
 		if (this.trainingPlanForm.invalid) return;
 
 		this.trainingPlanService
@@ -160,8 +162,8 @@ export class AddTrainingPlanComponent implements OnInit {
 
 	initExercise() {
 		return new FormGroup({
-			exerciseName: new FormControl(''),
-			sets: new FormControl(''),
+			exerciseName: new FormControl('', Validators.required),
+			sets: new FormControl('', Validators.required),
 			reps: new FormControl(''),
 			tempo: new FormControl(''),
 			rest: new FormControl(''),

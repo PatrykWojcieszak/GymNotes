@@ -58,41 +58,55 @@
               </div>
               <div class="training-exercise" formArrayName="trainingExercises">
                 <div class="table-responsive">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th scope="col" style="width: 200px;">Exercise</th>
-                        <th scope="col" style="width: 60px;">Sets</th>
-                        <th scope="col" style="width: 60px;">Reps</th>
-                        <th scope="col" style="width: 60px;">Tempo</th>
-                        <th scope="col" style="width: 60px;">Rest[s]</th>
-                        <th scope="col" style="width: 60px;">RPE</th>
-                        <th scope="col" style="width: 140px;">Weight[pounds]</th>
-                        <th scope="col" style="width: 200px;">Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr [formGroupName]="k" *ngFor="let exerciseSection of getExercise(daySection); let k=index">
-                        <td><input class="input-table" type="text" maxlength="50" formControlName="exerciseName" /></td>
-                        <td><input class="input-table" type="number" min="0" step="1" formControlName="sets" /></td>
-                        <td><input class="input-table" type="number" min="0" step="1" formControlName="reps" /></td>
-                        <td><input class="input-table" type="text" maxlength="7" formControlName="tempo" /></td>
-                        <td><input class="input-table" type="number" min="0" step="1" formControlName="rest" /></td>
-                        <td><input class="input-table" type="number" min="0" max="10" step="1" formControlName="rpe" />
-                        </td>
-                        <td><input class="input-table" type="number" min="0" step="1" formControlName="weight" /></td>
-                        <td><input class="input-table" type="text" maxlength="150" formControlName="description" /></td>
-                        <td class="table-icon" *ngIf="getExercise(daySection).length > 1">
-                          <span class="fas fa-trash-alt" title="Delete" (click)="removeExercise(i,j,k)">
-                          </span>
-                        </td>
-                        <td class="table-icon" *ngIf="isMoreThanZeroExercise(k, i, j)">
-                          <span class="fas fa-plus" title="Add" (click)="addExercise(i,j)">
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+
+                  <div class="divTable minimalistBlack">
+                    <div class="divTableHeading">
+                      <div class="divTableRow">
+                        <div class="divTableHead">Exercise*</div>
+                        <div class="divTableHead">Sets*</div>
+                        <div class="divTableHead">Reps</div>
+                        <div class="divTableHead">Tempo</div>
+                        <div class="divTableHead">Rest[s]</div>
+                        <div class="divTableHead">RPE</div>
+                        <div class="divTableHead">Weight[pounds]</div>
+                        <div class="divTableHead">Description</div>
+                      </div>
+                    </div>
+                    <div class="divTableBody" [formGroupName]="k"
+                      *ngFor="let exerciseSection of getExercise(daySection); let k=index">
+                      <div class="divTableRow">
+                        <div class="divTableCell"><input class="input-table" type="text" maxlength="50"
+                            formControlName="exerciseName" />
+                        </div>
+                        <div class="divTableCell"><input class="input-table" type="number" min="0" step="1"
+                            formControlName="sets" /></div>
+                        <div class="divTableCell"><input class="input-table" type="number" min="0" step="1"
+                            formControlName="reps" /></div>
+                        <div class="divTableCell"><input class="input-table" type="text" maxlength="7"
+                            formControlName="tempo" /></div>
+                        <div class="divTableCell"><input class="input-table" type="number" min="0" step="1"
+                            formControlName="rest" /></div>
+                        <div class="divTableCell"><input class="input-table" type="number" min="0" max="10" step="1"
+                            formControlName="rpe" /></div>
+                        <div class="divTableCell"><input class="input-table" type="number" min="0" step="1"
+                            formControlName="weight" /></div>
+                        <div class="divTableCell"><input class="input-table" type="text" maxlength="150"
+                            formControlName="description" /></div>
+                        <div class="divTableCellIcon" *ngIf="getExercise(daySection).length > 1"><span
+                            class="fas fa-trash-alt" title="Delete" (click)="removeExercise(i,j,k)">
+                          </span></div>
+                        <div class="divTableCellIcon" *ngIf="isMoreThanZeroExercise(k, i, j)"> <span class="fas fa-plus"
+                            title="Add" (click)="addExercise(i,j)">
+                          </span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="errorContainer" *ngIf="daySection.controls.trainingExercises.touched">
+                    <span class="errorInfo" *ngIf="daySection.controls.trainingExercises.invalid">Exercise name and sets
+                      are
+                      required</span>
+                  </div>
+
                 </div>
               </div>
               <div class="btn-wrapper width500">
