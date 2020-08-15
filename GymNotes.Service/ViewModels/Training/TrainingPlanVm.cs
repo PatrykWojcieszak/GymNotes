@@ -8,7 +8,7 @@ namespace GymNotes.Service.ViewModels.Training
   {
     public int Id { get; set; }
 
-    public DateTime ModifiedTime { get; set; }
+    public DateTime ModifiedAt { get; set; }
 
     public string Name { get; set; }
 

@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/Auth/Authentication.service';
 import { TrainingPlanService } from 'src/app/Core/Services/Http/TrainingPlan/TrainingPlan.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TrainingPlan } from 'src/app/Shared/Models/Training/TrainingPlan';
 import { param } from 'jquery';
 import { SpinnerOverlayService } from 'src/app/Core/Services/Utility/SpinnerOverlay.service';
@@ -10,175 +10,189 @@ import { startLoadingIndicator, stopLoadingIndicator } from '@btapai/ng-loading-
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-AddTrainingPlan',
-  templateUrl: './AddTrainingPlan.component.html',
-  styleUrls: ['./AddTrainingPlan.component.scss']
+	selector: 'app-AddTrainingPlan',
+	templateUrl: './AddTrainingPlan.component.html',
+	styleUrls: [ './AddTrainingPlan.component.scss' ]
 })
 export class AddTrainingPlanComponent implements OnInit {
+	trainingPlanForm: FormGroup;
 
-  trainingPlanForm: FormGroup;
+	validForNextStep = false;
+	submittedNextStep = false;
 
-  validForNextStep = false;
-  submittedNextStep = false;
+	trainingPlanId: number;
 
-  trainingPlanId: number;
+	trainingPlan: TrainingPlan = {
+		name: '',
+		description: '',
+		id: 0,
+		modifiedAt: null,
+		isMain: false,
+		isFavorite: false,
+		creator: null,
+		owner: null,
+		trainingWeeks: [
+			{
+				name: '',
+				trainingDays: [
+					{
+						name: '',
+						trainingExercises: [
+							{
+								exerciseName: ''
+							}
+						]
+					}
+				]
+			}
+		]
+	};
 
-  trainingPlan: TrainingPlan = {
-    name: '',
-    description: '',
-    id: 0,
-    modifiedTime: null,
-    isMain: false,
-    isFavorite: false,
-    creator: null,
-    owner: null,
-    trainingWeeks: [{
-      name: '',
-      trainingDays: [{
-        name: '',
-        trainingExercises: [{
-          exerciseName: '',
-        }]
-      }]
-    }],
-  };
+	isLoading = true;
 
-  isLoading = true;
+	constructor(
+		private authentication: AuthenticationService,
+		private fb: FormBuilder,
+		private trainingPlanService: TrainingPlanService,
+		private route: ActivatedRoute,
+		public spinner: SpinnerOverlayService,
+		private router: Router
+	) {}
 
-  constructor(
-    private authentication: AuthenticationService,
-    private fb: FormBuilder,
-    private trainingPlanService: TrainingPlanService,
-    private route: ActivatedRoute,
-    public spinner: SpinnerOverlayService) { }
+	ngOnInit() {
+		this.route.params.subscribe((params: Params) => {
+			this.trainingPlanId = params.id;
+			if (params.id) {
+				this.trainingPlanForm = this.fb.group({
+					id: [ '' ],
+					name: [ '', Validators.required ],
+					description: [ '', Validators.required ],
+					creatorId: this.authentication.UserId,
+					ownerId: this.authentication.UserId,
+					trainingWeeks: new FormArray([])
+				});
 
-  ngOnInit() {
+				const parameters = [ params.id ];
 
-    this.route.params.subscribe((params: Params) => {
-      this.trainingPlanId = params.id;
-      if(params.id)
-      {
-        this.trainingPlanForm = this.fb.group({
-          id: [''],
-          name: ['', Validators.required],
-          description: ['', Validators.required],
-          creatorId: this.authentication.UserId,
-          ownerId: this.authentication.UserId,
-          trainingWeeks: new FormArray([ ]),
-        });
+				this.trainingPlanService.GetTrainingPlan(parameters).subscribe((res: TrainingPlan) => {
+					this.trainingPlan = res;
+					this.loadForm(res);
+					this.isLoading = false;
+				});
+			} else {
+				this.createForm();
+				this.isLoading = false;
+			}
+		});
+	}
 
-        const parameters = [params.id];
+	createForm() {
+		this.trainingPlanForm = this.fb.group({
+			id: [ '0' ],
+			name: [ '', Validators.required ],
+			description: [ '', Validators.required ],
+			creatorId: this.authentication.UserId,
+			ownerId: this.authentication.UserId,
+			trainingWeeks: new FormArray([ this.initWeek() ])
+		});
+	}
 
-        this.trainingPlanService.GetTrainingPlan(parameters).subscribe( (res: TrainingPlan) => {
-          this.trainingPlan = res;
-          this.loadForm(res);
-          this.isLoading = false;
-        })
-      }
-      else{
-        this.createForm();
-      }
-    });
-  }
-
-  createForm(){
-    this.trainingPlanForm = this.fb.group({
-      id: [''],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      creatorId: this.authentication.UserId,
-      ownerId: this.authentication.UserId,
-      trainingWeeks: new FormArray([ this.initWeek()]),
-    });
-  }
-
-  loadForm(object: TrainingPlan) {
-
-
-    for (let week = 0; week < Object.keys(object.trainingWeeks).length; week++) {
+	loadForm(object: TrainingPlan) {
+		for (let week = 0; week < Object.keys(object.trainingWeeks).length; week++) {
 			this.addWeek();
 
 			for (let day = 0; day < Object.keys(object.trainingWeeks[week].trainingDays).length - 1; day++) {
 				this.addDay(day);
 
-				for (let exercise = 0; exercise < Object.keys(object.trainingWeeks[week].trainingDays[day].trainingExercises).length - 1; exercise++) {
+				for (
+					let exercise = 0;
+					exercise < Object.keys(object.trainingWeeks[week].trainingDays[day].trainingExercises).length - 1;
+					exercise++
+				) {
 					this.addExercise(week, day);
 				}
 			}
 		}
 
-    this.trainingPlanForm.patchValue(this.trainingPlan);
-    this.onNextStep();
-  }
+		this.trainingPlanForm.patchValue(this.trainingPlan);
+		this.onNextStep();
+	}
 
-  onSubmit(){
-    console.warn(this.trainingPlanForm.value);
+	onSubmit() {
+		console.warn(this.trainingPlanForm.value);
 
-    if(this.trainingPlanForm.invalid)
-      return
+		if (this.trainingPlanForm.invalid) return;
 
-    this.trainingPlanService.Create(this.trainingPlanForm.value).subscribe(x => console.warn(x));
-  }
+		this.trainingPlanService
+			.Create(this.trainingPlanForm.value)
+			.subscribe((x) => this.router.navigateByUrl('/training-list'));
+	}
 
-  get form(){
-    return this.trainingPlanForm.controls;
-  }
+	get form() {
+		return this.trainingPlanForm.controls;
+	}
 
-  getWeek(form) {
+	getWeek(form) {
 		return form.controls.trainingWeeks.controls;
-  }
+	}
 
 	getDay(form) {
 		return form.controls.trainingDays.controls;
-  }
+	}
 
 	getExercise(form) {
 		return form.controls.trainingExercises.controls;
-  }
+	}
 
-  initWeek(){
-    return new FormGroup({
-      name: new FormControl(''),
-      trainingDays: new FormArray([this.initDay() ])
-    });
-  }
+	initWeek() {
+		return new FormGroup({
+			name: new FormControl('', Validators.required),
+			trainingDays: new FormArray([ this.initDay() ])
+		});
+	}
 
-  initDay(){
-    return new FormGroup({
-      name: new FormControl(''),
-      trainingExercises: new FormArray([this.initExercise()])
-    });
-  }
+	initDay() {
+		return new FormGroup({
+			name: new FormControl('', Validators.required),
+			trainingExercises: new FormArray([ this.initExercise() ])
+		});
+	}
 
-  initExercise(){
-    return new FormGroup({
-      exerciseName: new FormControl(''),
-      sets: new FormControl(''),
-      reps: new FormControl(''),
-      tempo: new FormControl(''),
-      rest: new FormControl(''),
-      rpe: new FormControl(''),
-      weight: new FormControl(''),
-      description: new FormControl(''),
-    });
-  }
+	initExercise() {
+		return new FormGroup({
+			exerciseName: new FormControl(''),
+			sets: new FormControl(''),
+			reps: new FormControl(''),
+			tempo: new FormControl(''),
+			rest: new FormControl(''),
+			rpe: new FormControl(''),
+			weight: new FormControl(''),
+			description: new FormControl('')
+		});
+	}
 
-  addWeek() {
-    const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
+	addWeek() {
+		const control = this.trainingPlanForm.get('trainingWeeks') as FormArray;
 		control.push(this.initWeek());
 	}
 
 	addDay(j) {
-    const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
+		const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
 		control.push(this.initDay());
 	}
 
 	addExercise(i, j) {
-    const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
+		const control = this.trainingPlanForm.get([
+			'trainingWeeks',
+			i,
+			'trainingDays',
+			j,
+			'trainingExercises'
+		]) as FormArray;
 		control.push(this.initExercise());
 	}
 
-  removeDay(j) {
+	removeDay(j) {
 		const control = this.trainingPlanForm.get([ 'trainingWeeks', j, 'trainingDays' ]) as FormArray;
 		control.removeAt(j);
 	}
@@ -189,12 +203,24 @@ export class AddTrainingPlanComponent implements OnInit {
 	}
 
 	removeExercise(i, j, k) {
-		const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
+		const control = this.trainingPlanForm.get([
+			'trainingWeeks',
+			i,
+			'trainingDays',
+			j,
+			'trainingExercises'
+		]) as FormArray;
 		control.removeAt(k);
-  }
+	}
 
-  isMoreThanZeroExercise(index, i, j) {
-		const control = this.trainingPlanForm.get([ 'trainingWeeks', i, 'trainingDays', j, 'trainingExercises' ]) as FormArray;
+	isMoreThanZeroExercise(index, i, j) {
+		const control = this.trainingPlanForm.get([
+			'trainingWeeks',
+			i,
+			'trainingDays',
+			j,
+			'trainingExercises'
+		]) as FormArray;
 
 		if (index + 1 === control.length) return true;
 		else return false;
@@ -212,15 +238,15 @@ export class AddTrainingPlanComponent implements OnInit {
 
 		if (index + 1 === control.length) return true;
 		else return false;
-  }
+	}
 
-  onNextStep(){
-    this.submittedNextStep = true;
+	onNextStep() {
+		this.submittedNextStep = true;
 
-    if(this.trainingPlanForm.invalid){
-      return;
-    }
+		if (!this.trainingPlanForm.controls.name.valid || !this.trainingPlanForm.controls.description.valid) {
+			return;
+		}
 
-    this.validForNextStep = true;
-  }
+		this.validForNextStep = true;
+	}
 }

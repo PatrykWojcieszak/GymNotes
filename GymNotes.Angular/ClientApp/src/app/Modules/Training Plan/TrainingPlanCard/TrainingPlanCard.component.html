@@ -1,8 +1,9 @@
-<div class="training-container favorite" [ngClass]="{'favorite': TrainingPlan.isFavorite, 'selected': TrainingPlan.isMain}">
+<div class="training-container favorite"
+  [ngClass]="{'favorite': TrainingPlan.isFavorite, 'selected': TrainingPlan.isMain}">
   <div class="left-side">
     <span class="title">{{TrainingPlan.name}}</span>
-    <span >{{TrainingPlan.description}}</span>
-    <span class="info-text">Modified at: {{TrainingPlan.modifiedTime | date: 'short'}}</span>
+    <span>{{TrainingPlan.description}}</span>
+    <span class="info-text">Modified at: {{TrainingPlan.modifiedAt | date: 'short'}}</span>
     <span class="info-text">Created by: {{TrainingPlan.owner.fullName}}</span>
   </div>
   <div class="right-side">

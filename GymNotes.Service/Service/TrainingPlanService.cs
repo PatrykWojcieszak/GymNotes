@@ -27,11 +27,9 @@ namespace GymNotes.Service.Service
 
     public async Task<ApiResponse> EditTrainingPlan(TrainingPlanVm trainingPlanVm)
     {
-      
-
       return new ApiResponse(true);
     }
-    
+
     public async Task<ApiResponse> CreateTrainingPlan(TrainingPlanVm trainingPlanVm)
     {
       var owner = _unitOfWork.userRepository.FindByCondition(x => x.Id == trainingPlanVm.OwnerId).FirstOrDefault();
@@ -44,9 +42,10 @@ namespace GymNotes.Service.Service
       if (creator == null)
         throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
 
-      trainingPlanVm.ModifiedTime = DateTime.Now;
+      trainingPlanVm.ModifiedAt = DateTime.Now;
 
-      _unitOfWork.trainingPlanRepository.Create(_mapper.Map<TrainingPlan>(trainingPlanVm));
+      var res = _mapper.Map<TrainingPlan>(trainingPlanVm);
+      _unitOfWork.trainingPlanRepository.Create(res);
 
       await _unitOfWork.CompleteAsync();
 
@@ -114,7 +113,7 @@ namespace GymNotes.Service.Service
         .FindByCondition(x => x.OwnerId == userId && x.IsMain == true)
         .FirstOrDefault();
 
-      if(mainTrainingPlan != null)
+      if (mainTrainingPlan != null)
       {
         if (mainTrainingPlan.Id == id)
         {
@@ -134,7 +133,6 @@ namespace GymNotes.Service.Service
 
           _unitOfWork.trainingPlanRepository.Update(mainTrainingPlan);
           _unitOfWork.trainingPlanRepository.Update(trainingPlan);
-
         }
       }
       else

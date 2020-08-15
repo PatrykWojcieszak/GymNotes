@@ -8,105 +8,102 @@ import { TrainingPlan } from 'src/app/Shared/Models/Training/TrainingPlan';
 import { IQueryAPI } from 'src/Common';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class TrainingPlanStorageService {
-
-  public trainingPlan: PaginatedList<TrainingPlan> = {
+	public trainingPlan: PaginatedList<TrainingPlan> = {
 		hasNextPage: false,
 		hasPreviousPage: false,
 		items: [],
 		pageIndex: 1,
 		totalPages: 0
-  };
+	};
 
-  filterOption = {
-    1: 'All',
-    2: 'Favorites',
-    3: 'Newest',
-  };
+	filterOption = {
+		1: 'All',
+		2: 'Favorites',
+		3: 'Newest'
+	};
 
-  public isLoading = false;
+	public isLoading = false;
 	public error: Error = null;
 	private isLoaded = false;
-  private isFoundAny = false;
+	private isFoundAny = false;
 
 	public queryAPI: IQueryAPI = {
 		page: '1',
-		filterby: [1, 1],
+		filterby: [ 1, 1 ],
 		pagesize: '8',
-    search: '',
-  };
+		search: ''
+	};
 
-  constructor(
-    private authentication: AuthenticationService,
-    private trainingPlanService: TrainingPlanService) { }
+	constructor(private authentication: AuthenticationService, private trainingPlanService: TrainingPlanService) {}
 
-    public onStart(): void{
-      this.getTrainingPlanList(this.queryAPI);
-    }
+	public onStart(): void {
+		this.getTrainingPlanList(this.queryAPI);
+	}
 
-    public getTrainingPlanList(query?: IQueryAPI){
-      this.setLoading();
+	public getTrainingPlanList(query?: IQueryAPI) {
+		this.setLoading();
 
-      const parameters: string[] = [ this.authentication.UserId ];
+		const parameters: string[] = [ this.authentication.UserId ];
 
-      this.trainingPlanService.GetAll(query, parameters).subscribe(
-        (res: PaginatedList<TrainingPlan>) => {
-          this.trainingPlan = res;
-          this.setSuccess();
-        },
-        (error: Error) => {
-          this.setError(error);
-          console.error(error.message);
-        }
-      )
-    }
+		this.trainingPlanService.GetAll(query, parameters).subscribe(
+			(res: PaginatedList<TrainingPlan>) => {
+				this.trainingPlan = res;
+				this.setSuccess();
+			},
+			(error: Error) => {
+				this.setError(error);
+				console.error(error.message);
+			}
+		);
+	}
 
-    public search = () => {
-      this.getTrainingPlanList(this.queryAPI);
-    };
+	public search = () => {
+		this.getTrainingPlanList(this.queryAPI);
+	};
 
-    public get showNoResults(): boolean {
-      return this.isLoaded && !this.isFoundAny;
-    }
+	public get showNoResults(): boolean {
+		return this.isLoaded && !this.isFoundAny;
+	}
 
-    public updateSearch(searchText: string) {
-     this.queryAPI = { ...this.queryAPI, search: searchText };
-     this.search();
-    }
+	public updateSearch(searchText: string) {
+		this.queryAPI = { ...this.queryAPI, search: searchText };
+		this.search();
+	}
 
-    public filterOptionDropdown(type: number){
-      const tempVal = this.queryAPI.filterby[1];
-      this.queryAPI = {...this.queryAPI, filterby: [type, tempVal]};
-      this.search();
-    }
+	public filterOptionDropdown(type: number) {
+		const tempVal = this.queryAPI.filterby[1];
+		this.queryAPI = { ...this.queryAPI, filterby: [ type, tempVal ] };
+		this.search();
+	}
 
-    public nextPage(): void {
-      this.queryAPI = { ...this.queryAPI, page: (this.trainingPlan.pageIndex + 1).toString() };
-      this.search();
-    }
+	public nextPage(): void {
+		this.queryAPI = { ...this.queryAPI, page: (this.trainingPlan.pageIndex + 1).toString() };
+		this.search();
+	}
 
-    public prevPage(): void {
-      this.queryAPI = { ...this.queryAPI, page: (this.trainingPlan.pageIndex - 1).toString() };
-      this.search();
-    }
+	public prevPage(): void {
+		this.queryAPI = { ...this.queryAPI, page: (this.trainingPlan.pageIndex - 1).toString() };
+		this.search();
+	}
 
-    private setLoading() {
-      this.isLoading = true;
-      this.isLoaded = false;
-      this.error = null;
-      this.isFoundAny = false;
-    }
+	private setLoading() {
+		this.isLoading = true;
+		this.isLoaded = false;
+		this.error = null;
+		this.isFoundAny = false;
+	}
 
-    private setSuccess() {
-      this.isLoaded = true;
-      this.isLoading = false;
-      this.isFoundAny = this.trainingPlan.items.length !== 0;
-    }
+	private setSuccess() {
+		this.isLoaded = true;
+		this.isLoading = false;
+		this.isFoundAny = this.trainingPlan.items.length !== 0;
+	}
 
-    private setError(error: Error) {
-      this.error = error;
-      this.isLoading = false;
-    }
+	private setError(error: Error) {
+		this.error = error;
+		this.isLoading = false;
+	}
 }
