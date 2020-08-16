@@ -7,25 +7,25 @@ import { AddTrainingPlanComponent } from '../Training Plan/AddTrainingPlan/AddTr
 import { AuthGuard } from 'src/app/Auth/auth.guard';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: TrainingListComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'add-training-plan',
-    component: AddTrainingPlanComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'add-training-plan/:id',
-    component: AddTrainingPlanComponent,
-    canActivate: [AuthGuard]
-  },
+	{
+		path: '',
+		component: TrainingListComponent,
+		canActivate: [ AuthGuard ]
+	},
+	{
+		path: 'add-training-plan',
+		component: AddTrainingPlanComponent,
+		canActivate: [ AuthGuard ]
+	},
+	{
+		path: 'add-training-plan/:id/:editMode',
+		component: AddTrainingPlanComponent,
+		canActivate: [ AuthGuard ]
+	}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+	imports: [ RouterModule.forChild(routes) ],
+	exports: [ RouterModule ]
 })
-export class TrainingPlanRoutingModule { }
+export class TrainingPlanRoutingModule {}

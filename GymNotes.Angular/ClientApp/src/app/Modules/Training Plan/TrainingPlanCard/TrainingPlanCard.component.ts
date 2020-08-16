@@ -86,6 +86,6 @@ export class TrainingPlanCardComponent implements OnInit {
 	}
 
 	onTrainingPlanSelected() {
-		this.router.navigate([ 'add-training-plan/', this.TrainingPlan.id ], { relativeTo: this.route });
+		this.router.navigate([ 'add-training-plan/', this.TrainingPlan.id, true ], { relativeTo: this.route });
 	}
 }

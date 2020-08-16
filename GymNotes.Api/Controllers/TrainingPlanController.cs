@@ -26,9 +26,9 @@ namespace GymNotes.Controllers
     #region POST
 
     [ApiValidationFilter]
-    [HttpPost("edit/{id}")]
-    public async Task<IActionResult> EditTrainingPlan(string Id, [FromBody] TrainingPlanVm trainingPlanVm) => 
-      Ok(await _trainingPlanService.EditTrainingPlan(trainingPlanVm));
+    [HttpPost("update/{id}")]
+    public async Task<IActionResult> EditTrainingPlan(string Id, [FromBody] TrainingPlanVm trainingPlanVm) =>
+      Ok(await _trainingPlanService.EditTrainingPlan(Id, trainingPlanVm));
 
     [ApiValidationFilter]
     [HttpPost("create")]
@@ -51,7 +51,7 @@ namespace GymNotes.Controllers
 
     #region GET
 
-    [HttpGet("get/{id}")]                          
+    [HttpGet("get/{id}")]
     public IActionResult GetTrainingPlan(int id) =>
       Ok(_trainingPlanService.GetTrainingPlan(id));
 

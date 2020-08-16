@@ -6,6 +6,7 @@ using GymNotes.Service.IService;
 using GymNotes.Service.Utils;
 using GymNotes.Service.ViewModels;
 using GymNotes.Service.ViewModels.Training;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,50 @@ namespace GymNotes.Service.Service
       _unitOfWork = unitOfWork;
     }
 
-    public async Task<ApiResponse> EditTrainingPlan(TrainingPlanVm trainingPlanVm)
+    public async Task<ApiResponse> EditTrainingPlan(string id, TrainingPlanVm trainingPlanVm)
     {
+      var user = _unitOfWork.userRepository.FindByCondition(x => x.Id == id).FirstOrDefault();
+
+      if (user == null)
+        throw new MyNotFoundException(ApiResponseDescription.USER_NOT_FOUND);
+
+      var plan = _unitOfWork.trainingPlanRepository.GetTrainingPlan(trainingPlanVm.Id).FirstOrDefault();
+
+      if (plan == null)
+        throw new MyNotFoundException(ApiResponseDescription.TRAINING_PLAN_NOT_FOUND);
+
+      var weeksIdsToRemove = plan.TrainingWeeks.Select(t => t.Id).Except(trainingPlanVm.TrainingWeeks.Select(t => t.Id)).ToList();
+
+      if (weeksIdsToRemove.Count != 0)
+      {
+        foreach (var item in weeksIdsToRemove)
+        {
+          _unitOfWork.trainingWeekRepository.Delete(plan.TrainingWeeks.FirstOrDefault(x => x.Id == item));
+        }
+      }
+      else
+      {
+        var daysIdsToRemove = plan.TrainingWeeks.Select(p => new { Id = p.Id, Days = p.TrainingDays.Select(y => new { y.Id }) }).ToList();
+
+        if (daysIdsToRemove.Count != 0)
+        {
+          foreach (var item in daysIdsToRemove)
+          {
+            _unitOfWork.trainingDayRepository.Delete(plan.TrainingWeeks.Select(x => x.TrainingDays.FirstOrDefault(x => x.Id == item.Days)).FirstOrDefault());
+          }
+        }
+        else
+        {
+          var execisessIdsToRemove = plan.TrainingWeeks
+            .Select(t => t.TrainingDays.Select(x => x.TrainingExercises.Select(p => p.Id).Except(trainingPlanVm.TrainingWeeks.Select(t => t.Id)))).ToList();
+        }
+      }
+
+      plan = _mapper.Map<TrainingPlan>(trainingPlanVm);
+
+      _unitOfWork.trainingPlanRepository.Update(plan);
+      await _unitOfWork.CompleteAsync();
+
       return new ApiResponse(true);
     }
 

@@ -48,6 +48,7 @@ export class AddTrainingPlanComponent implements OnInit {
 		]
 	};
 
+	editMode = false;
 	isLoading = true;
 
 	constructor(
@@ -62,6 +63,7 @@ export class AddTrainingPlanComponent implements OnInit {
 	ngOnInit() {
 		this.route.params.subscribe((params: Params) => {
 			this.trainingPlanId = params.id;
+			this.editMode = params.editMode;
 			if (params.id) {
 				this.trainingPlanForm = this.fb.group({
 					id: [ '' ],
@@ -77,6 +79,7 @@ export class AddTrainingPlanComponent implements OnInit {
 				this.trainingPlanService.GetTrainingPlan(parameters).subscribe((res: TrainingPlan) => {
 					this.trainingPlan = res;
 					this.loadForm(res);
+					console.warn(res);
 					this.isLoading = false;
 				});
 			} else {
@@ -122,12 +125,22 @@ export class AddTrainingPlanComponent implements OnInit {
 		console.warn(this.trainingPlanForm.value);
 
 		this.trainingPlanForm.markAllAsTouched();
-
+		console.warn(this.trainingPlanForm.invalid);
 		if (this.trainingPlanForm.invalid) return;
 
-		this.trainingPlanService
-			.Create(this.trainingPlanForm.value)
-			.subscribe((x) => this.router.navigateByUrl('/training-list'));
+		console.warn(this.editMode);
+		if (this.editMode) {
+			console.warn('edit');
+			const parameters = [ this.authentication.UserId ];
+
+			this.trainingPlanService
+				.Update(this.trainingPlanForm.value, parameters)
+				.subscribe((x) => this.router.navigateByUrl('/training-list'));
+		} else {
+			this.trainingPlanService
+				.Create(this.trainingPlanForm.value)
+				.subscribe((x) => this.router.navigateByUrl('/training-list'));
+		}
 	}
 
 	get form() {
@@ -148,6 +161,7 @@ export class AddTrainingPlanComponent implements OnInit {
 
 	initWeek() {
 		return new FormGroup({
+			id: new FormControl('0'),
 			name: new FormControl('', Validators.required),
 			trainingDays: new FormArray([ this.initDay() ])
 		});
@@ -155,6 +169,7 @@ export class AddTrainingPlanComponent implements OnInit {
 
 	initDay() {
 		return new FormGroup({
+			id: new FormControl('0'),
 			name: new FormControl('', Validators.required),
 			trainingExercises: new FormArray([ this.initExercise() ])
 		});
@@ -162,6 +177,7 @@ export class AddTrainingPlanComponent implements OnInit {
 
 	initExercise() {
 		return new FormGroup({
+			id: new FormControl('0'),
 			exerciseName: new FormControl('', Validators.required),
 			sets: new FormControl('', Validators.required),
 			reps: new FormControl(''),

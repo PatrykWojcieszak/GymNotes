@@ -70,8 +70,20 @@ textarea {
 	border-radius: 20px;
 }
 
+.table {
+	color: #a09faf;
+}
+
 .table-responsive {
 	width: 80%;
+}
+
+.table-icon {
+	text-align: center;
+	vertical-align: middle;
+	margin: 0;
+	width: 8px;
+	padding: 0;
 }
 
 .fa-trash-alt {
@@ -100,6 +112,18 @@ textarea {
 
 .fa-trash-alt:hover {
 	background: #060d19;
+}
+
+.input-table {
+	background: transparent;
+	color: #a09faf;
+	border: none;
+	outline: none;
+	width: 100%;
+}
+
+td {
+	padding: 6px;
 }
 
 div.minimalistBlack {
