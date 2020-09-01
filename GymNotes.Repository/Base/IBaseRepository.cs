@@ -17,5 +17,7 @@ namespace GymNotes.Repository.Base
     void Update(T entity);
 
     void Delete(T entity);
+
+    void Detach(T entity);
   }
 }

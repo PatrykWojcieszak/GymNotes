@@ -1,109 +1,135 @@
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-import { AuthenticationService } from './../../../Auth/Authentication.service';
-import { Injectable } from '@angular/core';
+import { AuthenticationService } from "./../../../Auth/Authentication.service";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
-import { TrainingPlanService } from './../Http/TrainingPlan/TrainingPlan.service';
-import { PaginatedList } from 'src/app/Shared/Models/PaginatedList';
-import { TrainingPlan } from 'src/app/Shared/Models/Training/TrainingPlan';
-import { IQueryAPI } from 'src/Common';
+import { TrainingPlanService } from "./../Http/TrainingPlan/TrainingPlan.service";
+import { PaginatedList } from "src/app/Shared/Models/PaginatedList";
+import { TrainingPlan } from "src/app/Shared/Models/Training/TrainingPlan";
+import { IQueryAPI } from "src/Common";
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
 export class TrainingPlanStorageService {
-	public trainingPlan: PaginatedList<TrainingPlan> = {
-		hasNextPage: false,
-		hasPreviousPage: false,
-		items: [],
-		pageIndex: 1,
-		totalPages: 0
-	};
+  private _trainingPlan: BehaviorSubject<
+    PaginatedList<TrainingPlan>
+  > = new BehaviorSubject<PaginatedList<TrainingPlan>>(new PaginatedList());
 
-	filterOption = {
-		1: 'All',
-		2: 'Favorites',
-		3: 'Newest'
-	};
+  public readonly trainingPlan = this._trainingPlan.asObservable;
 
-	public isLoading = false;
-	public error: Error = null;
-	private isLoaded = false;
-	private isFoundAny = false;
+  get TrainingPlan() {
+    return this._trainingPlan.value;
+  }
 
-	public queryAPI: IQueryAPI = {
-		page: '1',
-		filterby: [ 1, 1 ],
-		pagesize: '8',
-		search: ''
-	};
+  set TrainingPlan(value) {
+    this._trainingPlan.next(value);
+  }
 
-	constructor(private authentication: AuthenticationService, private trainingPlanService: TrainingPlanService) {}
+  filterOption = {
+    1: "All",
+    2: "Favorites",
+    3: "Newest",
+  };
 
-	public onStart(): void {
-		this.getTrainingPlanList(this.queryAPI);
-	}
+  public isLoading = false;
+  public error: Error = null;
+  private isLoaded = false;
+  private isFoundAny = false;
 
-	public getTrainingPlanList(query?: IQueryAPI) {
-		this.setLoading();
+  public queryAPI: IQueryAPI = {
+    page: "1",
+    filterby: [1, 1],
+    pagesize: "8",
+    search: "",
+  };
 
-		const parameters: string[] = [ this.authentication.UserId ];
+  constructor(
+    private authentication: AuthenticationService,
+    private trainingPlanService: TrainingPlanService
+  ) {}
 
-		this.trainingPlanService.GetAll(query, parameters).subscribe(
-			(res: PaginatedList<TrainingPlan>) => {
-				this.trainingPlan = res;
-				this.setSuccess();
-			},
-			(error: Error) => {
-				this.setError(error);
-				console.error(error.message);
-			}
-		);
-	}
+  public onStart(): void {
+    this.getTrainingPlanList(this.queryAPI);
+  }
 
-	public search = () => {
-		this.getTrainingPlanList(this.queryAPI);
-	};
+  public getTrainingPlanList(query?: IQueryAPI) {
+    this.setLoading();
 
-	public get showNoResults(): boolean {
-		return this.isLoaded && !this.isFoundAny;
-	}
+    const parameters: string[] = [this.authentication.UserId];
 
-	public updateSearch(searchText: string) {
-		this.queryAPI = { ...this.queryAPI, search: searchText };
-		this.search();
-	}
+    this.trainingPlanService.GetAll(query, parameters).subscribe(
+      (res: PaginatedList<TrainingPlan>) => {
+        this.TrainingPlan = res;
+        this.setSuccess();
+      },
+      (error: Error) => {
+        this.setError(error);
+        console.error(error.message);
+      }
+    );
+  }
 
-	public filterOptionDropdown(type: number) {
-		const tempVal = this.queryAPI.filterby[1];
-		this.queryAPI = { ...this.queryAPI, filterby: [ type, tempVal ] };
-		this.search();
-	}
+  public onRemoveTrainingPlan(parameters) {
+    this.trainingPlanService.Delete(parameters).subscribe((res) => {
+      console.warn(res);
+      const tempTrainings = this.TrainingPlan.items.filter(
+        (x) => x.id !== parameters[1]
+      );
 
-	public nextPage(): void {
-		this.queryAPI = { ...this.queryAPI, page: (this.trainingPlan.pageIndex + 1).toString() };
-		this.search();
-	}
+      this.TrainingPlan = { ...this.TrainingPlan, items: tempTrainings };
+    });
+  }
 
-	public prevPage(): void {
-		this.queryAPI = { ...this.queryAPI, page: (this.trainingPlan.pageIndex - 1).toString() };
-		this.search();
-	}
+  public search = () => {
+    this.getTrainingPlanList(this.queryAPI);
+  };
 
-	private setLoading() {
-		this.isLoading = true;
-		this.isLoaded = false;
-		this.error = null;
-		this.isFoundAny = false;
-	}
+  public get showNoResults(): boolean {
+    return this.isLoaded && !this.isFoundAny;
+  }
 
-	private setSuccess() {
-		this.isLoaded = true;
-		this.isLoading = false;
-		this.isFoundAny = this.trainingPlan.items.length !== 0;
-	}
+  public updateSearch(searchText: string) {
+    this.queryAPI = { ...this.queryAPI, search: searchText };
+    this.search();
+  }
 
-	private setError(error: Error) {
-		this.error = error;
-		this.isLoading = false;
-	}
+  public filterOptionDropdown(type: number) {
+    const tempVal = this.queryAPI.filterby[1];
+    this.queryAPI = { ...this.queryAPI, filterby: [type, tempVal] };
+    this.search();
+  }
+
+  public nextPage(): void {
+    this.queryAPI = {
+      ...this.queryAPI,
+      page: (this.TrainingPlan.pageIndex + 1).toString(),
+    };
+    this.search();
+  }
+
+  public prevPage(): void {
+    this.queryAPI = {
+      ...this.queryAPI,
+      page: (this.TrainingPlan.pageIndex - 1).toString(),
+    };
+    this.search();
+  }
+
+  private setLoading() {
+    this.isLoading = true;
+    this.isLoaded = false;
+    this.error = null;
+    this.isFoundAny = false;
+  }
+
+  private setSuccess() {
+    this.isLoaded = true;
+    this.isLoading = false;
+    this.isFoundAny = this.TrainingPlan.items.length !== 0;
+  }
+
+  private setError(error: Error) {
+    this.error = error;
+    this.isLoading = false;
+  }
 }

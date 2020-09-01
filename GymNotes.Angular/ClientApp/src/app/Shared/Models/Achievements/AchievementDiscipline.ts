@@ -1,4 +1,4 @@
-import { Achievement } from './Achievement';
+import { Achievement } from "./Achievement";
 
 export class AchievementDiscipline {
   name: string;

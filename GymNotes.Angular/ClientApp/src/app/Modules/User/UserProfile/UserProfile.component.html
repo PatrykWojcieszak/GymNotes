@@ -15,7 +15,8 @@
             <p>Profile editing</p>
           </div>
         </div>
-        <div class="icon" (click)="sendCoachingRequest()" *ngIf="selectedUserId != authentication.UserId && UserInfo.isCoach">
+        <div class="icon" (click)="sendCoachingRequest()"
+          *ngIf="selectedUserId != authentication.UserId && UserInfo.isCoach">
           <i class="fas fa-user-plus"></i>
           <div class="icon-tooltip">
             <p>Send coaching request</p>
@@ -27,8 +28,10 @@
     <div class="main-content">
       <div class="social-icon-wrapper">
         <div class="social-icon-left">
-          <a target="_blank" href="{{UserInfo.facebook}}" class="btn-icon facebook"><i class="fab fa-facebook-f"></i></a>
-          <a target="_blank" href="{{UserInfo.instagram}}" class="btn-icon instagram"><i class="fab fa-instagram"></i></a>
+          <a target="_blank" href="{{UserInfo.facebook}}" class="btn-icon facebook"><i
+              class="fab fa-facebook-f"></i></a>
+          <a target="_blank" href="{{UserInfo.instagram}}" class="btn-icon instagram"><i
+              class="fab fa-instagram"></i></a>
         </div>
         <div class="social-icon-right">
           <a target="_blank" href="{{UserInfo.twitter}}" class="btn-icon twitter"><i class="fab fa-twitter"></i></a>
@@ -47,12 +50,13 @@
           Height: {{UserInfo.height | defaultValue:'-'}} |
           Weight: 85kg</span>
         <span class="secondary-text" *ngIf="UserInfo?.description != null">{{UserInfo.description}}</span>
-        <span class="secondary-text" *ngIf="UserInfo.isCoach">Coach: <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
-            class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i></span>
+        <span class="secondary-text" *ngIf="UserInfo.isCoach">Coach: <i class="fas fa-star"></i> <i
+            class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+            class="fas fa-star-half-alt"></i></span>
         <span class="secondary-text">Discipline: {{UserInfo.discipline | defaultValue:'-'}}</span>
         <span class="secondary-text">Years of experience: {{UserInfo.yearsOfExperience | defaultValue:'-'}}</span>
       </div>
-      <div class="achievements-container" *ngIf="achievementsStorage.AchievementsList?.length > 0">
+      <div class="achievements-container" *ngIf="(achievementsStorage.AchievementsList | async)?.length > 0">
         <span class="section-title">Achievements</span>
         <app-AchievementsList [editMode]="false" [userId]="authentication.UserId"></app-AchievementsList>
       </div>

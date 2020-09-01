@@ -23,9 +23,9 @@
             <div *ngFor="let section of getAchievement(myForm); let i = index">
               <div class="achievement-wrapper" [formGroupName]="i">
                 <div class="select-container">
-                  <select id="filter-option" class="form-control input-select" [ngClass]="{'form-control-gold': WhatPlaceSelected(i) === 'first',
-                    'form-control-silver': WhatPlaceSelected(i) === 'second',
-                    'form-control-bronze': WhatPlaceSelected(i) === 'third'
+                  <select id="filter-option" class="form-control input-select" [ngClass]="{'form-control-gold': WhichPlaceSelected(i) === 'first',
+                    'form-control-silver': WhichPlaceSelected(i) === 'second',
+                    'form-control-bronze': WhichPlaceSelected(i) === 'third'
                     }" name="filter-option" formControlName="place" (focusout)="AchievementChanged($event)">
                     <option class="gold" value='first'>&#xf091; -first</option>
                     <option class="silver" value='second'>&#xf091; -second</option>

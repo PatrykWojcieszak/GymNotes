@@ -98,10 +98,10 @@ export class UserProfileEditAchievementsComponent implements OnInit {
 			return;
     }
 
-    let parameters: string[] = [this.authentication.UserId];
+    const parameters: string[] = [this.authentication.UserId];
 
     this.userService.AddOrUpdateUserAchievements(this.myForm.value, parameters).subscribe((res: any) => {
-        this.achievementsStorage.getAchievements(this.authentication.UserId);
+        this.achievementsStorage.loadAchievements(this.authentication.UserId);
         this.dialogRef.close();
 			},
 			(err) => {
@@ -126,7 +126,7 @@ export class UserProfileEditAchievementsComponent implements OnInit {
     this.RequiredFields();
   }
 
-  WhatPlaceSelected(i){
+  WhichPlaceSelected(i){
     const control = <FormArray>this.myForm.get('achievements');
     const form = <FormGroup>control.at(i);
     return form.controls.place.value;

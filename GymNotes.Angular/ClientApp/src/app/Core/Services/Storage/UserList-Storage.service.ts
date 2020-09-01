@@ -1,110 +1,86 @@
-import { Injectable } from '@angular/core';
-import { PaginatedList } from 'src/app/Shared/Models/PaginatedList';
-import { User } from 'src/app/Shared/Models/User';
-import { IQueryAPI } from 'src/Common';
-import { UserService } from '../Http/User/User.service';
-import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Observable } from "rxjs";
+import { Injectable } from "@angular/core";
+import { PaginatedList } from "src/app/Shared/Models/PaginatedList";
+import { User } from "src/app/Shared/Models/User";
+import { IQueryAPI } from "src/Common";
+import { UserService } from "../Http/User/User.service";
+import { HttpParams } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class UserListStorageService {
+  private _userList: BehaviorSubject<PaginatedList<User>> = new BehaviorSubject<
+    PaginatedList<User>
+  >(new PaginatedList());
 
-  public userList: PaginatedList<User> = {
-		hasNextPage: false,
-		hasPreviousPage: false,
-		items: [],
-		pageIndex: 1,
-		totalPages: 0
+  public readonly userList = this._userList.asObservable;
+
+  get UserList() {
+    return this._userList.value;
+  }
+
+  set UserList(value) {
+    this._userList.next(value);
+  }
+
+  public isLoading = false;
+  public error: Error = null;
+  private isLoaded = false;
+  private isFoundAny = false;
+
+  public searchText = "";
+  public queryAPI: IQueryAPI = {
+    page: "1",
+    filterby: [1, 1],
+    pagesize: "5",
+    search: "",
   };
 
-	public isLoading = false;
-	public error: Error = null;
-	private isLoaded = false;
-	private isFoundAny = false;
+  constructor(private userService: UserService) {}
 
-	public searchText = '';
-	public queryAPI: IQueryAPI = {
-		page: '1',
-		filterby: [1, 1],
-		pagesize: '5',
-		search: ''
-  };
-
-  constructor(private userService: UserService,) { }
-
-  public getUsers(){
+  public getUsers() {
     this.getUserList(this.queryAPI);
   }
 
-	private setLoading() {
-		this.isLoading = true;
-		this.isLoaded = false;
-		this.error = null;
-		this.isFoundAny = false;
-	}
+  private setLoading() {
+    this.isLoading = true;
+    this.isLoaded = false;
+    this.error = null;
+    this.isFoundAny = false;
+  }
 
-	private setSuccess() {
-		this.isLoaded = true;
-		this.isLoading = false;
-		this.isFoundAny = this.userList.items.length !== 0;
-	}
+  private setSuccess() {
+    this.isLoaded = true;
+    this.isLoading = false;
+    this.isFoundAny = this.UserList.items.length !== 0;
+  }
 
-	private setError(error: Error) {
-		this.error = error;
-		this.isLoading = false;
+  private setError(error: Error) {
+    this.error = error;
+    this.isLoading = false;
   }
 
   public getUserList(query?: IQueryAPI) {
-		this.setLoading();
-		this.userService.GetUsers(query).subscribe(
-			(users: PaginatedList<User>) => {
-				this.userList = users;
-				console.warn(users);
-				this.setSuccess();
-			},
-			(error: Error) => {
-				this.setError(error);
-				console.error(error.message);
-			}
-		);
+    this.setLoading();
+    this.userService.GetUsers(query).subscribe(
+      (users: PaginatedList<User>) => {
+        this.UserList = users;
+        console.warn(users);
+        this.setSuccess();
+      },
+      (error: Error) => {
+        this.setError(error);
+        console.error(error.message);
+      }
+    );
   }
 
-  public search = () => {
-		this.getUserList(this.queryAPI);
-	};
+  public get showList(): boolean {
+    return this.isLoaded && this.isFoundAny;
+  }
 
-	public updateSearch = () => {
-		const validatedText = this.searchText.trim();
-		this.queryAPI = { ...this.queryAPI, search: validatedText };
-	};
-
-	public clearSearch() {
-		this.searchText = '';
-		this.queryAPI = { ...this.queryAPI, search: '' };
-	}
-
-	public nextPage(): void {
-		if (this.userList.totalPages <= this.userList.pageIndex) {
-			return;
-		}
-		this.queryAPI = { ...this.queryAPI, page: (this.userList.pageIndex + 1).toString() };
-		this.search();
-	}
-
-	public prevPage(): void {
-		if (this.userList.pageIndex <= 1) {
-			return;
-		}
-		this.queryAPI = { ...this.queryAPI, page: (this.userList.pageIndex - 1).toString() };
-		this.search();
-	}
-
-	public get showList(): boolean {
-		return this.isLoaded && this.isFoundAny;
-	}
-
-	public get showNoResults(): boolean {
-		return this.isLoaded && !this.isFoundAny;
-	}
+  public get showNoResults(): boolean {
+    return this.isLoaded && !this.isFoundAny;
+  }
 }

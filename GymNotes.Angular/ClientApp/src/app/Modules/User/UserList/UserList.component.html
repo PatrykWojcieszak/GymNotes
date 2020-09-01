@@ -9,14 +9,14 @@
 
   <app-Dropdown
     secondSelectBox
-    [defaultValue]="utilityService.getValueByKey(firstFilterDropdownList, 1)"
+    [defaultValue]="utilityService.getValueByKey(secondFilterDropdownList, 1)"
     [listElements]="secondFilterDropdownList"
     (selectedItem)="filterByDropdown($event)">
   </app-Dropdown>
 
 </app-Header>
 
-<app-Pagination [paginatedList]="userListStorage.userList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+<app-Pagination [paginatedList]="userListStorage.UserList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
 </app-Pagination>
 
 
@@ -50,10 +50,10 @@
 
   <div class="row">
     <div *ngIf="userListStorage.showList" class="user-list-container">
-      <app-UserCard *ngFor="let user of userListStorage.userList.items" [user]="user"></app-UserCard>
+      <app-UserCard *ngFor="let user of userListStorage.UserList.items" [user]="user"></app-UserCard>
     </div>
   </div>
 </main>
 
-<app-Pagination [paginatedList]="userListStorage.userList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
+<app-Pagination [paginatedList]="userListStorage.UserList" (nextPageEvent)="nextPage()" (prevPageEvent)="prevPage()">
 </app-Pagination>

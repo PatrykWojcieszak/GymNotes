@@ -9,9 +9,9 @@
       <div class="settings-wrapper">
         <div class="setting-name">Name</div>
         <span *ngIf="showElement != 'name'">
-          {{userStorage.UserInfo.firstName}}
-          <span class="alias">{{userStorage.UserInfo.alias}}</span>
-          {{userStorage.UserInfo.lastName}}</span>
+          {{userStorage.UserData.firstName}}
+          <span class="alias">{{userStorage.UserData.alias}}</span>
+          {{userStorage.UserData.lastName}}</span>
         <button class="edit-btn" *ngIf="showElement != 'name'">Edit</button>
       </div>
       <div *ngIf="showElement === 'name'">

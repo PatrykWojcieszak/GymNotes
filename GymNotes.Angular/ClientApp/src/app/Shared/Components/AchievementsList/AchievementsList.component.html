@@ -1,4 +1,4 @@
-<div class="section-content" *ngFor="let item of achievementsStorage.AchievementsList">
+<div class="section-content" *ngFor="let item of achievementsStorage.AchievementsList | async, let i = index">
   <div class="achievement-wrapper">
     <div class="navbar">
       <div class="center">
@@ -6,7 +6,7 @@
       </div>
       <div class="right" *ngIf="editMode">
         <i class="fas fa-pen" (click)="OpenAchievementsEditor(item.id)"></i>
-        <i class="fas fa-trash" (click)="DeleteAchievement(item.id)"></i>
+        <i class="fas fa-trash" (click)="DeleteAchievement(item.id, i)"></i>
       </div>
     </div>
     <div class="achievement" *ngFor="let achievement of item.achievements">

@@ -71,7 +71,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getAchievements(userId: string){
-    this.achievementsStorage.getAchievements(userId);
+    this.achievementsStorage.loadAchievements(userId);
   }
 
   profileEditing(){

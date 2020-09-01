@@ -19,6 +19,11 @@ namespace GymNotes.Data
       DbContextOptions options,
       IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions) { }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+      optionsBuilder.EnableSensitiveDataLogging();
+    }
+
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<AchievementDyscypline> AchievementDyscyplines { get; set; }
     public DbSet<Achievement> Achievements { get; set; }

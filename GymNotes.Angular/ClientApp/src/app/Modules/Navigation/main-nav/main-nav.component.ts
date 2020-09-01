@@ -25,7 +25,7 @@ export class MainNavComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-    this.userStorage.getUserData();
+    this.userStorage.loadUserData();
 
 	}
 

@@ -48,22 +48,22 @@
         <div class="social-wrapper">
           <div class="input-field">
             <input class="input-text effect-2" type="text" placeholder="Provide Instagram profile url" name="instagram"
-              [(ngModel)]="userStorage.UserInfo.instagram" #instagram="ngModel" (focusout)="updateInstagramURL($event)">
+              [(ngModel)]="userStorage.UserData.instagram" #instagram="ngModel" (focusout)="updateInstagramURL($event)">
             <span class="fab fa-instagram instagram-icon"></span>
           </div>
           <div class="input-field">
             <input class="input-text effect-2" type="text" placeholder="Provide Facebook profile url" name="facebook"
-              [(ngModel)]="userStorage.UserInfo.facebook" #facebook="ngModel" (focusout)="updateFacebookURL($event)">
+              [(ngModel)]="userStorage.UserData.facebook" #facebook="ngModel" (focusout)="updateFacebookURL($event)">
             <span class="fab fa-facebook-f instagram-icon"></span>
           </div>
           <div class="input-field">
             <input class="input-text effect-2" type="text" placeholder="Provide Twitter profile url" name="twitter"
-              [(ngModel)]="userStorage.UserInfo.twitter" #twitter="ngModel" (focusout)="updateTwitterURL($event)">
+              [(ngModel)]="userStorage.UserData.twitter" #twitter="ngModel" (focusout)="updateTwitterURL($event)">
             <span class="fab fa-twitter instagram-icon"></span>
           </div>
           <div class="input-field">
             <input class="input-text effect-2" type="text" placeholder="Provide Youtube profile url" name="youTube"
-              [(ngModel)]="userStorage.UserInfo.youTube" #youTube="ngModel" (focusout)="updateYoutubeURL($event)">
+              [(ngModel)]="userStorage.UserData.youTube" #youTube="ngModel" (focusout)="updateYoutubeURL($event)">
             <span class="fab fa-youtube instagram-icon"></span>
           </div>
         </div>
@@ -84,13 +84,13 @@
               <button class="basic-info-edit-btn" *ngIf="showElement != 'description'">Edit</button>
             </div>
             <div class="basic-info-content" *ngIf="showElement != 'description'">
-              <span>{{userStorage.UserInfo.description != null ? userStorage.UserInfo.description : 'Empty'}}</span>
+              <span>{{userStorage.UserData.description != null ? userStorage.UserData.description : 'Empty'}}</span>
             </div>
             <div *ngIf="showElement === 'description'">
               <div class="basic-info-input">
                 <div class="textarea-field">
                   <textarea class="input-text-without-icon effect-2" maxlength="500" type="text"
-                    placeholder="Description" name="description" [(ngModel)]="userStorage.UserInfo.description"
+                    placeholder="Description" name="description" [(ngModel)]="userStorage.UserData.description"
                     #description="ngModel"></textarea>
                   <span class="focus-border"></span>
                 </div>
@@ -113,13 +113,13 @@
               <button class="basic-info-edit-btn" *ngIf="showElement != 'discipline'">Edit</button>
             </div>
             <div class="basic-info-content" *ngIf="showElement != 'discipline'">
-              <span>{{userStorage.UserInfo.discipline != null ? userStorage.UserInfo.discipline : 'Empty'}}</span>
+              <span>{{userStorage.UserData.discipline != null ? userStorage.UserData.discipline : 'Empty'}}</span>
             </div>
             <div *ngIf="showElement === 'discipline'">
               <div class="basic-info-input">
                 <div class="textarea-field">
                   <input class="input-text-without-icon effect-2" maxlength="50" type="text" placeholder="Discipline"
-                    name="discipline" [(ngModel)]="userStorage.UserInfo.discipline" #discipline="ngModel">
+                    name="discipline" [(ngModel)]="userStorage.UserData.discipline" #discipline="ngModel">
                   <span class="focus-border"></span>
                 </div>
               </div>
@@ -142,7 +142,7 @@
               <button class="basic-info-edit-btn" *ngIf="showElement != 'trainingSince'">Edit</button>
             </div>
             <div class="basic-info-content" *ngIf="showElement != 'trainingSince'">
-              <span>{{userStorage.UserInfo.trainingSince != null ? userStorage.UserInfo?.trainingSince.getFullYear() : 'Empty'}}</span>
+              <span>{{userStorage.UserData.trainingSince != null ? userStorage.UserData?.trainingSince.getFullYear() : 'Empty'}}</span>
             </div>
             <div *ngIf="showElement === 'trainingSince'">
               <div class="basic-info-input">
@@ -150,7 +150,7 @@
 
                   <div class="dropdown-wrapper-long">
                     <app-Dropdown (selectedItem)="trainingSinceChanged($event)" defaultValue="{{'I train from'}}"
-                      [listElements]="years" [selectedElement]="userStorage.UserInfo?.trainingSince?.getFullYear()">
+                      [listElements]="years" [selectedElement]="userStorage.UserData?.trainingSince?.getFullYear()">
                     </app-Dropdown>
                   </div>
 
@@ -218,14 +218,14 @@
               <button class="basic-info-edit-btn" *ngIf="showElement != 'gender'">Edit</button>
             </div>
             <div class="basic-info-content" *ngIf="showElement != 'gender'">
-              <span>{{userStorage.UserInfo.gender != null ? userStorage.UserInfo.gender : 'Empty'}}</span>
+              <span>{{userStorage.UserData.gender != null ? userStorage.UserData.gender : 'Empty'}}</span>
             </div>
             <div *ngIf="showElement === 'gender'">
               <div class="basic-info-input">
                 <div class="years-if-expierience-select-box">
                   <div class="dropdown-wrapper-long">
                     <app-Dropdown (selectedItem)="genderChanged($event)" defaultValue='Gender'
-                      [listElements]="genderDropdownList" [selectedElement]="userStorage.UserInfo.gender">
+                      [listElements]="genderDropdownList" [selectedElement]="userStorage.UserData.gender">
                     </app-Dropdown>
                   </div>
                 </div>
@@ -248,14 +248,14 @@
               <button class="basic-info-edit-btn" *ngIf="showElement != 'isCoach'">Edit</button>
             </div>
             <div class="basic-info-content" *ngIf="showElement != 'isCoach'">
-              <span>{{userStorage.UserInfo.isCoach == true ? 'Yes' : 'No'}}</span>
+              <span>{{userStorage.UserData.isCoach == true ? 'Yes' : 'No'}}</span>
             </div>
             <div *ngIf="showElement === 'isCoach'">
               <div class="basic-info-input">
                 <div class="years-if-expierience-select-box">
                   <div class="dropdown-wrapper-long">
                     <app-Dropdown (selectedItem)="isCoachChanged($event)" defaultValue='No'
-                      [listElements]="coachDropdownList" selectedElement="{{userStorage.UserInfo.isCoach == true ? 'Yes' : 'No'}}">
+                      [listElements]="coachDropdownList" selectedElement="{{userStorage.UserData.isCoach == true ? 'Yes' : 'No'}}">
                     </app-Dropdown>
                   </div>
                 </div>
@@ -278,13 +278,13 @@
               <button class="basic-info-edit-btn" *ngIf="showElement != 'weight'">Edit</button>
             </div>
             <div class="basic-info-content" *ngIf="showElement != 'weight'">
-              <span>{{userStorage.UserInfo.height != null ? userStorage.UserInfo.height : 'Empty'}}</span>
+              <span>{{userStorage.UserData.height != null ? userStorage.UserData.height : 'Empty'}}</span>
             </div>
             <div *ngIf="showElement === 'weight'">
               <div class="basic-info-input">
                 <div class="textarea-field">
                   <input class="input-text-without-icon effect-2" type="number" min="0" step="0.1" placeholder="Height"
-                    name="height" [(ngModel)]="userStorage.UserInfo.height" #height="ngModel">
+                    name="height" [(ngModel)]="userStorage.UserData.height" #height="ngModel">
                   <span class="focus-border"></span>
                 </div>
               </div>

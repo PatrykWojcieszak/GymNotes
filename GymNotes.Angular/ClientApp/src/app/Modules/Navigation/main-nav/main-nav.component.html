@@ -10,9 +10,9 @@
               [routerLink]="['/userList/userprofile', Authentication.UserId]">
             </div>
             <div class="name-wrapper" [routerLink]="['/userList/userprofile', Authentication.UserId]" >
-              <span class="first">{{userStorage.UserInfo.firstName}}</span>
-              <span class="alias" *ngIf="userStorage.UserInfo?.alias != null">{{userStorage.UserInfo.alias}}</span>
-              <span class="last">{{userStorage.UserInfo.lastName}}</span>
+              <span class="first">{{userStorage.UserData.firstName}}</span>
+              <span class="alias" *ngIf="userStorage.UserData?.alias != null">{{userStorage.UserData.alias}}</span>
+              <span class="last">{{userStorage.UserData.lastName}}</span>
             </div>
           </div>
           <div class="menu-container">

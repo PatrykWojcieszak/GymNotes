@@ -46,9 +46,9 @@ export class GeneralSettingsComponent implements OnInit {
 
     this.nameForm = this.formBuilder.group({
       userId: [this.authentication.UserId],
-      firstname: [ this.userStorage.UserInfo.firstName, Validators.required ],
-      lastname: [ this.userStorage.UserInfo.lastName, Validators.required ],
-      alias: [ this.userStorage.UserInfo.alias ],
+      firstname: [ this.userStorage.UserData.firstName, Validators.required ],
+      lastname: [ this.userStorage.UserData.lastName, Validators.required ],
+      alias: [ this.userStorage.UserData.alias ],
     });
 
     this.userSettings.GetUserEmail(parameters).subscribe((res: any) =>{

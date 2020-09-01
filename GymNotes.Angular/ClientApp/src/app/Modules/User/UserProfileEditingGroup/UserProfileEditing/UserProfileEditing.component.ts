@@ -1,18 +1,22 @@
-import {Component,OnInit,Inject} from '@angular/core';
-import {MatDialog,MatDialogConfig,MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {formatDate} from '@angular/common';
+import { Component, OnInit, Inject } from "@angular/core";
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
+import { formatDate } from "@angular/common";
 
-import {UserStorageService} from 'src/app/Core/Services/Storage/User-Storage.service';
-import {UserProfileEditAchievementsComponent} from '../UserProfileEditAchievements/UserProfileEditAchievements.component';
-import {AuthenticationService} from 'src/app/Auth/Authentication.service';
-import {UserService} from 'src/app/Core/Services/Http/User/User.service';
-import {UserInfoService} from 'src/app/Core/Services/Http/User/UserInfo.service';
-import {ConfirmationDialogService} from 'src/app/Core/Services/Utility/ConfirmationDialog.service';
+import { UserStorageService } from "src/app/Core/Services/Storage/User-Storage.service";
+import { UserProfileEditAchievementsComponent } from "../UserProfileEditAchievements/UserProfileEditAchievements.component";
+import { AuthenticationService } from "src/app/Auth/Authentication.service";
+import { UserService } from "src/app/Core/Services/Http/User/User.service";
+import { UserInfoService } from "src/app/Core/Services/Http/User/UserInfo.service";
 
 @Component({
-  selector: 'app-UserProfileEditing',
-  templateUrl: './UserProfileEditing.component.html',
-  styleUrls: ['./UserProfileEditing.component.scss']
+  selector: "app-UserProfileEditing",
+  templateUrl: "./UserProfileEditing.component.html",
+  styleUrls: ["./UserProfileEditing.component.scss"],
 })
 export class UserProfileEditingComponent implements OnInit {
   showDescriptionEdit = false;
@@ -27,11 +31,11 @@ export class UserProfileEditingComponent implements OnInit {
   months: string[] = [];
   days: number[] = [];
 
-  showElement = '';
+  showElement = "";
 
-  birthdayYear = 'Year';
-  birthdayMonth = 'Month';
-  birthdayDay = 'Day';
+  birthdayYear = "Year";
+  birthdayMonth = "Month";
+  birthdayDay = "Day";
 
   isSelectBoxInitialized = false;
   basicInfo = false;
@@ -40,18 +44,18 @@ export class UserProfileEditingComponent implements OnInit {
   AchievementsList: any[];
 
   genderDropdownList = {
-    1: 'Male',
-    2: 'Female',
-    3: 'Other',
+    1: "Male",
+    2: "Female",
+    3: "Other",
   };
 
   coachDropdownList = {
-    1: 'YES',
-    2: 'NO',
+    1: "YES",
+    2: "NO",
   };
 
   constructor(
-    private dialogRef: MatDialogRef < UserProfileEditingComponent > ,
+    private dialogRef: MatDialogRef<UserProfileEditingComponent>,
     @Inject(MAT_DIALOG_DATA) Data,
     private matDialog: MatDialog,
     private userService: UserService,
@@ -62,21 +66,23 @@ export class UserProfileEditingComponent implements OnInit {
 
   ngOnInit() {
     this.currentYear = new Date().getFullYear();
-    this.initBirthday(this.userStorage.UserInfo.birthday);
+    this.initBirthday(this.userStorage.UserData.birthday);
 
     const parameters: string[] = [this.userAuthentication.UserId];
 
-    this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
-      this.AchievementsList = res;
-    });
+    this.userService
+      .GetUserAchievementsList(parameters)
+      .subscribe((res: any[]) => {
+        this.AchievementsList = res;
+      });
   }
 
   initBirthday(birthday: string) {
     const birthdayDate = new Date(birthday);
 
     this.birthdayYear = birthdayDate.getFullYear().toString();
-    this.birthdayMonth = birthdayDate.toLocaleString('en-US', {
-      month: 'long'
+    this.birthdayMonth = birthdayDate.toLocaleString("en-US", {
+      month: "long",
     });
     this.birthdayDay = birthdayDate.getDate().toString();
 
@@ -84,9 +90,11 @@ export class UserProfileEditingComponent implements OnInit {
     this.initMonths();
     this.initDays(
       birthdayDate.getFullYear(),
-      this.getNumberOfMonth(birthdayDate.toLocaleString('en-US', {
-        month: 'long'
-      }))
+      this.getNumberOfMonth(
+        birthdayDate.toLocaleString("en-US", {
+          month: "long",
+        })
+      )
     );
   }
 
@@ -95,20 +103,25 @@ export class UserProfileEditingComponent implements OnInit {
   }
 
   OpenAcievementsEditor(id) {
-    const dialogRef = this.matDialog.open(UserProfileEditAchievementsComponent, {
-      maxHeight: '100%',
-      data: {
-        Data: id
+    const dialogRef = this.matDialog.open(
+      UserProfileEditAchievementsComponent,
+      {
+        maxHeight: "100%",
+        data: {
+          Data: id,
+        },
       }
-    });
+    );
 
-    let parameters: string[] = [this.userAuthentication.UserId];
+    const parameters: string[] = [this.userAuthentication.UserId];
 
     dialogRef.afterClosed().subscribe((x) => {
-      this.userService.GetUserAchievementsList(parameters).subscribe((res: any[]) => {
-        this.AchievementsList = res;
-        console.warn(res);
-      });
+      this.userService
+        .GetUserAchievementsList(parameters)
+        .subscribe((res: any[]) => {
+          this.AchievementsList = res;
+          console.warn(res);
+        });
     });
   }
 
@@ -123,90 +136,100 @@ export class UserProfileEditingComponent implements OnInit {
   updateInstagramURL(e: any) {
     const model = {
       userId: this.userAuthentication.UserId,
-      content: this.userStorage.UserInfo.instagram
+      content: this.userStorage.UserData.instagram,
     };
 
-    this.userInfo.UpdateInstagramUrl(model).subscribe((res: any) => {}, (err) => {});
+    this.userInfo.UpdateInstagramUrl(model).subscribe(
+      (res: any) => {},
+      (err) => {}
+    );
   }
 
   updateFacebookURL(e: any) {
     const model = {
-      userId: 'this.userAuthentication.UserId',
-      content: this.userStorage.UserInfo.facebook
+      userId: this.userAuthentication.UserId,
+      content: this.userStorage.UserData.facebook,
     };
 
-    this.userInfo.UpdateFacebookUrl(model).subscribe((res: any) => {}, (err) => {});
+    console.log(model);
+    this.userInfo.UpdateFacebookUrl(model).subscribe(
+      (res: any) => {},
+      (err) => {}
+    );
   }
 
   updateTwitterURL(e: any) {
     const model = {
       userId: this.userAuthentication.UserId,
-      content: this.userStorage.UserInfo.twitter
+      content: this.userStorage.UserData.twitter,
     };
 
-    this.userInfo.UpdateTwitterUrl(model).subscribe((res: any) => {}, (err) => {});
+    this.userInfo.UpdateTwitterUrl(model).subscribe(
+      (res: any) => {},
+      (err) => {}
+    );
   }
 
   updateYoutubeURL(e: any) {
     const model = {
       userId: this.userAuthentication.UserId,
-      content: this.userStorage.UserInfo.youTube
+      content: this.userStorage.UserData.youTube,
     };
 
-    this.userInfo.UpdateYoutubeUrl(model).subscribe((res: any) => {}, (err) => {});
+    this.userInfo.UpdateYoutubeUrl(model).subscribe(
+      (res: any) => {},
+      (err) => {}
+    );
   }
 
   updateIsCoach() {
     const model = {
       userId: this.userAuthentication.UserId,
-      content: this.userStorage.UserInfo.isCoach
+      content: this.userStorage.UserData.isCoach,
     };
 
     this.userInfo.UpdateIsCoach(model).subscribe(
       (res: any) => {
-        this.showElement = '';
+        this.showElement = "";
       },
       (err) => {}
     );
   }
 
   isCoachChanged(isCoach) {
-    if (isCoach === 1) this.userStorage.UserInfo.isCoach = true;
-    else this.userStorage.UserInfo.isCoach = false;
+    if (isCoach === 1) this.userStorage.UserData.isCoach = true;
+    else this.userStorage.UserData.isCoach = false;
   }
 
   updateGender() {
     const model = {
       userId: this.userAuthentication.UserId,
-      content: this.userStorage.UserInfo.gender
+      content: this.userStorage.UserData.gender,
     };
 
     this.userInfo.UpdateGender(model).subscribe(
       (res: any) => {
-        this.showElement = '';
+        this.showElement = "";
       },
       (err) => {}
     );
   }
 
   genderChanged(e) {
-    if (e === 1)
-      this.userStorage.UserInfo.gender = 'Male';
-    else if (e === 2)
-      this.userStorage.UserInfo.gender = 'Female';
-    else
-      this.userStorage.UserInfo.gender = 'Other';
+    if (e === 1) this.userStorage.UserData.gender = "Male";
+    else if (e === 2) this.userStorage.UserData.gender = "Female";
+    else this.userStorage.UserData.gender = "Other";
   }
 
   updateDescription() {
     const model = {
       userId: this.userAuthentication.UserId,
-      content: this.userStorage.UserInfo.description
+      content: this.userStorage.UserData.description,
     };
 
     this.userInfo.UpdateDescription(model).subscribe(
       (res: any) => {
-        this.showElement = '';
+        this.showElement = "";
       },
       (err) => {}
     );
@@ -215,12 +238,12 @@ export class UserProfileEditingComponent implements OnInit {
   updateDiscipline() {
     const model = {
       userId: this.userAuthentication.UserId,
-      content: this.userStorage.UserInfo.discipline
+      content: this.userStorage.UserData.discipline,
     };
 
     this.userInfo.UpdateDiscipline(model).subscribe(
       (res: any) => {
-        this.showElement = '';
+        this.showElement = "";
       },
       (err) => {}
     );
@@ -229,30 +252,30 @@ export class UserProfileEditingComponent implements OnInit {
   updateTrainingSince() {
     const model = {
       userId: this.userAuthentication.UserId,
-      date: this.userStorage.UserInfo.trainingSince,
+      date: this.userStorage.UserData.trainingSince,
     };
 
     this.userInfo.UpdateTrainingSince(model).subscribe(
       (res: any) => {
-        this.showElement = '';
+        this.showElement = "";
       },
       (err) => {}
     );
   }
 
   trainingSinceChanged(e: any) {
-    this.userStorage.UserInfo.trainingSince = new Date(e.toString());
+    this.userStorage.UserData.trainingSince = new Date(e.toString());
   }
 
   updateheight() {
     const model = {
       userId: this.userAuthentication.UserId,
-      value: this.userStorage.UserInfo.height
+      value: this.userStorage.UserData.height,
     };
 
     this.userInfo.UpdateHeight(model).subscribe(
       (res: any) => {
-        this.showElement = '';
+        this.showElement = "";
       },
       (err) => {}
     );
@@ -268,29 +291,33 @@ export class UserProfileEditingComponent implements OnInit {
 
     if (date == null) return;
 
-    this.userStorage.UserInfo.birthday = formatDate(date, 'yyyy-MM-dd', 'en-US');
+    this.userStorage.UserData.birthday = formatDate(
+      date,
+      "yyyy-MM-dd",
+      "en-US"
+    );
 
     const model = {
       userId: this.userAuthentication.UserId,
-      date: date
+      date: date,
     };
 
     this.userInfo.UpdateBirthday(model).subscribe(
       (res: any) => {
-        this.showElement = '';
+        this.showElement = "";
       },
       (err) => {}
     );
   }
 
   ngAfterViewChecked() {
-    if (!this.isSelectBoxInitialized && this.showElement != '') {
+    if (!this.isSelectBoxInitialized && this.showElement !== "") {
       this.isSelectBoxInitialized = true;
     }
   }
 
   toggle(componentName: string) {
-    if (componentName == '') this.isSelectBoxInitialized = false;
+    if (componentName === "") this.isSelectBoxInitialized = false;
 
     this.showElement = componentName;
   }
@@ -305,8 +332,8 @@ export class UserProfileEditingComponent implements OnInit {
     for (let i = 0; i < 12; i++) {
       const date = new Date(new Date().getFullYear(), i);
 
-      const month = date.toLocaleString('en-US', {
-        month: 'long'
+      const month = date.toLocaleString("en-US", {
+        month: "long",
       });
 
       this.months.push(month);
@@ -316,7 +343,7 @@ export class UserProfileEditingComponent implements OnInit {
   initDays(year: number, month: number) {
     this.days = [];
 
-    var d = new Date(year, month + 1, 0);
+    const d = new Date(year, month + 1, 0);
     const numberOfDays = d.getDate();
 
     for (let i = 1; i <= numberOfDays; i++) {

@@ -44,12 +44,12 @@ export class UserListComponent implements OnInit {
 	}
 
 	public nextPage(): void {
-		this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.userList.pageIndex + 1).toString() };
+		this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.UserList.pageIndex + 1).toString() };
 		this.search();
 	}
 
 	public prevPage(): void {
-		this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.userList.pageIndex - 1).toString() };
+		this.queryAPI = { ...this.queryAPI, page: (this.userListStorage.UserList.pageIndex - 1).toString() };
 		this.search();
   }
 

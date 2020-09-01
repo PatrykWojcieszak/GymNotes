@@ -12,9 +12,11 @@ using GymNotes.Models;
 using GymNotes.Repository.Base;
 using GymNotes.Repository.IRepository;
 using GymNotes.Repository.IRepository.Chat;
+using GymNotes.Repository.IRepository.Training;
 using GymNotes.Repository.IRepository.User;
 using GymNotes.Repository.Repository;
 using GymNotes.Repository.Repository.Chat;
+using GymNotes.Repository.Repository.Training;
 using GymNotes.Repository.Repository.User;
 using GymNotes.Service.Chat;
 using GymNotes.Service.IService;
@@ -146,17 +148,31 @@ namespace GymNotes
 
       services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-      //services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+      //services.AddScoped<IUserRepository, UserRepository>();
+
       //services.AddScoped<IAchievementRepository, AchievementRepository>();
       //services.AddScoped<IAchievementDyscyplineRepository, AchievementDyscyplineRepository>();
+
       //services.AddScoped<ICoachingRequestRepository, CoachingRequestRepository>();
       //services.AddScoped<IPupilRepository, PupilRepository>();
+
       //services.AddScoped<IUserOpinionRepository, UserOpinionRepository>();
       //services.AddScoped<IUserOpinionLikesRepository, UserOpinionLikesRepository>();
-      //services.AddScoped<IChatRepository, ChatRepository>();
+
       //services.AddScoped<IMessageRepository, MessageRepository>();
       //services.AddScoped<IContactRepository, ContactRepository>();
-      //services.AddScoped<IUserRepository, UserRepository>();
+
+      //services.AddScoped<IStatisticsRepository, StatisticsRepository>();
+      //services.AddScoped<IStatisticsExerciseRepository, StatisticsExerciseRepository>();
+      //services.AddScoped<IStatisticsDisciplineRepository, StatisticsDisciplineRepository>();
+
+      //services.AddScoped<ITrainingPlanRepository, TrainingPlanRepository>();
+      //services.AddScoped<ITrainingWeekRepository, TrainingWeekRepository>();
+      //services.AddScoped<ITrainingDayRepository, TrainingDayRepository>();
+      //services.AddScoped<ITrainingExerciseRepository, TrainingExerciseRepository>();
+
+      //services.AddScoped<IPlannedTrainingRepository, PlannedTrainingRepository>();
+      //services.AddScoped<ITrainingHistoryRepository, TrainingHistoryRepository>();
 
       //services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 

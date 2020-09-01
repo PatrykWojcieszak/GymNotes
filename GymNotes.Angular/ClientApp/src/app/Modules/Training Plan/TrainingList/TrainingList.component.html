@@ -14,12 +14,12 @@
   </div>
 </app-Header>
 
-<app-Pagination [paginatedList]="trainingPlanStorage.trainingPlan" (nextPageEvent)="trainingPlanStorage.nextPage()" (prevPageEvent)="trainingPlanStorage.prevPage()">
+<app-Pagination [paginatedList]="trainingPlanStorage.TrainingPlan" (nextPageEvent)="trainingPlanStorage.nextPage()" (prevPageEvent)="trainingPlanStorage.prevPage()">
 </app-Pagination>
 
 <main class="content-container container d-flex flex-column">
 
-  <app-TrainingPlanCard *ngFor="let item of trainingPlanStorage.trainingPlan.items" [TrainingPlan]="item"></app-TrainingPlanCard>
+  <app-TrainingPlanCard *ngFor="let item of trainingPlanStorage.TrainingPlan.items" [TrainingPlan]="item"></app-TrainingPlanCard>
 
   <div *ngIf="trainingPlanStorage.isLoading" class="row">
     <div class="spinner">
@@ -50,7 +50,7 @@
 </main>
 
 <app-Pagination
-  [paginatedList]="trainingPlanStorage.trainingPlan"
+  [paginatedList]="trainingPlanStorage.TrainingPlan"
   (nextPageEvent)="trainingPlanStorage.nextPage()"
   (prevPageEvent)="trainingPlanStorage.prevPage()">
 </app-Pagination>
