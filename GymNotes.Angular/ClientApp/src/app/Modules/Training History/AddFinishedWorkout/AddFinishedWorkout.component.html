@@ -23,7 +23,11 @@
             <span class="errorInfo" *ngIf="form.workoutName.errors?.required">Workout name is required</span>
           </div>
         </div>
-
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker panelClass="datepicker"></mat-datepicker>
+        </mat-form-field>
         <div class="training-exercise" formArrayName="trainingExercise">
           <div class="table-responsive">
             <div class="divTable minimalistBlack">

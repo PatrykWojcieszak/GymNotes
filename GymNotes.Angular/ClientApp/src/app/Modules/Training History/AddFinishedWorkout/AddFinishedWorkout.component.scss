@@ -224,3 +224,23 @@ div.minimalistBlack {
 .divTableBody {
 	display: table-row-group;
 }
+
+.mat-datepicker-toggle {
+	color: $red;
+}
+
+.mat-form-field input {
+	color: $secondary-color;
+}
+
+.mat-form-field input::placeholder {
+	color: $secondary-color;
+}
+
+::ng-deep .datepicker {
+	background: $secondary-color;
+}
+
+::ng-deep .datepicker .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+	border-color: darkblue;
+}
