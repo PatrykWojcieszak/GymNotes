@@ -16,18 +16,23 @@
         <div>
           <span class="content-panel-title">Workout name</span>
           <div class="input-field">
-            <input class="input-text effect-2" type="text" placeholder="Workout name">
+            <input class="input-text effect-2" formControlName="workoutName" type="text" placeholder="Workout name">
             <span class="focus-border"></span>
           </div>
           <div class="errorContainer" *ngIf="submitted || form.workoutName.touched">
             <span class="errorInfo" *ngIf="form.workoutName.errors?.required">Workout name is required</span>
           </div>
         </div>
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker panelClass="datepicker"></mat-datepicker>
-        </mat-form-field>
+        <div>
+          <span class="content-panel-title">Workout date</span>
+          <mat-form-field>
+            <mat-label>Custom calendar color</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker panelClass="datepicker"></mat-datepicker>
+          </mat-form-field>
+        </div>
+
         <div class="training-exercise" formArrayName="trainingExercise">
           <div class="table-responsive">
             <div class="divTable minimalistBlack">

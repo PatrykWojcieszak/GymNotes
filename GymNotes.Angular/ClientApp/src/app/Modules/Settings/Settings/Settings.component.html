@@ -3,27 +3,14 @@
     <div class="title">Settings</div>
     <div class="mobile">
       <div class="settings-panel">
-        <div class="settings-element"
-          [routerLink]="['general']"
-          routerLinkActive="settings-element-active">
-          <a class="fas fa-cog"></a> <span class="settings-name">General</span>
-        </div>
-        <div class="settings-element"
-          routerLinkActive="settings-element-active"
-          [routerLink]="['security']">
-          <a class="fas fa-user-shield"></a> <span class="settings-name">Security</span>
-        </div>
-      </div>
-      <div class="settings-panel">
-        <div class="settings-element"
-          routerLinkActive="settings-element-active">
-          <a class="fas fa-user-lock"></a> <span class="settings-name">Privacy</span>
-        </div>
-        <div class="settings-element"
-          routerLinkActive="settings-element-active"
-          [routerLink]="['notifications']">
-          <a class="fas fa-bell"></a> <span class="settings-name">Notifications</span>
-        </div>
+        <app-NavigationItem class="no-outline" routerLink="general" routerLinkActive Icon="fas fa-cog" Title="General">
+        </app-NavigationItem>
+        <app-NavigationItem class="no-outline" routerLink="security" routerLinkActive Icon="fas fa-user-shield" Title="Security">
+        </app-NavigationItem>
+        <app-NavigationItem class="no-outline" routerLinkActive Icon="fas fa-user-lock" Title="Privacy">
+        </app-NavigationItem>
+        <app-NavigationItem class="no-outline" routerLink="notifications" routerLinkActive Icon="fas fa-bell" Title="Notifications">
+        </app-NavigationItem>
       </div>
     </div>
   </div>

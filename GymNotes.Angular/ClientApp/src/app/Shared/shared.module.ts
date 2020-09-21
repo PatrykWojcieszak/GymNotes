@@ -1,3 +1,4 @@
+import { NavigationItemComponent } from './../Modules/Navigation/main-nav/NavigationItem/NavigationItem.component';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -24,13 +25,15 @@ import { DefaultValuePipe } from './Pipes/DefaultValue.pipe';
     HeaderComponent,
     SpinnerComponent,
     DefaultValuePipe,
+    NavigationItemComponent,
 	],
 	imports: [ CommonModule, RouterModule, FormsModule, AngularMaterialModule ],
 	exports: [
 		ConfirmationDialogComponent,
 		DropdownDirective,
 		DropdownComponent,
-		AchievementsListComponent,
+    AchievementsListComponent,
+    NavigationItemComponent,
 		PaginationComponent,
     HeaderComponent,
     SpinnerComponent,

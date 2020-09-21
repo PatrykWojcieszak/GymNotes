@@ -7,64 +7,35 @@
         <div class="drawer-wrapper">
           <div class="user-container">
             <div class="avatar-container"><img src="/images/russ.jpg" class="avatar"
-              [routerLink]="['/userList/userprofile', Authentication.UserId]">
+                [routerLink]="['/userList/userprofile', Authentication.UserId]">
             </div>
-            <div class="name-wrapper" [routerLink]="['/userList/userprofile', Authentication.UserId]" >
+            <div class="name-wrapper" [routerLink]="['/userList/userprofile', Authentication.UserId]">
               <span class="first">{{userStorage.UserData.firstName}}</span>
               <span class="alias" *ngIf="userStorage.UserData?.alias != null">{{userStorage.UserData.alias}}</span>
               <span class="last">{{userStorage.UserData.lastName}}</span>
             </div>
           </div>
           <div class="menu-container">
-            <div class="menu-element"
-              routerLink="/userList"
-              routerLinkActive='settings-element-active'>
-              <a class="fas fa-search"></a> <span class="menu-name">Search user</span>
-            </div>
-            <div class="menu-element"
-              routerLink="/training-list"
-              routerLinkActive='settings-element-active'>
-              <a class="fas fa-th-list"></a> <span class="menu-name">Training plan</span>
-            </div>
-            <div class="menu-element"
-              routerLink="/calendar"
-              routerLinkActive='settings-element-active'>
-              <a class="fas fa-calendar-alt"></a> <span class="menu-name">Training history</span>
-            </div>
-            <div class="menu-element"
-              routerLink="/tools"
-              routerLinkActive='settings-element-active'>
-              <a class="fas fa-tools"></a> <span class="menu-name">Tools</span>
-            </div>
-            <div class="menu-element"
-
-              routerLinkActive='settings-element-active'>
-              <a class="fas fa-chart-area"></a> <span class="menu-name">Statistics</span>
-            </div>
-            <div class="menu-element"
-              routerLinkActive='settings-element-active'>
-              <a class="fas fa-users"></a> <span class="menu-name">Pupil</span>
-            </div>
-            <div class="menu-element"
-              routerLinkActive='settings-element-active'>
-              <a class="fas fa-user-friends"></a> <span class="menu-name">Coach</span>
-            </div>
+            <app-NavigationItem class="no-outline" routerLink="/userList" routerLinkActive Icon="fas fa-search" Title="Search user">
+            </app-NavigationItem>
+            <app-NavigationItem class="no-outline" routerLink="/training-list" routerLinkActive Icon="fas fa-th-list"
+              Title="Training plan"></app-NavigationItem>
+            <app-NavigationItem class="no-outline" routerLink="/calendar" routerLinkActive Icon="fas fa-calendar-alt"
+              Title="Training history"></app-NavigationItem>
+            <app-NavigationItem class="no-outline" routerLink="/tools" routerLinkActive Icon="fas fa-tools" Title="Tools">
+            </app-NavigationItem>
+            <app-NavigationItem class="no-outline" routerLinkActive Icon="fas fa-chart-area" Title="Statistics"></app-NavigationItem>
+            <app-NavigationItem class="no-outline" routerLinkActive Icon="fas fa-users" Title="Pupil"></app-NavigationItem>
+            <app-NavigationItem class="no-outline" routerLinkActive Icon="fas fa-user-friends" Title="Coach"></app-NavigationItem>
           </div>
         </div>
         <div class="footer-container">
-          <i class="fas fa-bell"
-            routerLink="/notifications"
-            routerLinkActive='settings-element-active'>
+          <i class="fas fa-bell" routerLink="/notifications" routerLinkActive='settings-element-active'>
             <div class="icon-notification">2</div>
           </i>
-          <i class="far fa-envelope"
-            routerLink="/chat"
-            routerLinkActive='settings-element-active'></i>
-          <i class="fas fa-user-cog"
-            routerLinkActive='settings-element-active'
-            routerLink="/settings/general"></i>
-          <i class=" fas fa-power-off"
-            (click)="logout()"></i>
+          <i class="far fa-envelope" routerLink="/chat" routerLinkActive='settings-element-active'></i>
+          <i class="fas fa-user-cog" routerLinkActive='settings-element-active' routerLink="/settings/general"></i>
+          <i class=" fas fa-power-off" (click)="logout()"></i>
         </div>
       </div>
     </mat-nav-list>

@@ -8,6 +8,7 @@ import { SettingsComponent } from './Settings/Settings.component';
 import { SecurityComponent } from './Security/Security.component';
 import { GeneralSettingsComponent } from './GeneralSettings/GeneralSettings.component';
 
+import { SharedModule } from 'src/app/Shared/shared.module';
 import { SettingsRoutingModule } from './settings-routing.module';
 
 
@@ -24,6 +25,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
     ReactiveFormsModule,
     RouterModule,
     SettingsRoutingModule,
+    SharedModule,
   ],
 })
 export class SettingsModule { }

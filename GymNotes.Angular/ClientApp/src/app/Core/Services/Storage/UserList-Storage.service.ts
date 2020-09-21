@@ -66,7 +66,6 @@ export class UserListStorageService {
     this.userService.GetUsers(query).subscribe(
       (users: PaginatedList<User>) => {
         this.UserList = users;
-        console.warn(users);
         this.setSuccess();
       },
       (error: Error) => {
